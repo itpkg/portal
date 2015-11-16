@@ -14,3 +14,5 @@
 
 # add
 /.idea
+/vendor/assets/bower_components
+/public/assets/

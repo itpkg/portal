@@ -49,10 +49,12 @@ group :development do
 end
 
 # add
+gem 'bootstrap_form'
+
 gem 'devise'
 gem 'omniauth'
 gem 'devise-bootstrap-views'
 
 gem 'kaminari'
 gem 'kaminari-i18n'
-gem 'bootstrap-kaminari-views'
+gem 'kaminari-bootstrap', '~> 3.0.1'

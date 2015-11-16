@@ -1,0 +1,25 @@
+{
+  "name": "portal",
+  "version": "0.0.1",
+  "homepage": "https://github.com/itpkg/portal",
+  "authors": [
+    "Jitang Zheng <jitang.zheng@gmail.com>"
+  ],
+  "description": "Portal system",
+  "moduleType": [
+    "es6"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap-sass": "~3.3.5",
+    "famfamfam-flags": "~0.4.0",
+    "famfamfam-silk": "~0.3.3"
+  }
+}
