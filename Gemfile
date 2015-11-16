@@ -35,6 +35,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
+
+  # add
   gem 'rspec-rails', '~> 3.0'
 end
 
@@ -46,3 +48,7 @@ group :development do
   gem 'spring'
 end
 
+# add
+gem 'devise'
+gem 'omniauth'
+gem 'devise-bootstrap-views'
