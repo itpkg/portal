@@ -52,3 +52,7 @@ end
 gem 'devise'
 gem 'omniauth'
 gem 'devise-bootstrap-views'
+
+gem 'kaminari'
+gem 'kaminari-i18n'
+gem 'bootstrap-kaminari-views'
