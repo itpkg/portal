@@ -1,2 +1,4 @@
-# portal
-Portal system 
+Portal system (by rails)
+---
+
+## Deploy
