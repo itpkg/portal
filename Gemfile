@@ -53,6 +53,8 @@ gem 'bootstrap_form'
 
 gem 'devise'
 gem 'omniauth'
+gem 'cancancan'
+gem 'rolify'
 gem 'devise-i18n'
 gem 'devise-bootstrap-views'
 
