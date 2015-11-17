@@ -1,0 +1,15 @@
+<h3><%= t '.change_your_password' %></h3>
+<hr/>
+
+<%= bootstrap_form_for(resource, as: resource_name, url: password_path(resource_name), html: {method: :put}) do |f| %>
+    <%= devise_error_messages! %>
+    <%= f.hidden_field :reset_password_token %>
+    <%= f.password_field :password, autofocus: true, autocomplete: 'off', placeholder: @minimum_password_length ? t('devise.passwords.characters_minimum', size: @minimum_password_length) : t('devise.passwords.please_input_your_password') %>
+    <%= f.password_field :password_confirmation, autocomplete: 'off' %>
+
+
+    <%= f.primary t('.change_my_password') %>
+<% end %>
+
+<br/>
+<%= render 'devise/shared/links' %>

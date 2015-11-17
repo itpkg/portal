@@ -1,0 +1,17 @@
+<h3><%= t '.sign_in' %></h3>
+<hr/>
+
+<%= bootstrap_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+
+    <%= f.email_field :email, autofocus: true %>
+    <%= f.password_field :password, autocomplete: "off" %>
+    <% if devise_mapping.rememberable? -%>
+        <%= f.check_box :remember_me %>
+    <% end -%>
+
+    <%= f.primary t('.sign_in') %>
+
+<% end %>
+
+<br/>
+<%= render 'devise/shared/links' %>
