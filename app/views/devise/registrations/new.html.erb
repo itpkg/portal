@@ -1,14 +1,14 @@
 <h3><%= t '.sign_up' %></h3>
 <hr>
-<%= bootstrap_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+<%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
     <%= devise_error_messages! %>
 
-    <%= f.text_field :username, autofocus: true %>
-    <%= f.email_field :email %>
-    <%= f.password_field :password, autocomplete: 'off', placeholder: @minimum_password_length ? t('devise.passwords.characters_minimum', size: @minimum_password_length) : t('devise.passwords.please_input_your_password') %>
-    <%= f.password_field :password_confirmation, autocomplete: "off" %>
+    <%= f.input :username, autofocus: true %>
+    <%= f.input :email %>
+    <%= f.input :password, autocomplete: 'off', placeholder: @minimum_password_length ? t('devise.passwords.characters_minimum', size: @minimum_password_length) : t('devise.passwords.please_input_your_password') %>
+    <%= f.input :password_confirmation, autocomplete: "off" %>
 
-    <%= f.primary t('.sign_up') %>
+    <%= f.button :submit, t('.sign_up') %>
 <% end %>
 
 <br/>

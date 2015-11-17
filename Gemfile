@@ -57,6 +57,7 @@ end
 
 # add
 gem 'simple_form'
+gem 'country_select'
 gem 'wice_grid'
 gem 'font-awesome-sass'
 

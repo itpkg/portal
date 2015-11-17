@@ -8,6 +8,7 @@ zh-CN:
         email: 邮箱
         password: 密码
         remember_me: 记住我
+        current_password: 当前密码
         password_confirmation: 再输一遍
     errors:
       messages:
