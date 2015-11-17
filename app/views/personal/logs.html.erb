@@ -1,5 +1,5 @@
 <% count=50 %>
-<h3><%= t '.title', count:count%></h3>
+<h3><%= t '.title', count: count %></h3>
 <hr/>
 <ul class="list-group">
   <% current_user.logs.order(id: :desc).limit(count).each do |l| %>

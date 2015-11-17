@@ -8,10 +8,10 @@ class PersonalController < ApplicationController
     @links = []
 
     if current_user.is_admin?
-      @links << {href:site_path, title:'links.personal.site'}
+      @links << {href: site_path, title: 'site.index.title'}
     end
 
-    @links << {href:personal_logs_path, title:'links.personal.logs'}
+    @links << {href: personal_logs_path, title: 'links.personal.logs'}
     render layout: 'dashboard'
   end
 end

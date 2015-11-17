@@ -8,6 +8,10 @@ Rails.application.routes.draw do
     resources :comments
   end
 
+  %w(info seo captcha adverts users).each do |a|
+    get "site/#{a}"
+    post "site/#{a}"
+  end
 
   get 'site/status'
   get 'site' => 'site#index'

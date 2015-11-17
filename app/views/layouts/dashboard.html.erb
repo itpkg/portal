@@ -3,13 +3,7 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-2">
-          <ul id="ds-links" class="nav nav-pills nav-stacked">
-            <% @links.each do |l| %>
-                <li class="nav-item">
-                  <%= link_to t(l.fetch(:title)), '#', class: 'nav-link', data:l.fetch(:href) %>
-                </li>
-            <% end %>
-          </ul>
+          <%= render 'shared/tab_v', id: 'ds-tabs', target: 'ds-content', links: @links %>
         </div>
         <div class="col-sm-10">
           <%= render 'shared/messages' %>
@@ -19,23 +13,7 @@
         </div>
       </div>
     </div>
-    <script>
 
-      $(function(){
-        var ids ="ul#ds-links a";
-        $(ids).click(function(e){
-          //console.log();
-          $(ids).each(function(){
-            $(this).removeClass('active');
-          });
-          $.get($(this).attr('data'), function(data){
-              $("div#ds-content").html(data);
-
-          });
-          $(this).addClass('active');
-        });
-      });
-    </script>
 <% end %>
 
 <%= render file: 'layouts/application' %>

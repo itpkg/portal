@@ -1,0 +1,23 @@
+<% tid = "tab-h-#{id}-tabs" %>
+<% cid = "tab-h-#{id}-content" %>
+<ul id="<%= tid %>" class="nav nav-tabs">
+  <% links.each do |l| %>
+      <li class="nav-item">
+        <%= link_to t(l.fetch(:title)), '#', class: 'nav-link', id: l.fetch(:href) %>
+      </li>
+  <% end %>
+</ul>
+<br/>
+<div id="<%= cid %>"></div>
+<script>
+  $(function () {
+    var ids = "ul#<%= tid %> a";
+    $(ids).click(function (e) {
+      e.preventDefault();
+      $.get($(this).attr('id'), function (data) {
+        $("div#<%= cid %>").html(data);
+      });
+      $(this).tab('show');
+    });
+  });
+</script>

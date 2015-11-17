@@ -3,12 +3,20 @@ en:
     search: Search
   placeholders:
     search: Please input...
+  site:
+    index:
+      title: Site info
+      status: Status
+      info: Base info
+      captcha: Captcha
+      adverts: Adverts
+      users: Users
+      seo: Seo
   personal:
     logs:
-      title: Recent %{count} items
+      title: "%{count} items at most"
   links:
     personal:
-      site: Site info
       logs: Logs
       index: Dashboard
     home: Home

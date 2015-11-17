@@ -3,10 +3,18 @@ zh-CN:
     search: 点此此处输入
   personal:
     logs:
-      title: 最近%{count}条记录
+      title: 最多显示%{count}条记录
+  site:
+    index:
+      title: 站点设置
+      status: 当前状态
+      info: 基本信息
+      captcha: 验证码
+      adverts: 广告代码
+      users: 用户列表
+      seo: 搜索引擎
   links:
     personal:
-      site: 站点信息
       logs: 日志列表
       index: 控制面板
     home: 主页

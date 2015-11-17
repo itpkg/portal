@@ -20,4 +20,7 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.for(:account_update) { |u| u.permit(:username, :email, :password, :password_confirmation, :current_password) }
   end
 
+  def must_be_admin!
+    render(401) unless current_user && current_user.is_admin?
+  end
 end
