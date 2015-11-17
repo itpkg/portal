@@ -2,5 +2,11 @@ zh-CN:
   placeholders:
     search: 点此此处输入
   links:
+    personal:
+      index: 控制面板
+    home: 主页
+    welcome: 欢迎你, %{name}
+    sign_in_or_up: 注册/登录
+    sign_out: 安全退出
     back_to_top: 返回顶部
     build_by_html: "使用<a href='https://github.com/itpkg/portal' target='_blank'>Portal系统</a>构建"
