@@ -20,4 +20,10 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  buttons:
+    search: Search
+  placeholders:
+    search: Please input...
+  links:
+    back_to_top: Back to top
+    build_by_html: "Build by <a href='https://github.com/itpkg/portal' target='_blank'>Portal Web System</a>"

@@ -2,7 +2,7 @@ require 'sidekiq/web'
 
 Rails.application.routes.draw do
 
-  get 'personal'=>'personal#index'
+  get 'personal' => 'personal#index'
 
   devise_for :users
 

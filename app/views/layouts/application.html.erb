@@ -2,14 +2,11 @@
 <html lang="<%= I18n.locale %>">
 <head>
   <title>Portal</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
-<p class="notice"><%= notice %></p>
-       <p class="alert"><%= alert %></p>
-<%= yield %>
-
+<%= yield :root %>
 </body>
 </html>

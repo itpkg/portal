@@ -2,7 +2,7 @@ class CreateCmsTags < ActiveRecord::Migration
   def change
     create_table :cms_tags do |t|
       t.string :name, null: false
-      t.string :lang, null:false, limit:5, default:'en'
+      t.string :lang, null: false, limit: 5, default: 'en'
       t.timestamps null: false
     end
 

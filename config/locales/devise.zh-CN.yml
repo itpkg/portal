@@ -50,8 +50,8 @@ zh-CN:
         sign_in: 登录
     shared:
       links:
-        didn_t_receive_confirmation_instructions: 没有收到确认指令？
-        didn_t_receive_unlock_instructions: 没有收到解锁指令？
+        didn_t_receive_confirmation_instructions: 没有收到确认邮件？
+        didn_t_receive_unlock_instructions: 没有收到解锁邮件？
         forgot_your_password: 忘记密码？
         sign_in: 登录
         sign_in_with_provider:  用 %{provider} 登录

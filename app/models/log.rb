@@ -1,7 +1,7 @@
 class Log < ActiveRecord::Base
   belongs_to :user
 
-  enum flag: [ :info, :error, :notice ]
+  enum flag: [:info, :error, :notice]
 
   before_create :set_created_at
 

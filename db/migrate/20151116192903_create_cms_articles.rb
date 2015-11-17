@@ -5,7 +5,7 @@ class CreateCmsArticles < ActiveRecord::Migration
       t.string :title, null: false, limit: 255
       t.string :summary, null: false, limit: 800
       t.text :body, null: false
-      t.string :lang, null:false, limit:5, default:'en'
+      t.string :lang, null: false, limit: 5, default: 'en'
       t.timestamps null: false
     end
 

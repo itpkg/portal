@@ -1,0 +1,6 @@
+zh-CN:
+  placeholders:
+    search: 点此此处输入
+  links:
+    back_to_top: 返回顶部
+    build_by_html: "使用<a href='https://github.com/itpkg/portal' target='_blank'>Portal系统</a>构建"
