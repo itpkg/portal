@@ -52,6 +52,7 @@ group :development do
   gem 'capistrano-rails', '~> 1.1'
   gem 'capistrano-rbenv', '~> 2.0'
   gem 'capistrano3-puma'
+  gem 'capistrano-sidekiq'
 end
 
 # add
