@@ -6,4 +6,4 @@ DEVEL
 
 ## Notes
 ### Rails
- * rails g controller home index --no-assets
+ * rails g controller home index --no-assets --helper

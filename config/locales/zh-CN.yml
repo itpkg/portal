@@ -3,6 +3,8 @@ zh-CN:
     search: 点此此处输入
   links:
     personal:
+      site: 站点信息
+      logs: 日志列表
       index: 控制面板
     home: 主页
     welcome: 欢迎你, %{name}

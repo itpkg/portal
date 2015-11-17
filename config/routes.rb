@@ -2,6 +2,10 @@ require 'sidekiq/web'
 
 Rails.application.routes.draw do
 
+
+  get 'site' => 'site#index'
+
+  get 'personal/logs'
   get 'personal' => 'personal#index'
 
   devise_for :users

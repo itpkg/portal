@@ -26,6 +26,8 @@ en:
     search: Please input...
   links:
     personal:
+      site: Site info
+      logs: Logs
       index: Dashboard
     home: Home
     welcome: Welcome, %{name}

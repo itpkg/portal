@@ -1,0 +1,23 @@
+<% content_for :root do %>
+    <%= render 'shared/header' %>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-2">
+          <ul class="nav nav-pills nav-stacked">
+            <% @links.each do |l| %>
+                <li class="nav-item">
+                  <%= link_to t(l.fetch(:title)), l.fetch(:href), class: 'nav-link' %>
+                </li>
+            <% end %>
+          </ul>
+        </div>
+        <div class="col-sm-10">
+          <%= render 'shared/messages' %>
+          <%= yield %>
+          <%= render 'shared/footer' %>
+        </div>
+      </div>
+    </div>
+<% end %>
+
+<%= render file: 'layouts/application' %>

@@ -1,4 +1,4 @@
-<h3><%= t '.sign_in' %></h3>
+<h3><%= @title=t '.sign_in' %></h3>
 <hr/>
 
 <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
