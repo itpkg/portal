@@ -56,18 +56,14 @@ group :development do
 end
 
 # add
-gem 'bootstrap_form'
-
 gem 'devise'
+gem 'devise-i18n'
 gem 'omniauth'
 gem 'cancancan'
 gem 'rolify'
-gem 'devise-i18n'
-gem 'devise-bootstrap-views'
 
 gem 'kaminari'
 gem 'kaminari-i18n'
-gem 'kaminari-bootstrap', '~> 3.0.1'
 
 gem 'sinatra', require: nil
 gem 'sidekiq'

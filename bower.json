@@ -18,9 +18,10 @@
     "tests"
   ],
   "dependencies": {
-    "bootstrap-sass": "~3.3.5",
     "famfamfam-flags": "~0.4.0",
     "famfamfam-silk": "~0.3.3",
-    "ueditor": "~1.4.3"
+    "riot": "~2.3.1",
+    "ueditor": "~1.4.3",
+    "bootstrap": "~4.0.0-alpha"
   }
 }

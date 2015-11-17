@@ -16,4 +16,5 @@
 //= require_tree .
 
 
-//= require bootstrap-sass/assets/javascripts/bootstrap-sprockets
+//= require bootstrap/dist/js/bootstrap
+//= require riot/riot
