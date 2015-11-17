@@ -56,7 +56,10 @@ group :development do
 end
 
 # add
-gem 'bootstrap_form'
+gem 'simple_form'
+gem 'wice_grid'
+gem 'font-awesome-sass'
+
 gem 'rails-settings-cached'
 
 gem 'devise'
