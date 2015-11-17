@@ -57,6 +57,7 @@ end
 
 # add
 gem 'bootstrap_form'
+gem 'rails-settings-cached'
 
 gem 'devise'
 gem 'devise-i18n'
