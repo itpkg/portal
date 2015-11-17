@@ -1,6 +1,9 @@
 zh-CN:
   placeholders:
     search: 点此此处输入
+  personal:
+    logs:
+      title: 最近%{count}条记录
   links:
     personal:
       site: 站点信息

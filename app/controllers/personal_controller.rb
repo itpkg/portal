@@ -4,10 +4,6 @@ class PersonalController < ApplicationController
   layout false
 
 
-  def logs
-
-  end
-
   def index
     @links = []
 

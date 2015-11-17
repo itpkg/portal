@@ -1,0 +1,8 @@
+<% count=50 %>
+<h3><%= t '.title', count:count%></h3>
+<hr/>
+<ul class="list-group">
+  <% current_user.logs.order(id: :desc).limit(count).each do |l| %>
+      <li class="list-group-item"><%= "#{time_ago_in_words l.created_at}: #{l.message}" %></li>
+  <% end %>
+</ul>

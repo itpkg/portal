@@ -56,6 +56,7 @@ group :development do
 end
 
 # add
+gem 'rails-i18n', '~> 4.0.0'
 gem 'simple_form'
 gem 'country_select'
 gem 'wice_grid'
