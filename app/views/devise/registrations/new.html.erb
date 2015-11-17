@@ -1,8 +1,7 @@
 <h3><%= t '.sign_up' %></h3>
 <hr>
 <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-    <%= devise_error_messages! %>
-
+    <!--<%= devise_error_messages! %>-->
     <%= f.input :username, autofocus: true %>
     <%= f.input :email %>
     <%= f.input :password, autocomplete: 'off', placeholder: @minimum_password_length ? t('devise.passwords.characters_minimum', size: @minimum_password_length) : t('devise.passwords.please_input_your_password') %>

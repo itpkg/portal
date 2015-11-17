@@ -2,7 +2,6 @@
 <hr>
 
 <%= simple_form_for(resource, as: resource_name, url: unlock_path(resource_name), html: {method: :post}) do |f| %>
-    <%= devise_error_messages! %>
     <%= f.input :email, autofocus: true %>
     <%= f.button :submit, t('.resend_unlock_instructions') %>
 <% end %>
