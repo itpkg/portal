@@ -77,3 +77,5 @@ Portal system (by rails)
     
     ##### REMEMBER CHANGE  YOUR SETTING FILES ON SERVER BEFORE CONTINUE #####    
     cap production deploy:check 
+    cap production puma:config
+    cap production puma:nginx_config
