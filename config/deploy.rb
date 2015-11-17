@@ -37,6 +37,7 @@ set :keep_releases, 7
 # rbenv
 set :rbenv_type, :user
 set :rbenv_ruby, File.read('.ruby-version').strip
+set :nginx_use_ssl, true
 
 namespace :deploy do
 
