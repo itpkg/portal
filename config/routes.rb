@@ -1,5 +1,14 @@
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
   devise_for :users
+
+
+  authenticate :user, lambda { |u| u.is_admin? } do
+    mount Sidekiq::Web => '/sidekiq'
+  end
+
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

@@ -61,3 +61,9 @@ gem 'devise-bootstrap-views'
 gem 'kaminari'
 gem 'kaminari-i18n'
 gem 'kaminari-bootstrap', '~> 3.0.1'
+
+gem 'sinatra', require: nil
+gem 'sidekiq'
+
+gem 'redis-store'
+gem 'redis-rails'

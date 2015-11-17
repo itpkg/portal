@@ -17,14 +17,16 @@ ActiveRecord::Schema.define(version: 20151116192912) do
   enable_extension "plpgsql"
 
   create_table "cms_articles", force: :cascade do |t|
-    t.integer  "user_id",                null: false
-    t.string   "title",      limit: 255, null: false
-    t.string   "summary",    limit: 800, null: false
-    t.text     "body",                   null: false
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.integer  "user_id",                               null: false
+    t.string   "title",      limit: 255,                null: false
+    t.string   "summary",    limit: 800,                null: false
+    t.text     "body",                                  null: false
+    t.string   "lang",       limit: 5,   default: "en", null: false
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
   end
 
+  add_index "cms_articles", ["lang"], name: "index_cms_articles_on_lang", using: :btree
   add_index "cms_articles", ["user_id"], name: "index_cms_articles_on_user_id", using: :btree
 
   create_table "cms_articles_tags", id: false, force: :cascade do |t|
@@ -32,7 +34,6 @@ ActiveRecord::Schema.define(version: 20151116192912) do
     t.integer "tag_id",     null: false
   end
 
-  add_index "cms_articles_tags", ["article_id", "tag_id"], name: "index_cms_articles_tags_on_article_id_and_tag_id", unique: true, using: :btree
   add_index "cms_articles_tags", ["article_id"], name: "index_cms_articles_tags_on_article_id", using: :btree
   add_index "cms_articles_tags", ["tag_id"], name: "index_cms_articles_tags_on_tag_id", using: :btree
 
@@ -46,12 +47,15 @@ ActiveRecord::Schema.define(version: 20151116192912) do
   add_index "cms_comments", ["user_id"], name: "index_cms_comments_on_user_id", using: :btree
 
   create_table "cms_tags", force: :cascade do |t|
-    t.string   "name",       null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "name",                                null: false
+    t.string   "lang",       limit: 5, default: "en", null: false
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
   end
 
-  add_index "cms_tags", ["name"], name: "index_cms_tags_on_name", unique: true, using: :btree
+  add_index "cms_tags", ["lang"], name: "index_cms_tags_on_lang", using: :btree
+  add_index "cms_tags", ["name", "lang"], name: "index_cms_tags_on_name_and_lang", unique: true, using: :btree
+  add_index "cms_tags", ["name"], name: "index_cms_tags_on_name", using: :btree
 
   create_table "logs", force: :cascade do |t|
     t.integer  "user_id",                            null: false
