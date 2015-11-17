@@ -2,7 +2,14 @@ require 'sidekiq/web'
 
 Rails.application.routes.draw do
 
+  namespace :cms do
+    resources :articles
+    resources :tags
+    resources :comments
+  end
 
+
+  get 'site/status'
   get 'site' => 'site#index'
 
   get 'personal/logs'
