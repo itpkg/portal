@@ -3,6 +3,7 @@ zh-CN:
     success: 操作成功。
     failed: 操作失败！
     bad_captcha_code: 错误的验证码。
+    are_you_sure: 你确定？
   placeholders:
     search: 点此此处输入
   personal:
@@ -18,7 +19,9 @@ zh-CN:
       title: 用户列表
       name: 名字
       last_sign_in: 上次登录时间(总次数)
-      is_admin: 管理员？
+      role: 权限管理
+      add_admin: 分配admin权限
+      remove_admin: 释放admin权限
       created_at: 创建时间
     status:
       system: 系统

@@ -3,6 +3,7 @@ en:
     success: Success.
     failed: Failed!
     bad_captcha_code: Bad captcha code.
+    are_you_sure: Are you sure?
   buttons:
     search: Search
   placeholders:
@@ -12,7 +13,9 @@ en:
       title: Users
       name: Name
       last_sign_in: Last sign in
-      is_admin: Is admin?
+      role: Role
+      add_admin: Apply admin role
+      remove_admin: Release admin role
       created_at: Created at
     status:
       system: System

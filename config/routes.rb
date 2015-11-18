@@ -12,7 +12,7 @@ Rails.application.routes.draw do
     get "site/#{a}"
     post "site/#{a}"
   end
-
+  put 'site/role'
   get 'site/status'
   get 'site' => 'site#index'
 

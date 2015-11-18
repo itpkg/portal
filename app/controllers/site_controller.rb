@@ -87,6 +87,29 @@ class SiteController < ApplicationController
     render layout: 'personal'
   end
 
+  def role
+    user = User.find params[:user]
+    role = params[:role]
+    apply = params[:apply] == 'true'
+    if user && user.confirmed? && !user.is_root?
+      case role
+        when 'admin'
+          if apply
+            user.add_role role
+          else
+            user.remove_role role
+          end
+          flash[:notice] = t 'messages.success'
+        else
+          flash[:alert] = t 'messages.failed'
+      end
+    else
+      flash[:alert] = t 'messages.failed'
+
+    end
+    redirect_to site_users_path
+  end
+
   def index
     @links = [
         {href: site_info_path, title: 'site.index.info'},

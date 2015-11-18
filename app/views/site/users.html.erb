@@ -10,8 +10,12 @@
   g.column name: t('.last_sign_in') do |u|
     "#{u.last_sign_in_at ? time_ago_in_words(u.last_sign_in_at) : '-'}(#{u.sign_in_count})"
   end
-  g.column name: t('.is_admin') do |u|
-    u.is_admin? ? 'Y' : 'N'
+  g.column name: t('.role') do |u|
+    unless u.is_root?
+      u.is_admin? ?
+          button_to(t('.remove_admin'), site_role_path(role: 'admin', user: u.id, apply: false), method: :put, class: 'btn btn-sm btn-info', data: {confirm: t('messages.are_you_sure')}) :
+          button_to(t('.add_admin'), site_role_path(role: 'admin', user: u.id, apply: true), method: :put, class: 'btn btn-sm btn-danger', data: {confirm: t('messages.are_you_sure')})
+    end
   end
   g.column name: t('.created_at') do |u|
     time_ago_in_words u.created_at
