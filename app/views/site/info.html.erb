@@ -1,10 +1,10 @@
 <div id="site-msg"></div>
 <%= simple_form_for 'site', html: {id: 'site'} do |f| %>
-    <%= f.input :title, autofocus: true, input_html: {value: site_info('title')} %>
-    <%= f.input :keywords, input_html: {value: site_info('keywords')} %>
+    <%= f.input :title, autofocus: true, input_html: {value: Setting.get_site_info('title')} %>
+    <%= f.input :keywords, input_html: {value: Setting.get_site_info('keywords')} %>
     <%= f.input :author, input_html: {value: Setting.site_author} %>
-    <%= f.input :description, as: :text, input_html: {value: site_info('description')} %>
-    <%= f.input :copyright, input_html: {value: site_info('copyright')} %>
+    <%= f.input :description, as: :text, input_html: {value: Setting.get_site_info('description')} %>
+    <%= f.input :copyright, input_html: {value: Setting.get_site_info('copyright')} %>
     <%= f.button :submit, t('buttons.submit') %>
 <% end %>
 
