@@ -19,6 +19,10 @@ Rails.application.routes.draw do
   get 'personal/logs'
   get 'personal' => 'personal#index'
 
+  get 'baidu_verify_(*id)', to:'home#baidu', as: :baidu, format:true, constraints:{format: :html}
+  get 'google(*id)', to:'home#google', as: :google, format:true, constraints:{format: :html}
+  get 'robots.txt' => 'home#robots', format: false, as: :robots
+
   devise_for :users
 
   authenticate :user, lambda { |u| u.is_admin? } do

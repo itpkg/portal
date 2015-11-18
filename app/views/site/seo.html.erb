@@ -1,1 +1,18 @@
-seo
+<div id="seo-msg"></div>
+<%= simple_form_for 'seo', html: {id: 'seo'} do |f| %>
+    <%= f.input :google_site_id, autofocus: true, input_html: {value: Setting.google_site_id} %>
+    <%= f.input :baidu_site_id, input_html: {value: Setting.baidu_site_id} %>
+    <%= f.input :robots_txt, as: :text, input_html: {value: Setting.robots_txt} %>
+    <%= f.button :submit, t('buttons.submit') %>
+<% end %>
+<br/>
+<div class="btn-group btn-group-lg" role="group">
+  <%= link_to 'Google', google_path(id: Setting.google_site_id, format: :html, locale: nil), class: 'btn btn-default', target: '_blank' %>
+  <%= link_to 'Baidu', baidu_path(id: Setting.baidu_site_id, format: :html, locale: nil), class: 'btn btn-default', target: '_blank' %>
+  <%= link_to 'robots.txt', robots_path(locale: nil), class: 'btn btn-default', target: '_blank' %>
+</div>
+<script>
+  $(function () {
+    submit_form('seo');
+  });
+</script>

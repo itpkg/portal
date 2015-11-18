@@ -19,11 +19,26 @@ class SiteController < ApplicationController
   end
 
   def captcha
-
+    case request.method
+      when 'POST'
+        si = params.require('captcha').permit(:site_key, :secret_key)
+        Setting.recaptcha_site_key = si.fetch :site_key
+        Setting.recaptcha_secret_key = si.fetch :secret_key
+        render json: {ok: true}
+      else
+    end
   end
 
   def seo
-
+    case request.method
+      when 'POST'
+        si = params.require('seo').permit(:google_site_id, :baidu_site_id, :robots_txt)
+        Setting.google_site_id = si.fetch :google_site_id
+        Setting.baidu_site_id = si.fetch :baidu_site_id
+        Setting.robots_txt = si.fetch :robots_txt
+        render json: {ok: true}
+      else
+    end
   end
 
   def status
@@ -31,7 +46,14 @@ class SiteController < ApplicationController
   end
 
   def adverts
-
+    case request.method
+      when 'POST'
+        si = params.require('adverts').permit(:vertical, :horizontal)
+        Setting.advert_horizontal = si.fetch :horizontal
+        Setting.advert_vertical = si.fetch :vertical
+        render json: {ok: true}
+      else
+    end
   end
 
   def users

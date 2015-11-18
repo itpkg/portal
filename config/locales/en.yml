@@ -2,6 +2,7 @@ en:
   messages:
     success: Success.
     failed: Failed!
+    bad_captcha_code: Bad captcha code.
   buttons:
     search: Search
   placeholders:

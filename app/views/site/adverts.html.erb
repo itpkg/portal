@@ -1,1 +1,12 @@
-adverts
+<div id="adverts-msg"></div>
+<%= simple_form_for 'adverts', html: {id: 'adverts'} do |f| %>
+    <%= f.input :vertical, as: :text, autofocus: true, input_html: {value: Setting.advert_vertical} %>
+    <%= f.input :horizontal, as: :text, input_html: {value: Setting.advert_horizontal} %>
+    <%= f.button :submit, t('buttons.submit') %>
+<% end %>
+
+<script>
+  $(function () {
+    submit_form('adverts');
+  });
+</script>

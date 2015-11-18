@@ -1,1 +1,14 @@
-captcha
+<div id="captcha-msg"></div>
+<%= simple_form_for 'captcha', html: {id: 'captcha'} do |f| %>
+    <h3>reCaptcha</h3>
+    <hr/>
+    <%= f.input :site_key, autofocus: true, input_html: {value: Setting.recaptcha_site_key} %>
+    <%= f.input :secret_key, input_html: {value: Setting.recaptcha_secret_key} %>
+    <%= f.button :submit, t('buttons.submit') %>
+<% end %>
+
+<script>
+  $(function () {
+    submit_form('captcha');
+  });
+</script>

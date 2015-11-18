@@ -1,6 +1,10 @@
 zh-CN:
   simple_form:
     labels:
+      seo:
+        google_site_id: 谷歌站点ID
+        baidu_site_id: 百度站点ID
+        robots_txt: robots.txt
       site:
         title: 标题
         keywords: 关键字

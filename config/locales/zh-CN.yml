@@ -2,6 +2,7 @@ zh-CN:
   messages:
     success: 操作成功。
     failed: 操作失败！
+    bad_captcha_code: 错误的验证码。
   placeholders:
     search: 点此此处输入
   personal:
