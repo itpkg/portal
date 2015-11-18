@@ -1,1 +1,19 @@
-users
+<% @title = t '.title' %>
+<%= grid(@users) do |g|
+
+  g.column name: 'ID' do |u|
+    u.id
+  end
+  g.column name: t('.name') do |u|
+    "#{u.username}<#{u.email}>"
+  end
+  g.column name: t('.last_sign_in') do |u|
+    "#{u.last_sign_in_at ? time_ago_in_words(u.last_sign_in_at) : '-'}(#{u.sign_in_count})"
+  end
+  g.column name: t('.is_admin') do |u|
+    u.is_admin? ? 'Y' : 'N'
+  end
+  g.column name: t('.created_at') do |u|
+    time_ago_in_words u.created_at
+  end
+end -%>

@@ -2,20 +2,7 @@
 <ul id="<%= id %>" class="nav nav-pills nav-stacked">
   <% links.each do |l| %>
       <li class="nav-item">
-        <%= link_to t(l.fetch(:title)), '#', class: 'nav-link', id: l.fetch(:href) %>
+        <%= link_to t(l.fetch(:title)), l.fetch(:href), class: 'nav-link' %>
       </li>
   <% end %>
 </ul>
-
-<script>
-  $(function () {
-    var ids = "ul#<%= id %> a";
-    $(ids).click(function (e) {
-      e.preventDefault();
-      $.get($(this).attr('id'), function (data) {
-        $("div#<%= target %>").html(data);
-      });
-      $(this).tab('show');
-    });
-  });
-</script>

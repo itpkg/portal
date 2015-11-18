@@ -8,6 +8,12 @@ en:
   placeholders:
     search: Please input...
   site:
+    users:
+      title: Users
+      name: Name
+      last_sign_in: Last sign in
+      is_admin: Is admin?
+      created_at: Created at
     status:
       system: System
       jobs: Background jobs
@@ -19,15 +25,16 @@ en:
       info: Base info
       captcha: Captcha
       adverts: Adverts
-      users: Users
       seo: Seo
   personal:
+    index:
+      title: Dashboard
     logs:
-      title: "%{count} items at most"
+      type: Type
+      title: Logs
+      message: Message
+      created_at: Created at
   links:
-    personal:
-      logs: Logs
-      index: Dashboard
     home: Home
     welcome: Welcome, %{name}
     sign_in_or_up: Sign In/Up

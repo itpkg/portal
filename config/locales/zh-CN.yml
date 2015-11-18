@@ -6,9 +6,20 @@ zh-CN:
   placeholders:
     search: 点此此处输入
   personal:
+    index:
+      title: 控制面板
     logs:
-      title: 最多显示%{count}条记录
+      type: 类型
+      title: 日志列表
+      message: 消息
+      created_at: 创建时间
   site:
+    users:
+      title: 用户列表
+      name: 名字
+      last_sign_in: 上次登录时间(总次数)
+      is_admin: 管理员？
+      created_at: 创建时间
     status:
       system: 系统
       jobs: 后台任务
@@ -20,12 +31,8 @@ zh-CN:
       info: 基本信息
       captcha: 验证码
       adverts: 广告代码
-      users: 用户列表
       seo: 搜索引擎
   links:
-    personal:
-      logs: 日志列表
-      index: 控制面板
     home: 主页
     welcome: 欢迎你, %{name}
     sign_in_or_up: 注册/登录

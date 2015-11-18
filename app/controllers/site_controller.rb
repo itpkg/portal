@@ -83,7 +83,8 @@ class SiteController < ApplicationController
   end
 
   def users
-
+    @users = initialize_grid(User.select(:id, :username, :email, :last_sign_in_at, :sign_in_count, :created_at).order(sign_in_count: :desc, id: :desc))
+    render layout: 'personal'
   end
 
   def index
@@ -93,8 +94,8 @@ class SiteController < ApplicationController
         {href: site_seo_path, title: 'site.index.seo'},
         {href: site_status_path, title: 'site.index.status'},
         {href: site_adverts_path, title: 'site.index.adverts'},
-        {href: site_users_path, title: 'site.index.users'},
     ]
+    render layout: 'personal'
   end
 
   private
