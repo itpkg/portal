@@ -62,6 +62,7 @@ gem 'country_select'
 gem 'wice_grid'
 gem 'font-awesome-sass'
 
+gem 'nokogiri'
 gem 'carrierwave'
 gem 'mini_magick'
 gem 'fog'

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <%
+     titles = {
+         '404' => {
+             'en' => "The page you were looking for doesn't exist",
+             'zh-CN' => '您要访问的页面不存在',
+         },
+         '422' => {
+             'en' => 'The change you wanted was rejected',
+             'zh-CN' => '您的请求被拒绝',
+         },
+         '500' => {
+             'en' => "We're sorry, but something went wrong",
+             'zh-CN' => '很抱歉，出错了',
+         },
+     }
+     messages = {
+         '404' => {
+             'en' => 'You may have mistyped the address or the page may have moved.',
+             'zh-CN' => '可能你输错了地址或者页面被删除。'
+         },
+         '422' => {
+             'en' => "Maybe you tried to change something you didn't have access to.",
+             'zh-CN' => '可能你试图进入不被允许的页面。',
+         },
+         '500' => {
+             'en' => 'Internal Error.',
+             'zh-CN' => '内部错误',
+         },
+     }
+
+     buttons = {
+         'en' => 'Redirect to home',
+         'zh-CN' => '跳转到主页',
+     }
+     checks = {
+         'en' => 'If you are the application owner check the logs for more information.',
+         'zh-CN' => '如果你是管理员请检查日志。',
+     }
+  %>
+  <title><%= titles[code].map { |_, v| v }.join ' | ' %></title>
+  <link rel="stylesheet" href="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/css/bootstrap.css">
+  <style>
+    body {
+      margin-top: 70px;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="row">
+    <% %w(en zh-CN).each do |lang| %>
+        <div class="col-sm-6">
+          <div class="card">
+            <div class="card-block">
+              <h4 class="card-title"><%= titles[code][lang] %></h4>
+              <p class="card-text">
+                <%= messages[code][lang] %>
+                <br/>
+                <%= checks[lang] %>
+              </p>
+              <a href="/?locale=<%=lang%>" class="btn btn-primary"><%= buttons[lang] %></a>
+            </div>
+          </div>
+        </div>
+    <% end %>
+  </div>
+</div>
+</body>
+</html>
