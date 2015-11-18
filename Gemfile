@@ -80,4 +80,6 @@ gem 'sidekiq'
 gem 'redis-store'
 gem 'redis-rails'
 
+gem 'sitemap_generator'
+
 gem 'puma'
