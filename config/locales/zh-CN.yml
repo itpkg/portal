@@ -1,4 +1,7 @@
 zh-CN:
+  messages:
+    success: 操作成功。
+    failed: 操作失败！
   placeholders:
     search: 点此此处输入
   personal:

@@ -1,11 +1,14 @@
 en:
+  messages:
+    success: Success.
+    failed: Failed!
   buttons:
     search: Search
   placeholders:
     search: Please input...
   site:
     index:
-      title: Site info
+      title: Site
       status: Status
       info: Base info
       captcha: Captcha

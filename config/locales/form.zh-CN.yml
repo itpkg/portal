@@ -1,0 +1,9 @@
+zh-CN:
+  simple_form:
+    labels:
+      site:
+        title: 标题
+        keywords: 关键字
+        author: 作者
+        description: 说明
+        copyright: 版权

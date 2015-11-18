@@ -1,7 +1,7 @@
 module ApplicationHelper
 
   def site_info(key)
-    Setting["#{I18n.locale}://#{key}"]
+    Setting["#{I18n.locale}://site/#{key}"]
   end
 
   def paginate objects, options = {}

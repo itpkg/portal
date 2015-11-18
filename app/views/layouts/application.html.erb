@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html lang="<%= I18n.locale %>">
 <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="<%= site_info 'description' %>">
+  <meta name="keywords" content="<%= site_info 'keywords' %>">
+  <meta name="author" content="<%= Setting.site_author %>">
   <title><%= "#{@title}-#{site_info 'title'}" %></title>
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
@@ -8,5 +14,43 @@
 </head>
 <body>
 <%= yield :root %>
+<script>
+  function submit_form(id, success) {
+    if (!success) {
+      success = function (rs) {
+        var data;
+        if (rs.ok) {
+          data = "<div class='alert alert-info alert-dismissible fade in' role='alert'> \
+                  <button type='button' class='close' data-dismiss='alert' aria-label='Close'> \
+                    <span aria-hidden='true'>&times;</span> \
+                    <span class='sr-only'>Close</span> \
+                  </button> \
+                  <strong><%= t 'messages.success'%></strong> \
+                </div>";
+
+        } else {
+          data = "<div class='alert alert-danger alert-dismissible fade in' role='alert'> \
+                  <button type='button' class='close' data-dismiss='alert' aria-label='Close'> \
+                    <span aria-hidden='true'>&times;</span> \
+                    <span class='sr-only'>Close</span> \
+                  </button> \
+                  <strong><%= t 'messages.failed'%></strong> \
+                </div>";
+        }
+        $("div#" + id + '-msg').html(data);
+      }
+    }
+    var fm = $("form#" + id);
+    fm.submit(function (e) {
+      e.preventDefault();
+      $.ajax({
+        type: fm.attr('method'),
+        url: fm.attr('action'),
+        data: fm.serialize(),
+        success: success
+      });
+    });
+  }
+</script>
 </body>
 </html>
