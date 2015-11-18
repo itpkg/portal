@@ -29,8 +29,6 @@
         <% if user_signed_in? %>
             <%= link_to t('personal.index.title'), personal_logs_path, class: 'dropdown-item' %>
             <div class="dropdown-divider"></div>
-            <%= link_to t('devise.registrations.edit.title'), edit_user_registration_path, class: 'dropdown-item' %>
-            <div class="dropdown-divider"></div>
             <%= link_to t('links.sign_out'), destroy_user_session_path, class: 'dropdown-item' %>
         <% else %>
             <%= link_to t('devise.shared.links.sign_in'), new_user_session_path, class: 'dropdown-item' %>

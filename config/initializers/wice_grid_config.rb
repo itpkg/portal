@@ -53,10 +53,9 @@ if defined?(Wice::Defaults)
   # when you connect to two databases one of which is MySQL and the other is Postgresql.
   # If the key for an adapter is missing it will fall back to Wice::Defaults::STRING_MATCHING_OPERATOR
   Wice::Defaults::STRING_MATCHING_OPERATORS = {
-    'ActiveRecord::ConnectionAdapters::MysqlAdapter'      => 'LIKE',
-    'ActiveRecord::ConnectionAdapters::PostgreSQLAdapter' => 'ILIKE'
+      'ActiveRecord::ConnectionAdapters::MysqlAdapter' => 'LIKE',
+      'ActiveRecord::ConnectionAdapters::PostgreSQLAdapter' => 'ILIKE'
   }
-
 
 
   # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -132,23 +131,23 @@ if defined?(Wice::Defaults)
 
   # Format of the date displayed.
   # If you change the format, make sure to check if +DATE_PARSER+ can still parse this string.
-  Wice::Defaults::DATE_FORMAT     =  "%Y-%m-%d"
+  Wice::Defaults::DATE_FORMAT = "%Y-%m-%d"
 
   # Format of the date displayed in jQuery's Datepicker
   # If you change the format, make sure to check if +DATE_PARSER+ can still parse this string.
-  Wice::Defaults::DATE_FORMAT_JQUERY     =  "yy-mm-dd"
+  Wice::Defaults::DATE_FORMAT_JQUERY = "yy-mm-dd"
 
 
   # Format of the date displayed in Bootstrap's Datepicker
   # If you change the format, make sure to check if +DATE_PARSER+ can still parse this string.
-  Wice::Defaults::DATE_FORMAT_BOOTSTRAP     =  "yyyy-mm-dd"
+  Wice::Defaults::DATE_FORMAT_BOOTSTRAP = "yyyy-mm-dd"
 
 
   # With Calendar helpers enabled the parameter sent is the string displayed. This lambda will be given a date string in the
   # format defined by +DATETIME_FORMAT+ and must generate a DateTime object.
   # In many cases <tt>Time.zone.parse</tt> is enough, for instance,  <tt>%Y-%m-%d</tt>. If you change the format, make sure to check this code
   # and modify it if needed.
-  Wice::Defaults::DATETIME_PARSER = lambda{|datetime_string|
+  Wice::Defaults::DATETIME_PARSER = lambda { |datetime_string|
     if datetime_string.blank?
       nil
     elsif Time.zone
@@ -168,7 +167,7 @@ if defined?(Wice::Defaults)
   # format defined by +DATETIME+ and must generate a Date object.
   # In many cases <tt>Date.parse</tt> is enough, for instance,  <tt>%Y-%m-%d</tt>. If you change the format, make sure to check this code
   # and modify it if needed.
-  Wice::Defaults::DATE_PARSER = lambda{|date_string|
+  Wice::Defaults::DATE_PARSER = lambda { |date_string|
     if date_string.blank?
       nil
     else

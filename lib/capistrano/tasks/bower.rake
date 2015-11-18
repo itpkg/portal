@@ -1,9 +1,8 @@
-
 namespace :bower do
   desc 'install bower resources'
   task :install do
     on roles(:web) do |_|
-      within release_path do ||
+      within release_path do | |
         execute :bower, :install
       end
     end

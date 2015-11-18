@@ -1,5 +1,4 @@
-<h3><%= @title=t '.title' %></h3>
-<hr/>
+<% @title=t '.title' %>
 
 <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: {method: :put}) do |f| %>
     <%= devise_error_messages! %>

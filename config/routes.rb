@@ -22,8 +22,8 @@ Rails.application.routes.draw do
   #get ':sitemap.xml.gz' => 'home#sitemap', format: false, as: :sitemap
   get 'rss.atom' => 'home#rss', format: false, as: :rss
   get 'robots.txt' => 'home#robots', format: false, as: :robots
-  get 'baidu_verify_(*id)', to:'home#baidu', as: :baidu, format:true, constraints:{format: :html}
-  get 'google(*id)', to:'home#google', as: :google, format:true, constraints:{format: :html}
+  get 'baidu_verify_(*id)', to: 'home#baidu', as: :baidu, format: true, constraints: {format: :html}
+  get 'google(*id)', to: 'home#google', as: :google, format: true, constraints: {format: :html}
 
 
   devise_for :users
