@@ -12,6 +12,7 @@ class User < ActiveRecord::Base
   validates :email, presence: true
 
   has_many :logs
+  has_many :attachments
 
   def send_devise_notification(notification, *args)
     devise_mailer.send(notification, self, *args).deliver_later

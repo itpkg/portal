@@ -17,14 +17,15 @@ ActiveRecord::Schema.define(version: 20151118163315) do
   enable_extension "plpgsql"
 
   create_table "attachments", force: :cascade do |t|
-    t.integer  "user_id",                null: false
-    t.string   "title",                  null: false
-    t.string   "content_type",           null: false
-    t.string   "ext",          limit: 5, null: false
-    t.integer  "size",                   null: false
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-    t.string   "avatar",                 null: false
+    t.integer  "user_id",                            null: false
+    t.string   "title",                              null: false
+    t.string   "content_type",                       null: false
+    t.string   "ext",          limit: 5,             null: false
+    t.integer  "size",                               null: false
+    t.integer  "by_use",                 default: 0, null: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+    t.string   "avatar",                             null: false
   end
 
   add_index "attachments", ["content_type"], name: "index_attachments_on_content_type", using: :btree

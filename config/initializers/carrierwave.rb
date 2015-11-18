@@ -14,7 +14,7 @@ CarrierWave.configure do |config|
 
   config.fog_credentials = {
       provider: 'Local',
-      local_root: "#{Rails.root}/tmp/attachments",
+      local_root: "#{Rails.root}/public/attachments",
       endpoint: '/attachments',
   }
 

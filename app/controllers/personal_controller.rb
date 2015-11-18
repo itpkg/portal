@@ -4,6 +4,6 @@ class PersonalController < ApplicationController
 
 
   def logs
-    @logs = initialize_grid(Log.select(:flag, :message, :created_at).order(id: :desc))
+    @logs = initialize_grid(current_user.logs.select(:flag, :message, :created_at).order(id: :desc))
   end
 end

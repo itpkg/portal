@@ -15,6 +15,4 @@
 # add
 /.idea
 /vendor/assets/bower_components
-/public/assets/
-/public/sitemap.xml.gz
-/public/sitemap.xml
+/public

@@ -1,0 +1,43 @@
+<% @title = t '.title' %>
+
+
+<%= form_tag attachments_path, multipart: true do %>
+    <div class="row">
+      <div class="col-sm-6">
+        <label class="file">
+          <%= file_field_tag 'file'%>
+          <span class="file-custom"></span>
+        </label>
+      </div>
+      <div class="col-sm-1">
+        <%= submit_tag t('buttons.upload'), class:'btn btn-primary' %>
+      </div>
+    </div>
+
+<% end %>
+
+
+
+<%= grid(@items) do |g|
+  g.column name: 'ID' do |i|
+    i.id
+  end
+  g.column name: t('.file') do |i|
+    link_to "#{i.title}.#{i.ext}", i.avatar.url, target:'_blank'
+  end
+  g.column name: t('.size') do |i|
+    number_to_human_size i.size
+  end
+  g.column name: t('.type') do |i|
+    i.content_type
+  end
+  g.column name: t('.count') do |i|
+    i.by_use
+  end
+  g.column name: t('.updated_at') do |i|
+    time_ago_in_words i.updated_at
+  end
+  g.column name: t('.manage') do |i|
+    button_to(t('buttons.remove'), attachment_path(i), method: :delete, class: 'btn btn-sm btn-danger', data: {confirm: t('messages.are_you_sure')})
+  end
+end -%>

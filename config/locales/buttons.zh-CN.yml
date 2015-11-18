@@ -3,3 +3,12 @@ zh-CN:
     search: 搜索
     submit: 提交
     save: 保存
+    upload: 上传
+    remove: 删除
+    view: 查看
+    reset: 重写
+    update: 更新
+    upgrade: 升级
+    deploy: 部署
+    apply: 应用
+

@@ -7,6 +7,7 @@ class CreateAttachments < ActiveRecord::Migration
       t.string :content_type, null: false
       t.string :ext, limit: 5, null: false
       t.integer :size, null: false
+      t.integer :by_use, null:false, default: 0
 
       t.timestamps null: false
     end

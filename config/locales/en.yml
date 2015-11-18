@@ -8,6 +8,9 @@ en:
     search: Search
   placeholders:
     search: Please input...
+  attachments:
+    index:
+      title: Attachments
   site:
     users:
       title: Users

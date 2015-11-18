@@ -2,6 +2,8 @@ require 'sidekiq/web'
 
 Rails.application.routes.draw do
 
+  resources :attachments, except: [:update, :edit, :new]
+
   namespace :cms do
     resources :articles
     resources :tags
@@ -17,7 +19,6 @@ Rails.application.routes.draw do
   get 'site' => 'site#index'
 
   get 'personal/logs'
-  get 'personal' => 'personal#index'
 
   #get ':sitemap.xml.gz' => 'home#sitemap', format: false, as: :sitemap
   get 'rss.atom' => 'home#rss', format: false, as: :rss

@@ -14,6 +14,15 @@ zh-CN:
       title: 日志列表
       message: 消息
       created_at: 创建时间
+  attachments:
+    index:
+      title: 附件列表
+      file: 文件
+      size: 大小
+      count: 使用次数
+      updated_at: 上次更新
+      manage: 管理
+      type: 类型
   site:
     users:
       title: 用户列表

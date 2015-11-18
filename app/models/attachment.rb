@@ -11,7 +11,8 @@ class Attachment < ActiveRecord::Base
     name = file.original_filename
     self.content_type = file.content_type
     self.title = name
-    self.ext = name[name.rindex('.')+1, name.size].downcase
+    self.ext = File.extname(name).downcase
+    self.size = File.size file.tempfile
     self.avatar = file
   end
 
