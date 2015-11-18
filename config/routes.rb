@@ -20,8 +20,8 @@ Rails.application.routes.draw do
   get 'personal' => 'personal#index'
 
   #get ':sitemap.xml.gz' => 'home#sitemap', format: false, as: :sitemap
-  get ':rss.atom' => 'home#rss', format: false, as: :rss
-  get ':robots.txt' => 'home#robots', format: false, as: :robots
+  get 'rss.atom' => 'home#rss', format: false, as: :rss
+  get 'robots.txt' => 'home#robots', format: false, as: :robots
   get 'baidu_verify_(*id)', to:'home#baidu', as: :baidu, format:true, constraints:{format: :html}
   get 'google(*id)', to:'home#google', as: :google, format:true, constraints:{format: :html}
 

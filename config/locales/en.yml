@@ -8,6 +8,11 @@ en:
   placeholders:
     search: Please input...
   site:
+    status:
+      system: System
+      jobs: Background jobs
+      database: Database
+      details: Details
     index:
       title: Site
       status: Status

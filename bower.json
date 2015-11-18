@@ -23,6 +23,8 @@
     "riot": "~2.3.1",
     "ueditor": "~1.4.3",
     "bootstrap": "~4.0.0-alpha",
-    "famfamfam-mini": "~0.3.3"
+    "famfamfam-mini": "~0.3.3",
+    "highlight-js": "~8.9.1",
+    "highlightjs": "~8.9.1"
   }
 }

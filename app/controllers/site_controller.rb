@@ -1,3 +1,5 @@
+require 'etc'
+
 class SiteController < ApplicationController
   before_action :must_be_admin!
 
@@ -42,7 +44,31 @@ class SiteController < ApplicationController
   end
 
   def status
+    @system = {
+        user: ENV['USER'],
+        time: Time.now,
+        os: Etc.uname,
+        ruby: {
+            version: "#{RUBY_VERSION}(#{RUBY_RELEASE_DATE})",
+            bin: `which ruby`.chomp,
+        },
+        rails: {
+            env: Rails.env,
+            version: Rails.version,
+            root: Rails.root,
+        }
+    }
 
+    @redis = Rails.application.config.redis.info
+
+    conn = ActiveRecord::Base.connection
+    cfg = Rails.configuration.database_configuration[Rails.env]
+    @database = {
+        size: conn.exec_query("select pg_size_pretty(pg_database_size('#{cfg['database']}'))").first['pg_size_pretty'],
+        activity: conn.exec_query('SELECT pid,waiting,current_timestamp - least(query_start,xact_start) AS runtime, substr(query,1,32) AS current_query FROM pg_stat_activity WHERE NOT pid=pg_backend_pid()').map { |row|
+          {pid: row['pid'], waiting: row['waiting'], runtime: row['runtime'], current_query: row['current_query']}
+        },
+    }
   end
 
   def adverts

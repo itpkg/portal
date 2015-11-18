@@ -1,5 +1,9 @@
 module ApplicationHelper
 
+  def to_json(o)
+    JSON.pretty_generate o
+  end
+
   def site_info(key)
     Setting["#{I18n.locale}://site/#{key}"]
   end

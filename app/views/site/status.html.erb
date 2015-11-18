@@ -1,1 +1,44 @@
-status
+<div class="row">
+  <div class="col-sm-6">
+    <h4><%= t '.system' %></h4>
+    <hr/>
+    <pre>
+      <code class="json"><%= to_json(@system) %></code>
+    </pre>
+  </div>
+  <div class="col-sm-6">
+    <h4>
+      <%= t '.jobs' %>(
+      <%= link_to t('.details'), sidekiq_web_path(locale: nil), target: '_blank', class: 'btn btn-success' %>
+      )
+    </h4>
+    <hr/>
+    <pre>
+      <code class="json" id="cd-jobs"></code>
+    </pre>
+  </div>
+  <div class="col-sm-6">
+    <h4>Redis</h4>
+    <hr/>
+    <pre>
+      <code class="json"><%= to_json(@redis) %></code>
+    </pre>
+  </div>
+  <div class="col-sm-6">
+    <h4><%= t '.database' %></h4>
+    <hr/>
+    <pre>
+      <code class="json"><%= to_json(@database) %></code>
+    </pre>
+  </div>
+</div>
+
+
+<script>
+  $(function () {
+    $.get('/sidekiq/stats', function (rs) {
+      $("code#cd-jobs").text(to_json(rs));
+      show_code();
+    });
+  });
+</script>

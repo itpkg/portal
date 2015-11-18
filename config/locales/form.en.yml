@@ -1,6 +1,9 @@
 en:
   simple_form:
     labels:
+      adverts:
+        vertical: Vertical panel
+        horizontal: Horizontal panel
       seo:
         google_site_id: Google site id
         baidu_site_id: Baidu site id
