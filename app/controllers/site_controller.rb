@@ -5,6 +5,35 @@ class SiteController < ApplicationController
 
   layout false
 
+  def about_us
+    case request.method
+      when 'POST'
+        si = params.require('about_us').permit(:details, :address)
+        address = si.fetch :address
+        key = Setting.google_map_server_key
+        if key
+          uri = URI 'https://maps.googleapis.com/maps/api/geocode/json'
+          uri.query = URI.encode_www_form key: key, address: address
+          res = Net::HTTP.get_response uri
+          unless res.is_a?(Net::HTTPSuccess)
+            render(json: {ok: false}) and return
+          end
+          map = JSON.parse res.body
+          unless map['status'] == 'OK'
+            render(json: {ok: false, data: map['status']}) and return
+          end
+          mrs = map['results'].first
+          address = mrs['formatted_address']
+          Setting.site_geometry = {lat: mrs['geometry']['location']['lat'], lng: mrs['geometry']['location']['lng']}
+        end
+
+        Setting[_s_key('details')] = si.fetch :details
+        Setting.site_address = address
+        render json: {ok: true}
+      else
+    end
+  end
+
   def info
 
     case request.method
@@ -39,6 +68,17 @@ class SiteController < ApplicationController
         Setting.google_site_id = si.fetch :google_site_id
         Setting.baidu_site_id = si.fetch :baidu_site_id
         Setting.robots_txt = si.fetch :robots_txt
+        render json: {ok: true}
+      else
+    end
+  end
+
+  def map
+    case request.method
+      when 'POST'
+        si = params.require('map').permit(:server_key, :browser_key)
+        Setting.google_map_server_key = si.fetch :server_key
+        Setting.google_map_browser_key = si.fetch :browser_key
         render json: {ok: true}
       else
     end
@@ -114,10 +154,12 @@ class SiteController < ApplicationController
   def index
     @links = [
         {href: site_info_path, title: 'site.index.info'},
+        {href: site_about_us_path, title: 'site.about_us.title'},
         {href: site_captcha_path, title: 'site.index.captcha'},
         {href: site_seo_path, title: 'site.index.seo'},
         {href: site_status_path, title: 'site.index.status'},
         {href: site_adverts_path, title: 'site.index.adverts'},
+        {href: site_map_path, title: 'site.index.map'},
         {href: notices_path, title: 'notices.index.title'},
     ]
     render layout: 'personal'

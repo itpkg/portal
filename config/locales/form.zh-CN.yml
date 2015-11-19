@@ -8,6 +8,9 @@ zh-CN:
       adverts:
         vertical: 垂直栏
         horizontal: 水平栏
+      map:
+        browser_key: 谷歌地图Browser Key
+        server_key: 谷歌地图Server Key
       seo:
         google_search_id: 谷歌搜索ID
         google_site_id: 谷歌站点ID
@@ -19,3 +22,6 @@ zh-CN:
         author: 作者
         description: 说明
         copyright: 版权
+      about_us:
+        address: 地址
+        details: 介绍

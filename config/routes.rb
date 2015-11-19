@@ -13,7 +13,7 @@ Rails.application.routes.draw do
 
   resources :notices, only: [:index, :create, :destroy]
 
-  %w(info seo captcha adverts users).each do |a|
+  %w(info seo captcha adverts users about_us map).each do |a|
     get "site/#{a}"
     post "site/#{a}"
   end
@@ -23,6 +23,7 @@ Rails.application.routes.draw do
 
   get 'personal/logs'
 
+  get 'about_us' => 'home#about_us'
   get 'search' => 'home#search'
   #get ':sitemap.xml.gz' => 'home#sitemap', format: false, as: :sitemap
   get 'rss.atom' => 'home#rss', format: false, as: :rss

@@ -4,6 +4,12 @@ class HomeController < ApplicationController
   def index
   end
 
+  def about_us
+    @key = Setting.google_map_browser_key
+    @loc = Setting.site_geometry
+    render layout: 'cms'
+  end
+
   def search
     @keyword = params[:@keyword]
     @id = Setting.google_search_id

@@ -51,6 +51,8 @@ en:
       add_admin: Apply admin role
       remove_admin: Release admin role
       created_at: Created at
+    about_us:
+      title: About us
     status:
       system: System
       jobs: Background jobs

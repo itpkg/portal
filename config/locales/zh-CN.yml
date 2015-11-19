@@ -76,6 +76,8 @@ zh-CN:
       jobs: 后台任务
       database: 数据库
       details: 详细信息
+    about_us:
+      title: 关于我们
     index:
       title: 站点设置
       status: 当前状态
@@ -83,6 +85,7 @@ zh-CN:
       captcha: 验证码
       adverts: 广告代码
       seo: 搜索引擎
+      map: 地图
   links:
     home: 主页
     welcome: 欢迎你, %{name}

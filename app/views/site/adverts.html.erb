@@ -5,6 +5,14 @@
     <%= f.button :submit, t('buttons.submit') %>
 <% end %>
 
+<br/>
+<h3><%= t 'simple_form.labels.adverts.vertical' %></h3>
+<hr/>
+<%= raw Setting.advert_vertical %>
+<h3><%= t 'simple_form.labels.adverts.horizontal' %></h3>
+<hr/>
+<%= raw Setting.advert_horizontal %>
+
 <script>
   $(function () {
     submit_form('adverts');

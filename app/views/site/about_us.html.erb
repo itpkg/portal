@@ -1,0 +1,12 @@
+<div id="about_us-msg"></div>
+<%= simple_form_for 'about_us', html: {id: 'about_us'} do |f| %>
+    <%= f.input :address, input_html: {value: Setting.site_address} %>
+    <%= f.input :details, as: :text, input_html: {value: Setting.get_site_info('details')} %>
+    <%= f.button :submit, t('buttons.submit') %>
+<% end %>
+
+<script>
+  $(function () {
+    submit_form('about_us');
+  });
+</script>

@@ -11,6 +11,10 @@
   </p>
 
   <p>
-    <%= raw t('links.build_by_html') %> &nbsp; <%= Setting.get_site_info 'copyright' %>
+    <%= raw t('links.build_by_html') %>
+    &nbsp;
+    <%= "#{t 'simple_form.labels.about_us.address'}: #{Setting.site_address}" %>
+    &nbsp;
+    <%= Setting.get_site_info 'copyright' %>
   </p>
 </footer>

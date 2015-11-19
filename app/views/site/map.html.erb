@@ -1,0 +1,13 @@
+<div id="map-msg"></div>
+<%= simple_form_for 'map', html: {id: 'map'} do |f| %>
+
+    <%= f.input :server_key, autofocus: true, input_html: {value: Setting.google_map_server_key} %>
+    <%= f.input :browser_key, autofocus: true, input_html: {value: Setting.google_map_browser_key} %>
+
+    <%= f.button :submit, t('buttons.submit') %>
+<% end %>
+<script>
+  $(function () {
+    submit_form('map');
+  });
+</script>

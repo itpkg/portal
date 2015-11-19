@@ -1,9 +1,14 @@
 en:
   simple_form:
     labels:
+      about_us:
+        address: Address
       adverts:
         vertical: Vertical panel
         horizontal: Horizontal panel
+      map:
+        browser_key: Google map browser key
+        server_key: Google map server key
       seo:
         google_search_id: Google search id
         google_site_id: Google site id
