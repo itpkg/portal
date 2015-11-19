@@ -2,11 +2,11 @@ require 'sidekiq/web'
 
 Rails.application.routes.draw do
 
-  resources :attachments, except: [:update, :edit, :new]
+  resources :attachments, except: [:update, :edit, :new, :show]
 
   namespace :cms do
-    resources :articles
     resources :tags
+    resources :articles
     resources :comments
   end
 

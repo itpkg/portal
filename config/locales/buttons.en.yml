@@ -11,3 +11,5 @@ en:
     upgrade: Upgrade
     deploy: Deploy
     apply: Apply
+    edit: Edit
+    new: New

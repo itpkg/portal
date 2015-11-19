@@ -5,7 +5,6 @@ class CreateAttachments < ActiveRecord::Migration
 
       t.string :title, null: false
       t.string :content_type, null: false
-      t.string :ext, limit: 5, null: false
       t.integer :size, null: false
       t.integer :by_use, null:false, default: 0
 
@@ -14,6 +13,5 @@ class CreateAttachments < ActiveRecord::Migration
 
     add_index :attachments, :title
     add_index :attachments, :content_type
-    add_index :attachments, :ext
   end
 end

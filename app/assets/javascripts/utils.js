@@ -7,3 +7,7 @@ function show_code() {
 function to_json(o) {
     return JSON.stringify(o, null, 2)
 }
+
+function id2url(id, prefix){
+    return id.substring(prefix.length+1);
+}

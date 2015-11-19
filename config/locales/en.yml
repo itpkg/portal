@@ -11,6 +11,10 @@ en:
   attachments:
     index:
       title: Attachments
+  cms:
+    tags:
+      index:
+        title: Tags
   site:
     users:
       title: Users

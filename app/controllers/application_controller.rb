@@ -21,7 +21,8 @@ class ApplicationController < ActionController::Base
   end
 
   def must_be_admin!
-    head(:forbidden) unless current_user && current_user.is_admin?
+    authenticate_user!
+    head(:forbidden) unless current_user.is_admin?
   end
 
   def recaptcha!

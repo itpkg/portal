@@ -1,4 +1,5 @@
 class Cms::TagsController < ApplicationController
-  def index
-  end
+  before_action :must_be_admin!, except: [:show]
+  layout 'personal'
+
 end

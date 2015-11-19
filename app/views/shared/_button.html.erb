@@ -1,0 +1,12 @@
+<% case title %>
+<% when :remove%>
+    <%= button_to t('buttons.remove'), href, class:"btn btn-danger #{'btn-sm' if sm}", method: :delete, data: {confirm: t('messages.are_you_sure')} %>
+<% when :view%>
+    <%= button_to t('buttons.view'), href, class:"btn btn-secondary #{'btn-sm' if sm}" %>
+<% when :new %>
+    <%= button_to t('buttons.new'), href, class:"btn btn-success #{'btn-sm' if sm}" %>
+<% when :edit%>
+    <%= button_to t('buttons.edit'), href, class:"btn btn-warning #{'btn-sm' if sm}" %>
+<% else %>
+    <%= button_to t('buttons.submit'), href, class:"btn btn-primary #{'btn-sm' if sm}" %>
+<% end %>

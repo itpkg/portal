@@ -23,7 +23,7 @@
     i.id
   end
   g.column name: t('.file') do |i|
-    link_to "#{i.title}.#{i.ext}", i.avatar.url, target:'_blank'
+    link_to "#{i.title}", i.avatar.url, target:'_blank'
   end
   g.column name: t('.size') do |i|
     number_to_human_size i.size
@@ -38,6 +38,6 @@
     time_ago_in_words i.updated_at
   end
   g.column name: t('.manage') do |i|
-    button_to(t('buttons.remove'), attachment_path(i), method: :delete, class: 'btn btn-sm btn-danger', data: {confirm: t('messages.are_you_sure')})
+    render 'shared/button', title: :remove, href: attachment_path(i), sm:true
   end
 end -%>

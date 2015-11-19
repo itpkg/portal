@@ -1,18 +1,18 @@
 class AttachmentsController < ApplicationController
-  before_action :authenticate_user!, except:[:show]
+  before_action :authenticate_user!
   layout nil
-
-  def show
-
-  end
 
 
   def create
-    a = Attachment.new user:current_user
-    a.read! params[:file]
-
-    if a.save
-      flash[:notice] = t 'messages.success'
+    a = Attachment.new user: current_user
+    f = params[:file]
+    if f
+      a.read! f
+      if a.save
+        flash[:notice] = t 'messages.success'
+      else
+        flash[:alert] = t 'messages.failed'
+      end
     else
       flash[:alert] = t 'messages.failed'
     end

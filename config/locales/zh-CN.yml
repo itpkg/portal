@@ -23,6 +23,12 @@ zh-CN:
       updated_at: 上次更新
       manage: 管理
       type: 类型
+  cms:
+    tags:
+      index:
+        title: 标签列表
+        name: 名称
+        manage: 管理
   site:
     users:
       title: 用户列表

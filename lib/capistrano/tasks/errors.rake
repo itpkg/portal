@@ -2,7 +2,6 @@ namespace :generate do
 
   desc 'generate error files'
   task :errors do
-
     on roles(:web) do |_|
       %w(404 422 500).each do |code|
         obj = OpenStruct.new code: code
