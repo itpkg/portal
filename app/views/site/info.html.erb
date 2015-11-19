@@ -1,6 +1,7 @@
 <div id="site-msg"></div>
 <%= simple_form_for 'site', html: {id: 'site'} do |f| %>
-    <%= f.input :title, autofocus: true, input_html: {value: Setting.get_site_info('title')} %>
+    <%= f.input :favicon, autofocus: true, input_html: {value: Setting.site_favicon} %>
+    <%= f.input :title, input_html: {value: Setting.get_site_info('title')} %>
     <%= f.input :keywords, input_html: {value: Setting.get_site_info('keywords')} %>
     <%= f.input :author, input_html: {value: Setting.site_author} %>
     <%= f.input :description, as: :text, input_html: {value: Setting.get_site_info('description')} %>

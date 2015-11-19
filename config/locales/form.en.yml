@@ -16,3 +16,5 @@ en:
         google_site_id: Google site id
         baidu_site_id: Baidu site id
         robots_txt: robots.txt
+      site:
+        favicon: favicon.ico

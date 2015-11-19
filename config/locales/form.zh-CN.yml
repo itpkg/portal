@@ -28,6 +28,7 @@ zh-CN:
         baidu_site_id: 百度站点ID
         robots_txt: robots.txt
       site:
+        favicon: favicon.ico
         title: 标题
         keywords: 关键字
         author: 作者

@@ -38,12 +38,13 @@ class SiteController < ApplicationController
 
     case request.method
       when 'POST'
-        si = params.require('site').permit(:title, :keywords, :description, :author, :copyright)
+        si = params.require('site').permit(:favicon, :title, :keywords, :description, :author, :copyright)
         Setting[_s_key('title')] = si.fetch :title
         Setting[_s_key('keywords')] = si.fetch :keywords
         Setting[_s_key('description')] = si.fetch :description
         Setting[_s_key('copyright')] = si.fetch :copyright
         Setting.site_author = si.fetch :author
+        Setting.site_favicon = si.fetch :favicon
         render json: {ok: true}
       else
     end
