@@ -9,6 +9,7 @@ class Cms::Article < ActiveRecord::Base
   validates :title, presence: true
   validates :summary, presence: true
   validates :body, presence: true
+  validates :flag, presence: true
 
   enum flag: [:blog, :pictures, :video]
 

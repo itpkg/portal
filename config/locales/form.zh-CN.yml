@@ -11,6 +11,9 @@ zh-CN:
         body: 正文
         tags: 标签
         flag: 类型
+        flag_blog: 博客
+        flag_pictures: 图片
+        flag_video: 视频
       cms_comment:
         content: 内容
       adverts:
