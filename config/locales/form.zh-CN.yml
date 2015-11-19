@@ -4,7 +4,11 @@ zh-CN:
       notice:
         content: 内容
       cms_tag:
-          name: 名称
+        name: 名称
+      cms_article:
+        title: 标题
+        summary: 摘要
+        body: 正文
       adverts:
         vertical: 垂直栏
         horizontal: 水平栏

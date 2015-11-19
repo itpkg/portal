@@ -15,6 +15,9 @@
       <% end %>
       <br/>
       <%= t '.author' %>: <%= link_to @article.user.username, cms_user_path(@article.user) %>
+      <% if @article.can_edit? current_user %>
+          <%= render 'shared/button', title: :edit, href: edit_cms_article_path(@article), sm: true %>
+      <% end %>
       <br/>
       <%= "#{t '.updated_at'}: #{time_ago_in_words @article.updated_at}" %>
     </p>

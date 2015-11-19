@@ -39,6 +39,8 @@
 
       <div class="dropdown-menu dropdown-menu-right" aria-labelledby="sign-in-or-up">
         <% if user_signed_in? %>
+            <%= link_to t('cms.articles.new.title'), new_cms_article_path, class: 'dropdown-item' %>
+            <div class="dropdown-divider"></div>
             <%= link_to t('personal.index.title'), personal_logs_path, class: 'dropdown-item' %>
             <div class="dropdown-divider"></div>
             <%= link_to t('links.sign_out'), destroy_user_session_path, class: 'dropdown-item' %>

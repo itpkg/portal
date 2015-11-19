@@ -1,0 +1,14 @@
+<% @title = t '.title' %>
+<div class="row">
+  <div class="col-sm-offset-1 col-sm-10">
+    <h3><%= @title %></h3>
+    <hr/>
+    <%= simple_form_for(@article) do |f| %>
+        <%= f.input :title, autofocus: true %>
+        <%= f.input :summary, as: :text %>
+        <%= f.input :body, as: :text %>
+        <%= f.button :submit, t('buttons.submit') %>
+        <%= link_to t('buttons.back'), :back %>
+    <% end %>
+  </div>
+</div>
