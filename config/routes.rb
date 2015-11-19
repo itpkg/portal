@@ -11,6 +11,8 @@ Rails.application.routes.draw do
     resources :comments
   end
 
+  resources :notices, only: [:index, :create, :destroy]
+
   %w(info seo captcha adverts users).each do |a|
     get "site/#{a}"
     post "site/#{a}"

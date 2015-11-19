@@ -9,7 +9,7 @@
   g.column name: t('.visits') do |i|
     i.visits
   end
-  g.column name: t('.manage') do |i|
+  g.column name: t('buttons.manage') do |i|
     render 'shared/manage_column', edit: edit_cms_tag_path(i), remove: cms_tag_path(i)
   end
 end -%>

@@ -1,0 +1,6 @@
+<% case title %>
+<% when :remove %>
+    <%= button_tag t('buttons.remove'), id: "#{id}-remove-#{href}", class: "btn btn-danger #{'btn-sm' if sm}" %>
+<% else %>
+    <%= button_tag t('buttons.submit'), id: "#{id}-view-#{href}", class: "btn btn-primary #{'btn-sm' if sm}" %>
+<% end %>

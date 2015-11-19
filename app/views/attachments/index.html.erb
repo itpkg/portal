@@ -37,7 +37,7 @@
   g.column name: t('.updated_at') do |i|
     time_ago_in_words i.updated_at
   end
-  g.column name: t('.manage') do |i|
+  g.column name: t('buttons.manage') do |i|
     render 'shared/button', title: :remove, href: attachment_path(i), sm: true
   end
 end -%>

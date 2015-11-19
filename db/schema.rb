@@ -80,10 +80,12 @@ ActiveRecord::Schema.define(version: 20151118163315) do
   end
 
   create_table "notices", force: :cascade do |t|
-    t.string   "message",    limit: 255, null: false
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.string   "lang",       limit: 5,   default: "en", null: false
+    t.string   "content",    limit: 500,                null: false
+    t.datetime "created_at",                            null: false
   end
+
+  add_index "notices", ["lang"], name: "index_notices_on_lang", using: :btree
 
   create_table "roles", force: :cascade do |t|
     t.string   "name"
@@ -128,7 +130,7 @@ ActiveRecord::Schema.define(version: 20151118163315) do
     t.datetime "created_at",                                       null: false
     t.datetime "updated_at",                                       null: false
     t.string   "username",               limit: 255,               null: false
-    t.text     "details",                            default: " ", null: false
+    t.string   "details",                limit: 255, default: " ", null: false
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree

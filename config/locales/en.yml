@@ -12,6 +12,9 @@ en:
   attachments:
     index:
       title: Attachments
+  notices:
+    index:
+      title: Notices
   cms:
     users:
       index:

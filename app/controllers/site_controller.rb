@@ -117,6 +117,7 @@ class SiteController < ApplicationController
         {href: site_seo_path, title: 'site.index.seo'},
         {href: site_status_path, title: 'site.index.status'},
         {href: site_adverts_path, title: 'site.index.adverts'},
+        {href: notices_path, title:'notices.index.title'},
     ]
     render layout: 'personal'
   end

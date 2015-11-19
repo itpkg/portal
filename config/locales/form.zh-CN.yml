@@ -1,6 +1,8 @@
 zh-CN:
   simple_form:
     labels:
+      notice:
+        content: 内容
       cms_tag:
           name: 名称
       adverts:

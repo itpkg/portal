@@ -1,0 +1,33 @@
+<div id="notice-msg"></div>
+<%= simple_form_for(@notice,html: {id: 'notice'}) do |f| %>
+    <%= f.input :content, as: :text, autofocus: true %>
+    <%= f.button :submit, t('buttons.submit') %>
+<% end %>
+
+<br/>
+<table class="table table-bordered table-hover">
+  <thead>
+  <tr>
+    <th><%= t '.content' %></th>
+    <th><%= t '.created_at' %></th>
+    <th><%= t 'buttons.manage' %></th>
+  </tr>
+  </thead>
+  <tbody>
+
+  <% @notices.each do |n| %>
+      <tr>
+        <td><%= raw to_html n.content %></td>
+        <td><%= time_ago_in_words n.created_at %></td>
+        <td><%= render 'shared/ajax_button', title: :remove, id:'notice', sm:true, href:notice_path(n)%></td>
+      </tr>
+  <% end %>
+
+  </tbody>
+</table>
+<script>
+$(function () {
+    submit_form('notice');
+  on_remove_buttons('notice');
+  });
+</script>

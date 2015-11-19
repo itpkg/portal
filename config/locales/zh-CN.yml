@@ -22,8 +22,12 @@ zh-CN:
       size: 大小
       count: 使用次数
       updated_at: 上次更新
-      manage: 管理
       type: 类型
+  notices:
+    index:
+      title: 通知列表
+      content: 内容
+      created_at: 创建时间
   cms:
     users:
       index:
@@ -52,7 +56,6 @@ zh-CN:
       index:
         title: 标签列表
         name: 名称
-        manage: 管理
         visits: 访问次数
   site:
     users:

@@ -11,11 +11,11 @@
 
     <%= f.input :password, autocomplete: 'off', placeholder: t('.leave_blank_if_you_don_t_want_to_change_it') %>
 
-    <br/>
+
     <%= f.input :password_confirmation, autocomplete: 'off' %>
     <%= f.input :current_password, autocomplete: 'off', placeholder: t('.we_need_your_current_password_to_confirm_your_changes') %>
 
-    <br/>
+    <%= f.input :details, as: :text %>
 
     <%= f.button :submit, t('.update') %> <%= link_to t('buttons.back'), :back %>
 

@@ -15,6 +15,25 @@
 <body>
 <%= yield :root %>
 <script>
+
+  function on_remove_buttons(id){
+    $("button[id^='" + id + "-remove-']").click(function () {
+      if (confirm("<%= t 'messages.are_you_sure'%>")) {
+        $.ajax({
+          method: 'DELETE',
+          url: id2url($(this).attr('id'), id + "-remove"),
+          success: function(rs){
+            if (rs.ok) {
+              alert("<%= t 'messages.success'%>");
+            } else {
+              alert("<%= t 'messages.failed'%>");
+            }
+          }
+        });
+      }
+    });
+  }
+
   function init_table_clicks(id) {
     var cid = "div#" + id + "-form";
     $("button[id^='" + id + "-new-']").click(function () {
