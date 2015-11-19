@@ -1,2 +1,19 @@
-<h1>Cms::Articles#index</h1>
-<p>Find me in app/views/cms/articles/index.html.erb</p>
+<div class="row">
+  <% @articles.each do |a| %>
+      <div class="col-sm-3">
+        <% case a.flag.to_sym %>
+        <% when :pictures %>
+        <% else %>
+            <div class="card card-block">
+              <h4 class="card-title"><%= a.title %></h4>
+
+              <p class="card-text"><%= a.summary %></p>
+              <%= link_to t('buttons.view'), cms_article_path(a), class: 'card-link' %>
+            </div>
+        <% end %>
+      </div>
+  <% end %>
+</div>
+<div class="row text-center">
+  <%= paginate @articles %>
+</div>

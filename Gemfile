@@ -80,6 +80,8 @@ gem 'kaminari'
 gem 'kaminari-i18n'
 gem 'bootstrap-kaminari-views'
 
+gem 'redcarpet'
+
 gem 'sinatra', require: nil
 gem 'sidekiq'
 

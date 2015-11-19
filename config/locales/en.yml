@@ -13,7 +13,19 @@ en:
     index:
       title: Attachments
   cms:
+    users:
+      index:
+        title: User - %{name}
+    articles:
+      new:
+        title: New article
+      edit:
+        title: Edit article[%{id}]
+      index:
+        title: Articles
     tags:
+      show:
+        title: Tag-%{name}
       new:
         title: New tag
       edit:

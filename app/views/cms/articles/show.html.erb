@@ -1,0 +1,32 @@
+<% @title = @article.title %>
+<div class="row">
+  <div class="col-sm-offset-1 col-sm-10">
+
+    <h2><%= @article.title %></h2>
+    <hr/>
+    <p></p>
+
+    <p>
+      <%= t '.summary' %> :
+      <% case @article.flag.to_sym %>
+      <% when :pictures %>
+      <% else %>
+          <%= @article.summary %>
+      <% end %>
+      <br/>
+      <%= t '.author' %>: <%= link_to @article.user.username, cms_user_path(@article.user) %>
+      <br/>
+      <%= "#{t '.updated_at'}: #{time_ago_in_words @article.updated_at}" %>
+    </p>
+
+    <p>
+      <%= t '.tags' %> :
+      <% @article.tags.select(:id, :name).each do |t| %>
+          <%= link_to t.name, cms_tag_path(t) %>
+      <% end %>
+    </p>
+
+    <p><%= raw to_html(@article.body) %></p>
+
+  </div>
+</div>

@@ -1,0 +1,12 @@
+<% content_for :root do %>
+    <%= render 'shared/header' %>
+    <div class="container-fluid">
+      <div class="row">
+        <%= render 'shared/messages' %>
+      </div>
+      <%= yield %>
+      <%= render 'shared/footer' %>
+    </div>
+<% end %>
+
+<%= render file: 'layouts/application' %>

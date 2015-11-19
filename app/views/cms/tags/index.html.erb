@@ -4,7 +4,7 @@
 <br/><br/>
 <%= grid(@tags) do |g|
   g.column name: t('.name') do |i|
-    i.name
+    link_to i.name, cms_tag_path(i), target: '_blank'
   end
   g.column name: t('.visits') do |i|
     i.visits

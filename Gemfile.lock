@@ -293,6 +293,7 @@ GEM
       thor (>= 0.18.1, < 2.0)
     rake (10.4.2)
     rdoc (4.2.0)
+    redcarpet (3.3.3)
     redis (3.2.2)
     redis-actionpack (4.0.1)
       actionpack (~> 4)
@@ -422,6 +423,7 @@ DEPENDENCIES
   rails (= 4.2.5)
   rails-i18n (~> 4.0.0)
   rails-settings-cached
+  redcarpet
   redis-rails
   redis-store
   rolify

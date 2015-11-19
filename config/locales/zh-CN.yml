@@ -25,7 +25,24 @@ zh-CN:
       manage: 管理
       type: 类型
   cms:
+    users:
+      index:
+        title: 用户 - %{name}
+    articles:
+      new:
+        title: 发表文章
+      edit:
+        title: 编辑文章[%{id}]
+      index:
+        title: 文章列表
+      show:
+        author: 作者
+        updated_at: 最后更新
+        tags: 标签列表
+        summary: 摘要
     tags:
+      show:
+        title: 标签-%{name}
       new:
         title: 添加标签
       edit:

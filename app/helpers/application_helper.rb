@@ -1,5 +1,9 @@
 module ApplicationHelper
 
+  def to_html(md)
+    Rails.application.config.md2hm.render md
+  end
+
   def to_json(o)
     JSON.pretty_generate o
   end
