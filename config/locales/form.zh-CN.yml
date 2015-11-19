@@ -1,6 +1,8 @@
 zh-CN:
   simple_form:
     labels:
+      cms_tag:
+          name: 名称
       adverts:
         vertical: 垂直栏
         horizontal: 水平栏

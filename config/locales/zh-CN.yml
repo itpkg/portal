@@ -1,5 +1,6 @@
 zh-CN:
   messages:
+    in_use: 正在被使用
     success: 操作成功。
     failed: 操作失败！
     bad_captcha_code: 错误的验证码。
@@ -25,10 +26,15 @@ zh-CN:
       type: 类型
   cms:
     tags:
+      new:
+        title: 添加标签
+      edit:
+        title: 编辑标签[%{id}]
       index:
         title: 标签列表
         name: 名称
         manage: 管理
+        visits: 访问次数
   site:
     users:
       title: 用户列表

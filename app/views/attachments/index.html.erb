@@ -5,12 +5,12 @@
     <div class="row">
       <div class="col-sm-6">
         <label class="file">
-          <%= file_field_tag 'file'%>
+          <%= file_field_tag 'file' %>
           <span class="file-custom"></span>
         </label>
       </div>
       <div class="col-sm-1">
-        <%= submit_tag t('buttons.upload'), class:'btn btn-primary' %>
+        <%= submit_tag t('buttons.upload'), class: 'btn btn-primary' %>
       </div>
     </div>
 
@@ -23,7 +23,7 @@
     i.id
   end
   g.column name: t('.file') do |i|
-    link_to "#{i.title}", i.avatar.url, target:'_blank'
+    link_to "#{i.title}", i.avatar.url, target: '_blank'
   end
   g.column name: t('.size') do |i|
     number_to_human_size i.size
@@ -38,6 +38,6 @@
     time_ago_in_words i.updated_at
   end
   g.column name: t('.manage') do |i|
-    render 'shared/button', title: :remove, href: attachment_path(i), sm:true
+    render 'shared/button', title: :remove, href: attachment_path(i), sm: true
   end
 end -%>

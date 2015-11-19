@@ -1,38 +1,15 @@
 <% @title = t '.title' %>
-<div id="tag-form"></div>
-<br/>
 
-
-<%= button_to t('buttons.new'), new_cms_tag_path, class: 'btn btn-info btn-sm' %>
-
-<table class="table table-bordered table-hover">
-  <thead>
-  <tr>
-    <th><%= t '.name' %></th>
-    <th>
-      <%= t '.manage' %>
-    </th>
-  </tr>
-  </thead>
-  <tbody>
-  <% Cms::Tag.select(:id, :name).order(id: :desc).each do |t| %>
-      <tr>
-        <td>
-          <%= t.name %>
-        </td>
-        <td>
-          <%= button_to t('buttons.edit'), edit_cms_tag_path(t), class: 'btn btn-warning btn-sm' %>
-          <%= button_to t('buttons.edit'), cms_tag_path(t), class: 'btn btn-danger btn-sm' %>
-        </td>
-      </tr>
-  <% end %>
-  </tbody>
-</table>
-
-<script>
-
-
-  $(function(){
-      init_table_clicks('tag');
-  });
-</script>
+<%= render 'shared/button', title: :new, href: new_cms_tag_path, sm: false %>
+<br/><br/>
+<%= grid(@tags) do |g|
+  g.column name: t('.name') do |i|
+    i.name
+  end
+  g.column name: t('.visits') do |i|
+    i.visits
+  end
+  g.column name: t('.manage') do |i|
+    render 'shared/manage_column', edit: edit_cms_tag_path(i), remove: cms_tag_path(i)
+  end
+end -%>

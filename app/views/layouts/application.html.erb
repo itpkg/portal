@@ -15,25 +15,25 @@
 <body>
 <%= yield :root %>
 <script>
-  function  init_table_clicks(id){
-    var cid = "div#"+ id+"-form";
-    $("button[id^='"+id+"-new-']").click(function(){
-      $.get(id2url($(this).attr('id'), id+"-new"), function(data){
+  function init_table_clicks(id) {
+    var cid = "div#" + id + "-form";
+    $("button[id^='" + id + "-new-']").click(function () {
+      $.get(id2url($(this).attr('id'), id + "-new"), function (data) {
         $(cid).html(data);
       });
     });
 
-    $("button[id^='"+id+"-edit-']").click(function(){
-      $.get(id2url($(this).attr('id'), id+'-edit'), function(data){
+    $("button[id^='" + id + "-edit-']").click(function () {
+      $.get(id2url($(this).attr('id'), id + '-edit'), function (data) {
         $(cid).html(data);
       });
     });
-    $("button[id^='"+id+"-remove-']").click(function(){
-      if(confirm("<%= t 'messages.are_you_sure'%>")){
-        $.delete(id2url($(this).attr('id'), id+"-remove"), function(rs){
-          if(rs.ok){
+    $("button[id^='" + id + "-remove-']").click(function () {
+      if (confirm("<%= t 'messages.are_you_sure'%>")) {
+        $.delete(id2url($(this).attr('id'), id + "-remove"), function (rs) {
+          if (rs.ok) {
             alert("<%= t 'messages.success'%>");
-          }else{
+          } else {
             alert("<%= t 'messages.failed'%>");
           }
         });

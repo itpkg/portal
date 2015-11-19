@@ -1,1 +1,7 @@
-new
+<% @title = t '.title' %>
+<h3><%= @title %></h3>
+<hr/>
+<%= simple_form_for(@tag) do |f| %>
+    <%= f.input :name, autofocus: true %>
+    <%= f.button :submit, t('buttons.submit') %>
+<% end %>

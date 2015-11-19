@@ -1,5 +1,6 @@
 en:
   messages:
+    in_use: In use.
     success: Success.
     failed: Failed!
     bad_captcha_code: Bad captcha code.
@@ -13,6 +14,10 @@ en:
       title: Attachments
   cms:
     tags:
+      new:
+        title: New tag
+      edit:
+        title: Edit tag[%{id}]
       index:
         title: Tags
   site:
