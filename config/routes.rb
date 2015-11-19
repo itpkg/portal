@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   resources :attachments, except: [:update, :edit, :new, :show]
 
   namespace :cms do
-    resources :users, only:[:show]
+    resources :users, only:[:show, :index]
     resources :tags
     resources :articles
     resources :comments

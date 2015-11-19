@@ -27,6 +27,8 @@ zh-CN:
   cms:
     users:
       index:
+        title: 用户列表
+      show:
         title: 用户 - %{name}
     articles:
       new:

@@ -5,18 +5,20 @@ class HomeController < ApplicationController
   end
 
   def rss
-    xml = Rails.cache.fetch("cache://#{I18n.locale}/rss.atom", expires_in: 8.hours) do
+    locale = I18n.locale
+    xml = Rails.cache.fetch("cache://#{locale}/rss.atom", expires_in: 8.hours) do
       rss = RSS::Maker.make('atom') do |maker|
         maker.channel.author = Setting.site_author
         maker.channel.updated = Time.now.to_s
         maker.channel.about = rss_url
         maker.channel.title = Setting.get_site_info 'title'
 
-        Cms::Article.select(:id, :title, :updated_at).order(id: :desc).limit(120).each do |a|
+        Cms::Article.select(:id, :title, :updated_at).where(lang: locale).order(id: :desc).limit(120).each do |a|
           maker.items.new_item do |item|
             item.link = cms_articles_url(id: a.id)
+
             item.title = a.title
-            item.updated = a.updated_at
+            item.updated = a.updated_at.utc
           end
         end
       end

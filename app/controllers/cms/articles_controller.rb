@@ -2,7 +2,7 @@ class Cms::ArticlesController < ApplicationController
   layout 'cms'
 
   def index
-    @articles = Cms::Article.select(:id, :summary, :flag, :title).order(id: :desc).page params[:page]
+    @articles = Cms::Article.select(:id, :summary, :flag, :title).where(lang: I18n.locale).order(id: :desc).page params[:page]
     @title = t 'cms.articles.index.title'
   end
 

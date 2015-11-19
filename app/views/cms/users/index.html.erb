@@ -1,0 +1,22 @@
+<div class="row">
+  <% @users.each do |u| %>
+      <% unless u.is_root? %>
+          <div class="col-sm-2">
+            <div class="card">
+              <img class="card-img-top" src="<%= u.gravatar_url 180 %>"/>
+
+              <div class="card-block">
+                <h4 class="card-title"><%= u.username %></h4>
+
+                <p class="card-text"><%= raw to_html u.details %></p>
+                <%= link_to t('buttons.view'), cms_user_path(u) %>
+              </div>
+            </div>
+          </div>
+      <% end %>
+  <% end %>
+</div>
+
+<div class="row text-center">
+  <%= paginate @users %>
+</div>

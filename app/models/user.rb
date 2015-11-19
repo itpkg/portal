@@ -18,4 +18,8 @@ class User < ActiveRecord::Base
   def send_devise_notification(notification, *args)
     devise_mailer.send(notification, self, *args).deliver_later
   end
+
+  def gravatar_url(size)
+    "http://gravatar.com/avatar/#{Digest::MD5.hexdigest(self.email.downcase.strip)}.png?size=#{size}"
+  end
 end

@@ -15,8 +15,12 @@ en:
   cms:
     users:
       index:
+        title: Users
+      show:
         title: User - %{name}
     articles:
+      show:
+        updated_at: Updated at
       new:
         title: New article
       edit:
