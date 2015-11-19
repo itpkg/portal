@@ -5,10 +5,13 @@ en:
     failed: Failed!
     bad_captcha_code: Bad captcha code.
     are_you_sure: Are you sure?
-  buttons:
-    search: Search
   placeholders:
-    search: Please input...
+    search: Search in site
+  home:
+    search:
+      title:
+        index: Search
+        results: Search results of [%{keyword}]
   attachments:
     index:
       title: Attachments

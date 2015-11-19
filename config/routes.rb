@@ -23,6 +23,7 @@ Rails.application.routes.draw do
 
   get 'personal/logs'
 
+  get 'search' => 'home#search'
   #get ':sitemap.xml.gz' => 'home#sitemap', format: false, as: :sitemap
   get 'rss.atom' => 'home#rss', format: false, as: :rss
   get 'robots.txt' => 'home#robots', format: false, as: :robots

@@ -6,7 +6,12 @@ zh-CN:
     bad_captcha_code: 错误的验证码。
     are_you_sure: 你确定？
   placeholders:
-    search: 点此此处输入
+    search: 站内搜索
+  home:
+    search:
+      title:
+        index: 站内搜索
+        results: 搜索[%{keyword}]的结果
   personal:
     index:
       title: 控制面板

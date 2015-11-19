@@ -4,6 +4,12 @@ class HomeController < ApplicationController
   def index
   end
 
+  def search
+    @keyword = params[:@keyword]
+    @id = Setting.google_search_id
+    render layout: 'cms'
+  end
+
   def rss
     locale = I18n.locale
     xml = Rails.cache.fetch("cache://#{locale}/rss.atom", expires_in: 8.hours) do

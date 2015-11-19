@@ -34,7 +34,8 @@ class SiteController < ApplicationController
   def seo
     case request.method
       when 'POST'
-        si = params.require('seo').permit(:google_site_id, :baidu_site_id, :robots_txt)
+        si = params.require('seo').permit(:google_search_id, :google_site_id, :baidu_site_id, :robots_txt)
+        Setting.google_search_id = si.fetch :google_search_id
         Setting.google_site_id = si.fetch :google_site_id
         Setting.baidu_site_id = si.fetch :baidu_site_id
         Setting.robots_txt = si.fetch :robots_txt
@@ -117,7 +118,7 @@ class SiteController < ApplicationController
         {href: site_seo_path, title: 'site.index.seo'},
         {href: site_status_path, title: 'site.index.status'},
         {href: site_adverts_path, title: 'site.index.adverts'},
-        {href: notices_path, title:'notices.index.title'},
+        {href: notices_path, title: 'notices.index.title'},
     ]
     render layout: 'personal'
   end

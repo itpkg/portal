@@ -1,4 +1,3 @@
-
 class NoticesController < ApplicationController
   before_action :must_be_admin!
 
@@ -13,10 +12,11 @@ class NoticesController < ApplicationController
     n = Notice.new params.require(:notice).permit(:content)
     n.lang = I18n.locale
     n.save
-    render json:{ok:true}
+    render json: {ok: true}
   end
+
   def destroy
     Notice.destroy params[:id]
-    render json:{ok:true}
+    render json: {ok: true}
   end
 end

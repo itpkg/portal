@@ -1,5 +1,5 @@
 <div id="notice-msg"></div>
-<%= simple_form_for(@notice,html: {id: 'notice'}) do |f| %>
+<%= simple_form_for(@notice, html: {id: 'notice'}) do |f| %>
     <%= f.input :content, as: :text, autofocus: true %>
     <%= f.button :submit, t('buttons.submit') %>
 <% end %>
@@ -19,15 +19,15 @@
       <tr>
         <td><%= raw to_html n.content %></td>
         <td><%= time_ago_in_words n.created_at %></td>
-        <td><%= render 'shared/ajax_button', title: :remove, id:'notice', sm:true, href:notice_path(n)%></td>
+        <td><%= render 'shared/ajax_button', title: :remove, id: 'notice', sm: true, href: notice_path(n) %></td>
       </tr>
   <% end %>
 
   </tbody>
 </table>
 <script>
-$(function () {
+  $(function () {
     submit_form('notice');
-  on_remove_buttons('notice');
+    on_remove_buttons('notice');
   });
 </script>

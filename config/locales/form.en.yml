@@ -5,6 +5,7 @@ en:
         vertical: Vertical panel
         horizontal: Horizontal panel
       seo:
+        google_search_id: Google search id
         google_site_id: Google site id
         baidu_site_id: Baidu site id
         robots_txt: robots.txt

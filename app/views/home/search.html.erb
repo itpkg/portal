@@ -1,0 +1,21 @@
+<% @title = t '.title.results', keyword: params[:keyword] %>
+
+<div class="row">
+  <div class="col-sm-offset-1 col-sm-10">
+    <% if @id %>
+        <script>
+          (function () {
+            var cx = '<%= @id%>';
+            var gcse = document.createElement('script');
+            gcse.type = 'text/javascript';
+            gcse.async = true;
+            gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+                '//cse.google.com/cse.js?cx=' + cx;
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(gcse, s);
+          })();
+        </script>
+        <gcse:search></gcse:search>
+    <% end %>
+  </div>
+</div>

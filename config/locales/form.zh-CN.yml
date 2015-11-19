@@ -9,6 +9,7 @@ zh-CN:
         vertical: 垂直栏
         horizontal: 水平栏
       seo:
+        google_search_id: 谷歌搜索ID
         google_site_id: 谷歌站点ID
         baidu_site_id: 百度站点ID
         robots_txt: robots.txt
