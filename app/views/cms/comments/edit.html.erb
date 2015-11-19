@@ -6,4 +6,5 @@
     <br/>
     <%= f.button :submit, t('buttons.save') %>
     <%= render 'shared/button', title: :remove, sm: false, href: cms_comment_path(@comment.id) %>
+    <%= link_to t('buttons.back'), :back %>
 <% end %>

@@ -1,6 +1,8 @@
 en:
   simple_form:
     labels:
+      cms_article:
+        flag: Type
       about_us:
         address: Address
       adverts:

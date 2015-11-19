@@ -6,7 +6,8 @@
     <%= simple_form_for(@article) do |f| %>
         <%= f.input :title, autofocus: true %>
         <%= f.input :summary, as: :text %>
-        <%= f.input :body, as: :text %>
+        <%= f.association :tags, as: :check_boxes %>
+        <%= f.input :body, as: :text, input_html: {rows: 12} %>
         <%= f.button :submit, t('buttons.submit') %>
         <%= link_to t('buttons.back'), :back %>
     <% end %>

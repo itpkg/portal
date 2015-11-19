@@ -9,6 +9,8 @@ zh-CN:
         title: 标题
         summary: 摘要
         body: 正文
+        tags: 标签
+        flag: 类型
       cms_comment:
         content: 内容
       adverts:
