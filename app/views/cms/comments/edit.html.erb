@@ -1,0 +1,9 @@
+<%= @title = t '.title', id: @comment.id %>
+<hr/>
+<%= simple_form_for(@comment) do |f| %>
+    <%= f.input :article_id, as: :hidden %>
+    <%= f.input :content, as: :text, autofocus: true %>
+    <br/>
+    <%= f.button :submit, t('buttons.save') %>
+    <%= render 'shared/button', title: :remove, sm: false, href: cms_comment_path(@comment.id) %>
+<% end %>

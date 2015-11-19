@@ -55,12 +55,14 @@ ActiveRecord::Schema.define(version: 20151118163315) do
   add_index "cms_articles_tags", ["tag_id"], name: "index_cms_articles_tags_on_tag_id", using: :btree
 
   create_table "cms_comments", force: :cascade do |t|
-    t.integer  "user_id",    null: false
+    t.integer  "user_id"
+    t.integer  "article_id", null: false
     t.text     "content",    null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
+  add_index "cms_comments", ["article_id"], name: "index_cms_comments_on_article_id", using: :btree
   add_index "cms_comments", ["user_id"], name: "index_cms_comments_on_user_id", using: :btree
 
   create_table "cms_tags", force: :cascade do |t|

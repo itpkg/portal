@@ -8,6 +8,7 @@ module PersonalHelper
         links << {href: site_path, title: 'site.index.title'}
         links << {href: site_users_path, title: 'site.users.title'}
         links << {href: cms_tags_path, title: 'cms.tags.index.title'}
+        links << {href: cms_comments_path, title: 'cms.comments.index.title'}
       end
       links << {href: edit_user_registration_path, title: t('devise.registrations.edit.title')}
       links << {href: attachments_path, title: t('attachments.index.title')}

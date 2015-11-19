@@ -31,5 +31,31 @@
 
     <p><%= raw to_html(@article.body) %></p>
 
+    <h3><%= t '.comments' %></h3>
+    <hr/>
+    <%= simple_form_for(@comment) do |f| %>
+        <%= f.input :article_id, as: :hidden %>
+        <%= f.input :content, as: :text, autofocus: true %>
+        <%= render 'shared/recaptcha' %>
+        <br/>
+        <%= f.button :submit, t('buttons.new') %>
+    <% end %>
+    <br/>
+    <% @article.comments.order(id: :desc).each do |c| %>
+        <blockquote id="c-<%= c.id %>" class="blockquote">
+          <p><%= raw to_html(c.content) %></p>
+          <footer>
+            <%= time_ago_in_words c.updated_at %>
+            <%= c.user ? link_to(c.user.username, cms_user_path(c.user)) : t('.anonymous') %>
+            <cite>
+
+              <% if c.can_edit? current_user %>
+                  <%= link_to t('buttons.edit'), edit_cms_comment_path(c) %>
+              <% end %>
+            </cite>
+          </footer>
+        </blockquote>
+    <% end %>
+
   </div>
 </div>

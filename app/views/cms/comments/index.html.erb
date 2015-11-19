@@ -1,2 +1,7 @@
-<h1>Cms::Comments#index</h1>
-<p>Find me in app/views/cms/comments/index.html.erb</p>
+<% @title = t '.title' %>
+
+<%= grid(@comments) do |g|
+  g.column name: t('.content') do |i|
+    link_to i.content, cms_article_path(i.article_id, anchor: "c-#{i.id}"), target: '_blank'
+  end
+end -%>

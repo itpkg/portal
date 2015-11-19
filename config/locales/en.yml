@@ -33,6 +33,12 @@ en:
         title: Edit article[%{id}]
       index:
         title: Articles
+    comments:
+      edit:
+        title: Edit comment[%{id}]
+      index:
+        title: Comments
+        content: Content
     tags:
       show:
         title: Tag-%{name}

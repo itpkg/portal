@@ -51,6 +51,14 @@ zh-CN:
         updated_at: 最后更新
         tags: 标签列表
         summary: 摘要
+        comments: 评论列表
+        anonymous: 匿名
+    comments:
+      edit:
+        title: 编辑评论[%{id}]
+      index:
+        title: 评论列表
+        content: 内容
     tags:
       show:
         title: 标签-%{name}

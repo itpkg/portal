@@ -9,6 +9,8 @@ zh-CN:
         title: 标题
         summary: 摘要
         body: 正文
+      cms_comment:
+        content: 内容
       adverts:
         vertical: 垂直栏
         horizontal: 水平栏

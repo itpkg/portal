@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
     head(:forbidden) unless current_user.is_admin?
   end
 
-  def recaptcha!
+  def recaptcha?
 
     res = Net::HTTP.post_form URI('https://www.google.com/recaptcha/api/siteverify'),
                               secret: Setting.recaptcha_secret_key,
@@ -37,8 +37,6 @@ class ApplicationController < ActionController::Base
       valid = rs['success']
     end
 
-    unless valid
-      render json: {ok: false, data: [t('messages.bad_captcha_code')]}
-    end
+    valid
   end
 end

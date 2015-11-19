@@ -8,7 +8,7 @@ Rails.application.routes.draw do
     resources :users, only:[:show, :index]
     resources :tags
     resources :articles
-    resources :comments
+    resources :comments, except: [:new, :show]
   end
 
   resources :notices, only: [:index, :create, :destroy]

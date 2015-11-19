@@ -3,6 +3,7 @@ class Cms::Article < ActiveRecord::Base
 
   belongs_to :user
   has_and_belongs_to_many :tags
+  has_many :comments
 
 
   validates :title, presence: true
@@ -12,6 +13,6 @@ class Cms::Article < ActiveRecord::Base
   enum flag: [:blog, :pictures, :video]
 
   def can_edit?(u)
-    u && (self.user_id == u.id || u.is_admin?)
+    u &&(self.user_id == u.id || u.is_admin?)
   end
 end

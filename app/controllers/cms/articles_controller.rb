@@ -11,6 +11,7 @@ class Cms::ArticlesController < ApplicationController
   def show
     @article = Cms::Article.find params[:id]
     @article.update_column :visits, @article.visits+1
+    @comment = Cms::Comment.new article: @article
   end
 
   def new
