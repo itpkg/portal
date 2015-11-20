@@ -5,7 +5,7 @@ class Cms::TagsController < ApplicationController
   def show
     tag=Cms::Tag.find params[:id]
     tag.update_column :visits, tag.visits+1
-    @articles = tag.articles.select(:id, :summary, :flag, :title).order(id: :desc).page params[:page]
+    @articles = tag.articles.select(:id, :summary, :title).order(id: :desc).page params[:page]
     @title = t 'cms.tags.show.title', name: tag.name
     render 'cms/articles/index', layout: 'cms'
   end

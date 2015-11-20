@@ -32,15 +32,17 @@ ActiveRecord::Schema.define(version: 20151118163315) do
   add_index "attachments", ["user_id"], name: "index_attachments_on_user_id", using: :btree
 
   create_table "cms_articles", force: :cascade do |t|
-    t.integer  "user_id",                               null: false
-    t.string   "title",      limit: 255,                null: false
-    t.string   "summary",    limit: 800,                null: false
-    t.integer  "flag",                   default: 0,    null: false
-    t.text     "body",                                  null: false
-    t.string   "lang",       limit: 5,   default: "en", null: false
-    t.integer  "visits",                 default: 0,    null: false
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
+    t.integer  "user_id",                                null: false
+    t.string   "title",      limit: 255,                 null: false
+    t.string   "summary",    limit: 800,                 null: false
+    t.string   "pictures",   limit: 800
+    t.string   "video",      limit: 800
+    t.boolean  "top",                    default: false, null: false
+    t.text     "body",                                   null: false
+    t.string   "lang",       limit: 5,   default: "en",  null: false
+    t.integer  "visits",                 default: 0,     null: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
   end
 
   add_index "cms_articles", ["lang"], name: "index_cms_articles_on_lang", using: :btree

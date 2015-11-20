@@ -2,7 +2,7 @@ en:
   simple_form:
     labels:
       cms_article:
-        flag: Type
+        pictures: Pictures (one line per url)
       about_us:
         address: Address
       adverts:

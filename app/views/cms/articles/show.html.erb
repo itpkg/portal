@@ -7,12 +7,7 @@
     <p></p>
 
     <p>
-      <%= t '.summary' %> :
-      <% case @article.flag.to_sym %>
-      <% when :pictures %>
-      <% else %>
-          <%= @article.summary %>
-      <% end %>
+      <%= t '.summary' %> : <%= @article.summary %>
       <br/>
       <%= t '.author' %>: <%= link_to @article.user.username, cms_user_path(@article.user) %>
       <% if @article.can_edit? current_user %>

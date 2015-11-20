@@ -4,7 +4,7 @@ class Cms::ArticlesController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
 
   def index
-    @articles = Cms::Article.select(:id, :summary, :flag, :title).where(lang: I18n.locale).order(id: :desc).page params[:page]
+    @articles = Cms::Article.select(:id, :summary, :title).where(lang: I18n.locale).order(id: :desc).page params[:page]
     @title = t 'cms.articles.index.title'
   end
 
@@ -71,6 +71,6 @@ class Cms::ArticlesController < ApplicationController
 
   private
   def _params
-    params.require(:cms_article).permit(:title, :summary, :flag, :body, tag_ids: [])
+    params.require(:cms_article).permit(:title, :summary, :body, tag_ids: [])
   end
 end
