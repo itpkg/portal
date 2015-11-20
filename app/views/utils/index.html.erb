@@ -1,0 +1,28 @@
+<div class="row">
+  <h3>Base64</h3>
+  <hr/>
+  <div class="col-sm-offset-1 col-sm-5">
+    <textarea class="form-control" id="base64-s" rows="12"></textarea>
+    <br/>
+    <button id="base-e" class="btn btn-primary"><%= t '.encode' %></button>
+    <button id="base-d" class="btn btn-warning"><%= t '.decode' %></button>
+
+  </div>
+  <div class="col-sm-5">
+    <textarea class="form-control" readonly id="base64-t" rows="12"></textarea>
+  </div>
+</div>
+<script type="text/javascript">
+  $("button#base-e").click(function () {
+    $("textarea#base64-t").text(Base64.encode($("textarea#base64-s").val()));
+  });
+  $("button#base-d").click(function () {
+    try {
+      $("textarea#base64-t").text(Base64.decode($("textarea#base64-s").val()));
+    }
+    catch (err) {
+      alert(err);
+    }
+
+  });
+</script>

@@ -25,6 +25,7 @@
     "bootstrap": "~4.0.0-alpha",
     "famfamfam-mini": "~0.3.3",
     "highlight-js": "~8.9.1",
-    "highlightjs": "~8.9.1"
+    "highlightjs": "~8.9.1",
+    "js-base64": "~2.1.9"
   }
 }

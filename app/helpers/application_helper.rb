@@ -1,7 +1,7 @@
 module ApplicationHelper
 
   def to_html(md)
-    Rails.application.config.md2hm.render md
+    Rails.application.config.md2hm.render(md) if md
   end
 
   def to_json(o)

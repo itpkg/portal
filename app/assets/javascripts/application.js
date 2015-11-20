@@ -17,6 +17,7 @@
 //= require bootstrap/dist/js/bootstrap
 //= require riot/riot
 //= require wice_grid
-//=require highlightjs/highlight.pack
+//= require highlightjs/highlight.pack
+//= require js-base64/base64
 
 //= require_tree .

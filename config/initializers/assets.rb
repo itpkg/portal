@@ -28,6 +28,9 @@ Rails.application.config.assets.precompile << %r(famfamfam-silk/dist/png/[\w-]+\
 # riot
 Rails.application.config.assets.precompile << 'riot/riot.js'
 
+# base64
+Rails.application.config.assets.precompile << 'js-base64/base64.js'
+
 # highlight.js
 Rails.application.config.assets.precompile << 'highlightjs/highlight.pack.js'
 Rails.application.config.assets.precompile << %r(highlightjs/styles/*.css)

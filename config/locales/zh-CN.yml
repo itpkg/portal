@@ -12,6 +12,10 @@ zh-CN:
       title:
         index: 站内搜索
         results: 搜索[%{keyword}]的结果
+  utils:
+    index:
+      encode: 编码
+      decode: 解码
   personal:
     index:
       title: 控制面板
