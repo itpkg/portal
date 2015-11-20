@@ -4,6 +4,8 @@ zh-CN:
       user: 用户
     attributes:
       user:
+        logo: 头像
+        details: 个人介绍
         username: 用户名
         email: 邮箱
         password: 密码

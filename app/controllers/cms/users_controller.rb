@@ -9,6 +9,6 @@ class Cms::UsersController < ApplicationController
   end
 
   def index
-    @users = User.select(:id, :username, :details, :email).order(sign_in_count: :desc).page(params[:page]).per 30
+    @users = User.select(:id, :username, :details, :email, :logo).order(sign_in_count: :desc).page(params[:page]).per 30
   end
 end

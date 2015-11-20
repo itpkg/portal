@@ -4,6 +4,7 @@
     <%= devise_error_messages! %>
 
     <%= f.input :username, autofocus: true %>
+    <%= f.input :logo %>
     <%= f.input :email, readonly: true %>
     <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
         <div><%= t '.currently_waiting_confirmation_for', email: resource.unconfirmed_email %></div>
