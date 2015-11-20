@@ -2,7 +2,7 @@ class CreateCmsTags < ActiveRecord::Migration
   def change
     create_table :cms_tags do |t|
       t.string :name, null: false
-      t.integer :visits, null:false, default:0
+      t.integer :visits, null: false, default: 0
       t.timestamps null: false
     end
 
