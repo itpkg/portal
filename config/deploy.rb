@@ -26,7 +26,7 @@ set :deploy_to, "/var/www/#{fetch :application}/#{fetch :stage}"
 set :linked_files, fetch(:linked_files, []).push('config/database.yml', 'config/secrets.yml', 'config/sidekiq.yml', '.rbenv-vars')
 
 # Default value for linked_dirs is []
-set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/assets/bower_components', 'public/ueditor')
+set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/assets/bower_components', 'public/3rd')
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
@@ -38,6 +38,9 @@ set :keep_releases, 7
 set :rbenv_type, :user
 set :rbenv_ruby, File.read('.ruby-version').strip
 set :nginx_use_ssl, true
+
+# ueditor
+set :ueditor_version, 'v1.4.3.1'
 
 namespace :deploy do
 
