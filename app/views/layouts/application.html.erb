@@ -9,8 +9,16 @@
   <meta name="author" content="<%= Setting.site_author %>">
   <link rel="shortcut icon" href="<%= Setting.site_favicon %>"/>
   <title><%= "#{@title}-#{Setting.get_site_info 'title'}" %></title>
+
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
+
+  <script type="text/javascript">
+    window.UEDITOR_HOME_URL = '/ueditor/';
+    window.UEDITOR_CONTROLLER = "<%= ueditor_path %>";
+  </script>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <script type="text/javascript" src="/ueditor/ueditor.all.min.js"></script>
+  <script type="text/javascript" src="/ueditor/lang/<%= I18n.locale.downcase %>/<%= I18n.locale.downcase %>.js"></script>
   <%= csrf_meta_tags %>
 </head>
 <body>

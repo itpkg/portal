@@ -8,7 +8,7 @@ namespace :ueditor do
 
         execute :npm, :install
         execute :grunt
-        execute :mkdir, '-pv', target
+
         %w(dialogs themes lang third-party ueditor.all.min.js).each do |f|
           execute :cp, '-a', "dist/utf8-php/#{f}", "#{target}/#{f}"
         end
@@ -17,4 +17,4 @@ namespace :ueditor do
   end
 end
 
-after 'deploy', 'ueditor:build'
+#after 'deploy', 'ueditor:build'

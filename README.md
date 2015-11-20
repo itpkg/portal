@@ -79,3 +79,5 @@ Portal system (by rails)
     cap production deploy:check 
     cap production puma:config
     cap production puma:nginx_config
+    cap deploy
+

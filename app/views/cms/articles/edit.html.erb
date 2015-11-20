@@ -7,7 +7,8 @@
         <%= f.input :title, autofocus: true %>
         <%= f.input :summary, as: :text %>
         <%= f.association :tags, as: :check_boxes, item_wrapper_class: 'checkbox-inline' %>
-        <%= f.input :body, as: :text %>
+        <%= f.label :body %>
+        <%= render 'shared/ueditor', content: @article.body, id: 'cms_article[body]' %>
         <%= f.button :submit, t('buttons.submit') %>
         <%= render 'shared/button', title: :remove, sm: false, href: cms_article_path(@article) %>
         <%= link_to t('buttons.back'), :back %>

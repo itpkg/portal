@@ -21,6 +21,8 @@ Rails.application.routes.draw do
   get 'site/status'
   get 'site' => 'site#index'
 
+  get 'ueditor' =>'ueditor#index'
+
   get 'personal/logs'
 
   get 'about_us' => 'home#about_us'
