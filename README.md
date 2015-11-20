@@ -25,7 +25,7 @@ Portal system (by rails)
     apt-get install libreadline-dev libpq-dev
     apt-get clean
     
-    npm install -g bower
+    npm install -g bower grunt-cli
     ln -s /usr/bin/nodejs /usr/bin/node
     
     mkdir /var/www
