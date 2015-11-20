@@ -35,13 +35,15 @@ Rails.application.routes.draw do
   get 'google(*id)', to: 'home#google', as: :google, format: true, constraints: {format: :html}
 
 
+  resources :leave_words, only:[:index, :create, :destroy]
+  get 'utils' =>'utils#index'
+
   devise_for :users
 
   authenticate :user, lambda { |u| u.is_admin? } do
     mount Sidekiq::Web => '/sidekiq'
   end
 
-  get 'utils' =>'utils#index'
 
 
   # The priority is based upon order of creation: first created -> highest priority.

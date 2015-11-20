@@ -8,6 +8,8 @@ zh-CN:
   placeholders:
     search: 站内搜索
   home:
+    about_us:
+      leave_message: 给我留言(仅管理员可见)
     search:
       title:
         index: 站内搜索
@@ -74,6 +76,10 @@ zh-CN:
         title: 标签列表
         name: 名称
         visits: 访问次数
+  leave_words:
+    index:
+      content: 内容
+      created_at: 提交时间
   site:
     users:
       title: 用户列表
@@ -91,6 +97,7 @@ zh-CN:
     about_us:
       title: 关于我们
     index:
+      leave_words: 留言板
       title: 站点设置
       status: 当前状态
       info: 基本信息

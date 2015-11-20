@@ -8,6 +8,8 @@ en:
   placeholders:
     search: Search in site
   home:
+    about_us:
+      leave_message: Leave me a messsage(only master can see it)
     search:
       title:
         index: Search

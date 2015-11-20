@@ -19,7 +19,6 @@ class User < ActiveRecord::Base
   before_create :set_logo
 
 
-
   def send_devise_notification(notification, *args)
     devise_mailer.send(notification, self, *args).deliver_later
   end

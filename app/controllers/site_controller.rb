@@ -154,6 +154,7 @@ class SiteController < ApplicationController
 
   def index
     @links = [
+        {href: leave_words_path, title: 'site.index.leave_words'},
         {href: site_info_path, title: 'site.index.info'},
         {href: site_about_us_path, title: 'site.about_us.title'},
         {href: site_captcha_path, title: 'site.index.captcha'},

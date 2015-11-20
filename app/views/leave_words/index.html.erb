@@ -1,0 +1,24 @@
+<table class="table table-bordered table-hover">
+  <thead>
+  <tr>
+    <th><%= t '.content' %></th>
+    <th><%= t '.created_at' %></th>
+    <th><%= t 'buttons.manage' %></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @leave_words.each do |i| %>
+      <tr>
+        <td><%= raw to_html(i.content) %></td>
+        <td><%= time_ago_in_words i.created_at %></td>
+        <td><%= render 'shared/ajax_button', id: :lw, title: :remove, sm: true, href: leave_word_path(i) %></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<script>
+  $(function () {
+    on_remove_buttons('lw');
+  });
+</script>

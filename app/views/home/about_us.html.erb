@@ -11,24 +11,30 @@
       <%= raw to_html(Setting.get_site_info('details')) %>
     </p>
 
-    <div id="map"></div>
+    <p id="map"></p>
+    <h4><%= t '.leave_message' %></h4>
+    <hr>
+    <%= simple_form_for(@leave_word) do |f| %>
+        <%= f.input :content, as: :text, autofocus: true %>
+        <%= f.button :submit, t('buttons.submit') %>
+    <% end %>
 
-    <% if @loc %>
-        <script type="text/javascript">
-          var map;
-          function initMap() {
-            map = new google.maps.Map(document.getElementById('map'), {
-              center: {lat: <%= @loc.fetch :lat %>, lng: <%= @loc.fetch :lng%>},
-              zoom: 8
-            });
-          }
-        </script>
-    <% end %>
-    <% if @key %>
-        <script async defer
-                src="https://maps.googleapis.com/maps/api/js?key=<%= @key %>&callback=initMap">
-        </script>
-    <% end %>
   </div>
 </div>
 
+<% if @loc %>
+    <script type="text/javascript">
+      var map;
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: <%= @loc.fetch :lat %>, lng: <%= @loc.fetch :lng%>},
+          zoom: 8
+        });
+      }
+    </script>
+<% end %>
+<% if @key %>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=<%= @key %>&callback=initMap">
+    </script>
+<% end %>
