@@ -21,7 +21,7 @@ class AttachmentsController < ApplicationController
 
   def destroy
     a = Attachment.find params[:id]
-    if a && a.user_id == current_user.id && a.by_use == 0
+    if a && a.user_id == current_user.id
       a.destroy
       flash[:notice] = t 'messages.success'
     else

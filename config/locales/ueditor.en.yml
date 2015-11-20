@@ -1,0 +1,8 @@
+en:
+  ueditor:
+    success: SUCCESS
+    error: ERROR
+    not_picture: Not a picture
+    http_error: HTTP error
+    bad_callback: Bad callback param.
+    bad_request: Bad request address.

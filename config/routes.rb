@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   get 'site' => 'site#index'
 
   get 'ueditor' =>'ueditor#index'
+  post 'ueditor' =>'ueditor#index'
 
   get 'personal/logs'
 

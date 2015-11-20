@@ -1,0 +1,8 @@
+zh-CN:
+  ueditor:
+    success: SUCCESS
+    error: ERROR
+    not_picture: 不是图片
+    http_error: HTTP错误
+    bad_callback: 错误的回调参数。
+    bad_request: 请求地址出错。

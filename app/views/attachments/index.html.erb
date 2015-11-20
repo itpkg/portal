@@ -23,16 +23,13 @@
     i.id
   end
   g.column name: t('.file') do |i|
-    link_to "#{i.title}", i.avatar.url, target: '_blank'
+    link_to "#{i.title}", i.avatar_url, target: '_blank'
   end
   g.column name: t('.size') do |i|
     number_to_human_size i.size
   end
   g.column name: t('.type') do |i|
-    i.content_type
-  end
-  g.column name: t('.count') do |i|
-    i.by_use
+    i.avatar.content_type
   end
   g.column name: t('.updated_at') do |i|
     time_ago_in_words i.updated_at

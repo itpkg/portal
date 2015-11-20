@@ -1,9 +1,19 @@
 <p>
+
   <script type="text/plain" name="<%= id %>" id="<%= id %>-container">
     <%= raw content %>
   </script>
 
   <script type="text/javascript">
+    <% ue_id = "ue#{SecureRandom.hex}" %>
+    var <%= ue_id%> =
     UE.getEditor('<%= id %>-container');
+    <%= ue_id%>.ready(function () {
+      <%= ue_id%>.
+      execCommand('serverparam', {
+        'authenticity_token': '<%= form_authenticity_token %>',
+        'key2': 'value2'
+      });
+    });
   </script>
 </p>
