@@ -15,7 +15,7 @@
     <h4><%= t '.leave_message' %></h4>
     <hr>
     <%= simple_form_for(@leave_word) do |f| %>
-        <%= f.input :content, as: :text, autofocus: true %>
+        <%= f.input :content, as: :text %>
         <%= f.button :submit, t('buttons.submit') %>
     <% end %>
 

@@ -3,6 +3,14 @@ class Cms::ArticlesController < ApplicationController
 
   before_action :authenticate_user!, except: [:index, :show]
 
+  def top
+    must_be_admin!
+
+    a = Cms::Article.find params[:article_id]
+    a.update_column :top, params[:act]=='enable'
+    redirect_to cms_article_path(a)
+  end
+
   def index
     @articles = Cms::Article.select(:id, :summary, :title).where(lang: I18n.locale).order(id: :desc).page params[:page]
     @title = t 'cms.articles.index.title'

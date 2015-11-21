@@ -28,6 +28,8 @@ en:
         title: User - %{name}
     articles:
       show:
+        top_on: On top
+        top_off: Off top
         updated_at: Updated at
       new:
         title: New article

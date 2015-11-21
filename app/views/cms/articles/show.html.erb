@@ -2,7 +2,10 @@
 <div class="row">
   <div class="col-sm-offset-1 col-sm-10">
 
-    <h2><%= @article.title %></h2>
+    <h2>
+      <%= @article.title %>
+      <%= (@article.top ? link_to(t('.top_off'), cms_article_top_path(@article, act: :disable), method: :post, class: 'btn btn-sm btn-info') : link_to(t('.top_on'), cms_article_top_path(@article, act: :enable), method: :post, class:'btn btn-sm btn-danger')) if current_user && current_user.is_admin? %>
+    </h2>
     <hr/>
     <p></p>
 
@@ -30,7 +33,7 @@
     <hr/>
     <%= simple_form_for(@comment) do |f| %>
         <%= f.input :article_id, as: :hidden %>
-        <%= f.input :content, as: :text, autofocus: true %>
+        <%= f.input :content, as: :text %>
         <%= render 'shared/recaptcha' %>
         <br/>
         <%= f.button :submit, t('buttons.new') %>

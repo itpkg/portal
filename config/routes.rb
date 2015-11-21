@@ -7,7 +7,9 @@ Rails.application.routes.draw do
   namespace :cms do
     resources :users, only:[:show, :index]
     resources :tags
-    resources :articles
+    resources :articles do
+      post :top
+    end
     resources :comments, except: [:new, :show]
   end
 

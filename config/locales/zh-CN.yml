@@ -53,6 +53,8 @@ zh-CN:
       index:
         title: 文章列表
       show:
+        top_on: 置顶
+        top_off: 取消置顶
         author: 作者
         updated_at: 最后更新
         tags: 标签列表
