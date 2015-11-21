@@ -1,3 +1,2 @@
 *.rb
-!production.rb
 !staging.rb

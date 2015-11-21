@@ -84,4 +84,8 @@ Rails.application.configure do
   config.action_mailer.default_options = {from: "no-reply@#{ENV['PORTAL_DOMAIN']}"}
   config.action_mailer.default_url_options = {host: ENV['PORTAL_DOMAIN']}
   config.action_mailer.delivery_method = :sendmail
+  config.action_mailer.sendmail_settings = {
+      location: '/usr/sbin/exim4',
+      arguments: '-i'
+  }
 end

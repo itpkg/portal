@@ -5,6 +5,10 @@ Portal system (by rails)
 
 ### On server
 
+#### Setup mail server
+    sudo apt-get install exim4
+
+
 #### Create deploy user (as root)
     useradd -s /bin/bash -m deploy
     passwd -l deploy    
