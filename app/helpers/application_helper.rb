@@ -8,6 +8,15 @@ module ApplicationHelper
     JSON.pretty_generate o
   end
 
+  def current_version
+    fn = "#{Rails.root}/REVISION"
+    if File.exists?(fn)
+      File.read(fn).chomp
+    else
+      t 'messages.unknown'
+    end
+  end
+
   def paginate objects, options = {}
     options.reverse_merge!(theme: 'twitter-bootstrap-3')
 

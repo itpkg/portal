@@ -19,7 +19,6 @@ class SiteController < ApplicationController
             render(json: {ok: false}) and return
           end
           map = JSON.parse res.body
-          puts '#'*80, map
           unless map['status'] == 'OK'
             render(json: {ok: false, data: map['status']}) and return
           end

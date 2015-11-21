@@ -10,7 +10,7 @@
     <p></p>
 
     <p>
-      <%= t '.summary' %> : <%= @article.summary %>
+      <%= t '.summary' %> : <b><%= @article.summary %></b>
       <br/>
       <%= t '.author' %>: <%= link_to @article.user.username, cms_user_path(@article.user) %>
       <% if @article.can_edit? current_user %>

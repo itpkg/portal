@@ -92,4 +92,4 @@ en:
     sign_in_or_up: Sign In/Up
     sign_out: Sign Out
     back_to_top: Back to top
-    build_by_html: "Build by <a href='https://github.com/itpkg/portal' target='_blank'>Portal Web System</a>"
+    build_by_html: "Build by <a href='https://github.com/itpkg/portal' target='_blank'>Portal Web System(%{version})</a>"

@@ -5,6 +5,7 @@ zh-CN:
     failed: 操作失败！
     bad_captcha_code: 错误的验证码。
     are_you_sure: 你确定？
+    unknown: 未知
   placeholders:
     search: 站内搜索
   home:
@@ -122,4 +123,4 @@ zh-CN:
     sign_in_or_up: 注册/登录
     sign_out: 安全退出
     back_to_top: 返回顶部
-    build_by_html: "使用<a href='https://github.com/itpkg/portal' target='_blank'>Portal系统</a>构建"
+    build_by_html: "使用<a href='https://github.com/itpkg/portal' target='_blank'>Portal系统(%{version})</a>构建"
