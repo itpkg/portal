@@ -10,7 +10,7 @@ class Cms::Article < ActiveRecord::Base
   validates :summary, presence: true
   validates :body, presence: true
 
-  before_create :set_logo
+  before_save :set_logo
 
   def can_edit?(u)
     u &&(self.user_id == u.id || u.is_admin?)

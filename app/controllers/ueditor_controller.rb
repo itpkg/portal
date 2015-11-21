@@ -28,9 +28,9 @@ class UeditorController < ApplicationController
       when :upload_file
         rv = __store __field(:fileFieldName)
       when :list_image
-        rv = __list __field(:imageManagerAllowFiles)
+        rv = __list __config[:imageManagerAllowFiles]
       when :list_file
-        rv = __list __field(:fileManagerAllowFiles)
+        rv = __list __config[:fileManagerAllowFiles]
       when :catch_image
         rv = __remote_image(:catcherFieldName)
 
@@ -74,7 +74,7 @@ class UeditorController < ApplicationController
   end
 
   def __list(types)
-    Attachment.order(id: :desc).where(user_id: user_id).select { |a| types.include? File.extname(a.avatar_identifier) }.map { |a| a.avatar_url }
+    files = Attachment.order(id: :desc).where(user_id: current_user.id).select { |a| types.include? File.extname(a.avatar_identifier) }.map { |a| {url: a.avatar_url} }
     {
         state: t('ueditor.success'),
         list: files,
