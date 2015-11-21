@@ -1,3 +1,4 @@
+<% cache expires_in: 1.day do %>
 <hr/>
 <div class="row">
   <% FriendLink.select(:home, :name, :logo).each do |fl| %>
@@ -26,3 +27,4 @@
     <%= Setting.get_site_info 'copyright' %>
   </p>
 </footer>
+<% end %>
