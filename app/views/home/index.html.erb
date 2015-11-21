@@ -1,2 +1,104 @@
-<h1>Home#index</h1>
-<p>Find me in app/views/home/index.html.erb</p>
+<style>
+  body {
+    margin-top: 50px;
+  }
+</style>
+<div class="row">
+  <div id="carousel-top-article" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+      <% @top.each_index do |i| %>
+          <li data-target="#carousel-example-generic" data-slide-to="<%= i %>" class="<%= 'active' if i == 0 %>"></li>
+      <% end %>
+    </ol>
+    <div class="carousel-inner" role="listbox">
+      <% @top.each_with_index do |a, i| %>
+          <div class="carousel-item <%= 'active' if i == 0 %>">
+            <img class="fill-div" src="<%= a.logo %>" alt="<%= a.title %>">
+
+            <div class="carousel-caption">
+              <h3><%= a.title %></h3>
+
+              <p><%= a.summary %></p>
+
+              <p>
+                <%= link_to t('buttons.view'), cms_article_path(a), class: 'btn btn-primary', target: '_blank' %>
+              </p>
+            </div>
+          </div>
+      <% end %>
+    </div>
+    <a class="left carousel-control" href="#carousel-top-article" role="button" data-slide="prev">
+      <span class="icon-prev" aria-hidden="true"></span>
+      <span class="sr-only"><%= t 'buttons.previous' %></span>
+    </a>
+    <a class="right carousel-control" href="#carousel-top-article" role="button" data-slide="next">
+      <span class="icon-next" aria-hidden="true"></span>
+      <span class="sr-only"><%= t 'buttons.next' %></span>
+    </a>
+  </div>
+</div>
+<hr/>
+
+<div class="row">
+  <div class="col-md-10 col-md-offset-1">
+    <div class="row">
+      <% @users.each do |u| %>
+          <div class="col-md-3">
+            <img class="img-circle" src="<%= u.logo %>"/>
+
+            <h2><%= u.username %></h2>
+
+            <p>
+              <%= u.details %>
+            </p>
+
+            <p>
+              <%= link_to t('buttons.view'), cms_user_path(u), class: 'btn btn-secondary', target: '_blank' %>
+            </p>
+          </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<% @hot.each_with_index do |a, i| %>
+
+    <hr/>
+    <% if i.odd? %>
+        <div class="row">
+          <div class="col-md-7 col-md-offset-1">
+
+            <h2><%= a.title %></h2>
+
+            <p><%= a.summary %></p>
+
+            <p>
+              <%= link_to t('buttons.view'), cms_article_path(a), class: 'btn btn-secondary', target: '_blank' %>
+            </p>
+          </div>
+          <div class="col-md-3">
+            <a href="<%= cms_article_path(a) %>" target="_blank">
+              <img class="fill-div" src="<%= a.logo %>">
+            </a>
+          </div>
+        </div>
+    <% else %>
+        <div class="row">
+          <div class="col-md-3 col-md-offset-1">
+            <a href="<%= cms_article_path(a) %>" target="_blank">
+              <img class="fill-div" src="<%= a.logo %>">
+            </a>
+          </div>
+          <div class="col-md-7">
+
+            <h2><%= a.title %></h2>
+
+            <p><%= a.summary %></p>
+
+            <p>
+              <%= link_to t('buttons.view'), cms_article_path(a), class: 'btn btn-secondary', target: '_blank' %>
+            </p>
+          </div>
+        </div>
+    <% end %>
+<% end %>

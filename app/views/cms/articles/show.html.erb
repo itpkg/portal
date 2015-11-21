@@ -4,7 +4,7 @@
 
     <h2>
       <%= @article.title %>
-      <%= (@article.top ? link_to(t('.top_off'), cms_article_top_path(@article, act: :disable), method: :post, class: 'btn btn-sm btn-info') : link_to(t('.top_on'), cms_article_top_path(@article, act: :enable), method: :post, class:'btn btn-sm btn-danger')) if current_user && current_user.is_admin? %>
+      <%= (@article.top ? link_to(t('.top_off'), cms_article_top_path(@article, act: :disable), method: :post, class: 'btn btn-sm btn-info') : link_to(t('.top_on'), cms_article_top_path(@article, act: :enable), method: :post, class: 'btn btn-sm btn-danger')) if current_user && current_user.is_admin? %>
     </h2>
     <hr/>
     <p></p>

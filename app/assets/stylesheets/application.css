@@ -14,3 +14,7 @@
  *= require_self
  */
 
+img.fill-div {
+    height: auto;
+    width: 100%;
+}
