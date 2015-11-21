@@ -1,0 +1,12 @@
+development:
+  :provider: Local
+  :local_root: <%= "#{Rails.root}/public/attachments" %>
+  :endpoint: /attachments
+
+production:
+  :provider: AWS
+  :aws_access_key_id: xxx
+  :aws_secret_access_key: yyy
+  :region: eu-west-1
+  :host: s3.example.com
+  :endpoint: https://s3.example.com:8080

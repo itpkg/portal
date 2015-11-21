@@ -2,6 +2,10 @@ require 'rss'
 
 class HomeController < ApplicationController
   def index
+    @hot = Cms::Article.where(lang: I18n.locale).order(visits: :desc).limit(20)
+    @latest = Cms::Article.where(lang: I18n.locale).order(id: :desc).limit(20)
+    @top = Cms::Article.where(top: true)
+    render layout: 'cms'
   end
 
   def about_us

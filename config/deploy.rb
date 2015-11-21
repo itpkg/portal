@@ -23,10 +23,17 @@ set :deploy_to, "/var/www/#{fetch :application}/#{fetch :stage}"
 # set :pty, true
 
 # Default value for :linked_files is []
-set :linked_files, fetch(:linked_files, []).push('config/database.yml', 'config/secrets.yml', 'config/sidekiq.yml', '.rbenv-vars')
+set :linked_files, fetch(:linked_files, []).push('config/database.yml',
+                                                 'config/secrets.yml',
+                                                 'config/sidekiq.yml',
+                                                 'config/fog.yml',
+                                                 '.rbenv-vars')
 
 # Default value for linked_dirs is []
-set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/assets/bower_components', 'public/3rd')
+set :linked_dirs, fetch(:linked_dirs, []).push('log',
+                                               'tmp/pids', 'tmp/cache', 'tmp/sockets',
+                                               'vendor/assets/bower_components',
+                                               'public/3rd', 'public/attachments')
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
