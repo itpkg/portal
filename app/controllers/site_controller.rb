@@ -19,12 +19,14 @@ class SiteController < ApplicationController
             render(json: {ok: false}) and return
           end
           map = JSON.parse res.body
+          puts '#'*80, map
           unless map['status'] == 'OK'
             render(json: {ok: false, data: map['status']}) and return
           end
           mrs = map['results'].first
           address = mrs['formatted_address']
           Setting.site_geometry = {lat: mrs['geometry']['location']['lat'], lng: mrs['geometry']['location']['lng']}
+          Setting.site_place_id = mrs['place_id']
         end
 
         Setting[_s_key('details')] = si.fetch :details

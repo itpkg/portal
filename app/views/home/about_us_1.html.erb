@@ -15,11 +15,7 @@
       <%= raw to_html(Setting.get_site_info('details')) %>
     </div>
 
-    <% if @place_id && @key %>
-        <iframe width="600" height="450" frameborder="0" style="border:0"
-                src="https://www.google.com/maps/embed/v1/place?q=place_id:<%= @place_id%>&key=<%= @key%>" allowfullscreen>
-        </iframe>
-    <% end %>
+    <div id="map"></div>
 
     <br/>
     <h4><%= t '.leave_message' %></h4>
@@ -32,3 +28,16 @@
   </div>
 </div>
 
+<% if @loc && @key %>
+    <script>
+      var map;
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: <%= @loc.fetch :lat %>, lng: <%= @loc.fetch :lng%>},
+          zoom: 8
+        });
+      }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=<%= @key %>&callback=initMap"
+            async defer></script>
+<% end %>

@@ -11,6 +11,7 @@ class HomeController < ApplicationController
   def about_us
     @key = Setting.google_map_browser_key
     @loc = Setting.site_geometry
+    @place_id = Setting.site_place_id
     @leave_word = LeaveWord.new
     render layout: 'cms'
   end
