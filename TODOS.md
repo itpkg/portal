@@ -2,7 +2,8 @@ DEVEL
 ---
 
 ## Todos
- * cms
+ * facebook/qq/weibo oauth
+ * cache page
 
 ## Notes
 ### Rails

@@ -39,6 +39,12 @@ zh-CN:
       title: 通知列表
       content: 内容
       created_at: 创建时间
+  friend_links:
+    index:
+      title: 友情链接
+      web_site: 站点
+      logo: 图标
+      created_at: 创建时间
   cms:
     users:
       index:

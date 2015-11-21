@@ -163,6 +163,7 @@ class SiteController < ApplicationController
         {href: site_adverts_path, title: 'site.index.adverts'},
         {href: site_map_path, title: 'site.index.map'},
         {href: notices_path, title: 'notices.index.title'},
+        {href: friend_links_path, title: 'friend_links.index.title'},
     ]
     render layout: 'personal'
   end

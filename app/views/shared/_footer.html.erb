@@ -1,4 +1,12 @@
 <hr/>
+<div class="row">
+  <% FriendLink.select(:home, :name, :logo).each do |fl| %>
+      <div class="col-sm-1">
+        <%= link_to (fl.logo ? image_tag(fl.logo, alt: fl.name, class: 'fill-div') : fl.name), fl.home, target: '_blank' %>
+      </div>
+  <% end %>
+</div>
+<hr/>
 <footer>
   <p class="pull-right">
     <%= link_to image_tag('famfamfam-flags/dist/png/cn.png'), url_for(locale: 'zh-CN'), target: '_blank' %>

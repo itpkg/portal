@@ -1,0 +1,36 @@
+<div id="friend_link-msg"></div>
+<%= simple_form_for(@friend_link, html: {id: 'friend_link'}) do |f| %>
+    <%= f.input :name, autofocus: true %>
+    <%= f.input :home %>
+    <%= f.input :logo %>
+    <%= f.button :submit, t('buttons.submit') %>
+<% end %>
+
+<br/>
+<table class="table table-bordered table-hover">
+  <thead>
+  <tr>
+    <th><%= t '.web_site' %></th>
+    <th><%= t '.created_at' %></th>
+    <th><%= t 'buttons.manage' %></th>
+  </tr>
+  </thead>
+  <tbody>
+
+  <% FriendLink.order(id: :desc).each do |fl| %>
+      <tr>
+        <td><%= link_to fl.name, fl.home, target: '_blank' %></td>
+        <td><%= time_ago_in_words fl.created_at %></td>
+        <td><%= image_tag(fl.logo) if fl.logo %></td>
+        <td><%= render 'shared/ajax_button', title: :remove, id: 'friend_link', sm: true, href: friend_link_path(fl) %></td>
+      </tr>
+  <% end %>
+
+  </tbody>
+</table>
+<script>
+  $(function () {
+    submit_form('friend_link');
+    on_remove_buttons('friend_link');
+  });
+</script>

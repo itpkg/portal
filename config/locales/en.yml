@@ -20,6 +20,9 @@ en:
   notices:
     index:
       title: Notices
+  friend_links:
+    index:
+      title: Friend links
   cms:
     users:
       index:

@@ -3,6 +3,10 @@ zh-CN:
     labels:
       leave_word:
         content: 内容
+      friend_link:
+        name: 名称
+        home: 主页
+        logo: 图标
       notice:
         content: 内容
       cms_tag:
