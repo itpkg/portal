@@ -61,6 +61,9 @@ zh-CN:
         summary: 摘要
         comments: 评论列表
         anonymous: 匿名
+        hot_articles: 热门文章
+        latest_articles: 最新文章
+        near_articles: 相近文章
     comments:
       edit:
         title: 编辑评论[%{id}]

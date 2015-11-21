@@ -1,6 +1,6 @@
 <% @title = @article.title %>
 <div class="row">
-  <div class="col-sm-offset-1 col-sm-10">
+  <div class="col-sm-offset-1 col-sm-8">
 
     <h2>
       <%= @article.title %>
@@ -54,6 +54,15 @@
           </footer>
         </blockquote>
     <% end %>
+
+  </div>
+
+  <div class="col-sm-2">
+    <%= render 'cms/articles/shared/article_panel', title: '.hot_articles', articles: @hot_articles %>
+    <br/>
+    <%= render 'cms/articles/shared/article_panel', title: '.latest_articles', articles: @latest_articles %>
+    <br/>
+    <%= render 'cms/articles/shared/article_panel', title: '.near_articles', articles: @near_articles %>
 
   </div>
 </div>

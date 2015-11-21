@@ -1,0 +1,9 @@
+<h4><%= t title %></h4>
+<hr/>
+<ul>
+  <% articles.each do |a| %>
+      <li>
+        <%= link_to a.title, cms_article_path(a), target: '_blank' %>
+      </li>
+  <% end %>
+</ul>
