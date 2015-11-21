@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(version: 20151120225746) do
     t.integer  "user_id",                                null: false
     t.string   "title",      limit: 255,                 null: false
     t.string   "summary",    limit: 800,                 null: false
+    t.string   "logo",       limit: 255
     t.boolean  "top",                    default: false, null: false
     t.text     "body",                                   null: false
     t.string   "lang",       limit: 5,   default: "en",  null: false
@@ -137,7 +138,7 @@ ActiveRecord::Schema.define(version: 20151120225746) do
     t.datetime "updated_at",                                       null: false
     t.string   "username",               limit: 255,               null: false
     t.string   "details",                limit: 255, default: " ", null: false
-    t.string   "logo",                                             null: false
+    t.string   "logo",                   limit: 255,               null: false
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree

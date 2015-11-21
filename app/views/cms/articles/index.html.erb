@@ -2,6 +2,9 @@
   <% @articles.each do |a| %>
       <div class="col-sm-3">
         <div class="card card-block">
+          <% if a.logo %>
+              <img class="card-img-top" src="<%= a.logo %>"/>
+          <% end %>
           <h4 class="card-title"><%= a.title %></h4>
 
           <p class="card-text"><%= a.summary %></p>

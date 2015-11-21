@@ -10,7 +10,18 @@ class Cms::Article < ActiveRecord::Base
   validates :summary, presence: true
   validates :body, presence: true
 
+  before_create :set_logo
+
   def can_edit?(u)
     u &&(self.user_id == u.id || u.is_admin?)
+  end
+
+  private
+  def set_logo
+    doc = Nokogiri::HTML(self.body)
+    img = doc.xpath('//img').first
+    if img
+      self.logo = img.attr 'src'
+    end
   end
 end
