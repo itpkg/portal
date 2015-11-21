@@ -6,7 +6,7 @@
     <%= simple_form_for(@article) do |f| %>
         <%= f.input :title, autofocus: true %>
         <%= f.input :summary, as: :text %>
-        <%= f.association :tags, as: :check_boxes, item_wrapper_class: 'checkbox-inline' %>
+        <%= f.association :tags, collection: Cms::Tag.select(:id, :name).where(lang: I18n.locale), as: :check_boxes, item_wrapper_class: 'checkbox-inline' %>
         <%= f.label :body %>
         <%= render 'shared/ueditor', content: @article.body, id: 'cms_article[body]' %>
         <%= f.button :submit, t('buttons.submit') %>

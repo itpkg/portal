@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151121062327) do
+ActiveRecord::Schema.define(version: 20151121155603) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -66,13 +66,15 @@ ActiveRecord::Schema.define(version: 20151121062327) do
   add_index "cms_comments", ["user_id"], name: "index_cms_comments_on_user_id", using: :btree
 
   create_table "cms_tags", force: :cascade do |t|
-    t.string   "name",                   null: false
-    t.integer  "visits",     default: 0, null: false
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.string   "name",                      null: false
+    t.integer  "visits",     default: 0,    null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.string   "lang",       default: "en", null: false
   end
 
-  add_index "cms_tags", ["name"], name: "index_cms_tags_on_name", unique: true, using: :btree
+  add_index "cms_tags", ["lang", "name"], name: "index_cms_tags_on_lang_and_name", unique: true, using: :btree
+  add_index "cms_tags", ["lang"], name: "index_cms_tags_on_lang", using: :btree
 
   create_table "friend_links", force: :cascade do |t|
     t.string   "home",       limit: 255, null: false

@@ -20,8 +20,8 @@ class Cms::ArticlesController < ApplicationController
     @article = Cms::Article.find params[:id]
     @article.update_column :visits, @article.visits+1
 
-    @hot_articles = Cms::Article.select(:id, :title).order(visits: :desc).limit(12)
-    @latest_articles = Cms::Article.select(:id, :title).order(id: :desc).limit(12)
+    @hot_articles = Cms::Article.select(:id, :title).where(lang: I18n.locale).order(visits: :desc).limit(12)
+    @latest_articles = Cms::Article.select(:id, :title).where(lang: I18n.locale).order(id: :desc).limit(12)
     @near_articles = Cms::Article.select(:id, :title).where('id >= ? AND id <= ?', @article.id-6, @article.id+6).order(visits: :desc).limit(12)
 
     @comment = Cms::Comment.new article: @article
