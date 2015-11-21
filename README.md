@@ -15,7 +15,7 @@ Portal system (by rails)
     su - deploy
     mkdir .ssh
     chmod 700 .ssh    
-    cat /tmp/id_rsa.pub > ~/.ssh/authorized_keys
+    cat /tmp/id_rsa.pub >> ~/.ssh/authorized_keys
     
 #### Install packages (as root)
     apt-get update
