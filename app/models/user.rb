@@ -16,7 +16,7 @@ class User < ActiveRecord::Base
   has_many :attachments
   has_many :articles, class_name: 'Cms::Article'
 
-  before_create :set_logo
+  before_validation :set_logo
 
 
   def send_devise_notification(notification, *args)
