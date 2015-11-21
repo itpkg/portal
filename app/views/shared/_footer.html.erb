@@ -1,9 +1,9 @@
-<% cache expires_in: 1.day do %>
+<% cache "footer/#{I18n.locale}", expires_in: 1.day do %>
 <hr/>
 <div class="row">
   <% FriendLink.select(:home, :name, :logo).each do |fl| %>
       <div class="col-sm-1">
-        <%= link_to (fl.logo ? image_tag(fl.logo, alt: fl.name, class: 'fill-div') : fl.name), fl.home, target: '_blank' %>
+        <%= link_to (fl.logo && !fl.logo.empty? ? image_tag(fl.logo, alt: fl.name, class: 'fill-div') : fl.name), fl.home, target: '_blank' %>
       </div>
   <% end %>
 </div>
