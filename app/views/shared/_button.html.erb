@@ -1,7 +1,7 @@
 <% case title %>
 <% when :remove %>
     <%= link_to t('buttons.remove'), href, class: "btn btn-danger #{'btn-sm' if sm}", method: :delete, data: {confirm: t('messages.are_you_sure')} %>
-<% when :view %>
+<% when :show %>
     <%= link_to t('buttons.view'), href, class: "btn btn-secondary #{'btn-sm' if sm}" %>
 <% when :new %>
     <%= link_to t('buttons.new'), href, class: "btn btn-success #{'btn-sm' if sm}" %>

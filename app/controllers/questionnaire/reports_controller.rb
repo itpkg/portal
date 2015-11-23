@@ -3,15 +3,25 @@ class Questionnaire::ReportsController < ApplicationController
   layout 'personal'
 
   def result
-    
+    @report = Questionnaire::Report.find params[:report_id]
+    qus = @report.questions.select(:name, :id).order id: :asc
+    @answers = Questionnaire::Answer.select(:uid).order(uid: :desc).distinct.map do |a|
+      {
+          id: a.uid,
+          created_at: Questionnaire::Answer.where(uid: a.uid).first.created_at,
+          args: qus.map { |q| "#{q.name}: #{Questionnaire::Answer.select(:content).where(uid: a.uid, question_id: q).first.content}" }
+      }
+    end
+    render layout: 'cms'
   end
 
   def answer
     if recaptcha?
       uid = SecureRandom.uuid
+      now = Time.now
       r = Questionnaire::Report.select(:id).find params[:report_id]
       r.questions.select(:id).each do |q|
-        Questionnaire::Answer.create question_id: q.id, content:params["f_#{q.id}".to_sym], uid:uid
+        Questionnaire::Answer.create question_id: q.id, content: params["f_#{q.id}".to_sym], uid: uid, created_at: now
       end
       flash[:notice] = t 'messages.success'
     else

@@ -1,20 +1,20 @@
 <% cache expires_in: 1.day do %>
-<div class="row">
-  <% @articles.each do |a| %>
-      <div class="col-sm-3">
-        <div class="card card-block">
-          <% if a.logo %>
-              <img class="card-img-top fill-div" src="<%= a.logo %>"/>
-          <% end %>
-          <h4 class="card-title"><%= a.title %></h4>
+    <div class="row">
+      <% @articles.each do |a| %>
+          <div class="col-sm-3">
+            <div class="card card-block">
+              <% if a.logo %>
+                  <img class="card-img-top fill-div" src="<%= a.logo %>"/>
+              <% end %>
+              <h4 class="card-title"><%= a.title %></h4>
 
-          <p class="card-text"><%= a.summary %></p>
-          <%= link_to t('buttons.view'), cms_article_path(a), class: 'card-link' %>
-        </div>
-      </div>
-  <% end %>
-</div>
-<div class="row text-center">
-  <%= paginate @articles %>
-</div>
+              <p class="card-text"><%= a.summary %></p>
+              <%= link_to t('buttons.view'), cms_article_path(a), class: 'card-link' %>
+            </div>
+          </div>
+      <% end %>
+    </div>
+    <div class="row text-center">
+      <%= paginate @articles %>
+    </div>
 <% end %>

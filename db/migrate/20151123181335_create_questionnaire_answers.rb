@@ -4,7 +4,7 @@ class CreateQuestionnaireAnswers < ActiveRecord::Migration
       t.belongs_to :question, index: true, null: false
       t.text :content
       t.string :uid, null:false, limit:36
-      t.timestamps null: false
+      t.datetime :created_at, null: false
     end
     add_index :questionnaire_answers, :uid
   end

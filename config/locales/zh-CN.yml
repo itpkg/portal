@@ -10,6 +10,8 @@ zh-CN:
     search: 站内搜索
   questionnaire:
     reports:
+      result:
+        title: 问卷[%{title}]的结果
       edit:
         title: 编辑问卷 [%{title}]
         add: 添加问题

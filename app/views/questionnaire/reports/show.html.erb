@@ -3,6 +3,7 @@
     <h3>
       <%= @title = t '.title', title: @report.title %>
       <% if current_user && current_user.is_admin? %>
+          <%= render 'shared/button', title: :show, href: questionnaire_report_result_path(@report), sm: true %>
           <%= render 'shared/button', title: :edit, href: edit_questionnaire_report_path(@report), sm: true %>
       <% end %>
     </h3>
@@ -18,10 +19,12 @@
               <% case %>
               <% when q.y_n? %>
                   <label>
-                    <input type="radio" name="<%= id %>" value=true><%= t 'buttons.y' %>
+                    <input type="radio" name="<%= id %>" value="<%= t 'buttons.y' %>">
+                    <%= t 'buttons.y' %>
                   </label>
                   <label>
-                    <input type="radio" name="<%= id %>" value=false><%= t 'buttons.n' %>
+                    <input type="radio" name="<%= id %>" value="<%= t 'buttons.y' %>">
+                    <%= t 'buttons.n' %>
                   </label>
               <% when q.single? %>
                   <%= text_field_tag id, '', class: 'form-control' %>

@@ -11,7 +11,7 @@
         <td><%= raw to_html(i.content) %></td>
         <td><%= time_ago_in_words i.updated_at %></td>
         <td>
-            <%= render 'shared/button', title: :remove, sm: true, href: questionnaire_path(i) %>
+          <%= render 'shared/button', title: :remove, sm: true, href: questionnaire_path(i) %>
         </td>
       </tr>
   <% end %>

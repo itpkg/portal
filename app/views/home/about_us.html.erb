@@ -3,6 +3,7 @@
   #map {
     height: 100%;
   }
+
   html, body {
     height: 100%;
   }
@@ -17,7 +18,7 @@
 
     <% if @place_id && @key %>
         <iframe width="600" height="450" frameborder="0" style="border:0"
-                src="https://www.google.com/maps/embed/v1/place?q=place_id:<%= @place_id%>&key=<%= @key%>" allowfullscreen>
+                src="https://www.google.com/maps/embed/v1/place?q=place_id:<%= @place_id %>&key=<%= @key %>" allowfullscreen>
         </iframe>
     <% end %>
 

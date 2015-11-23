@@ -110,7 +110,6 @@ ActiveRecord::Schema.define(version: 20151123181335) do
     t.text     "content"
     t.string   "uid",         limit: 36, null: false
     t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
   end
 
   add_index "questionnaire_answers", ["question_id"], name: "index_questionnaire_answers_on_question_id", using: :btree

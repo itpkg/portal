@@ -38,6 +38,7 @@ Rails.application.routes.draw do
 
 
   namespace :questionnaire do
+    resources :answers, only: [:destroy]
     resources :questions, except: [:index, :show]
     resources :reports do
       post :answer

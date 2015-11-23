@@ -1,30 +1,30 @@
 <% cache "footer/#{I18n.locale}", expires_in: 1.day do %>
-<hr/>
-<div class="row">
-  <% FriendLink.select(:home, :name, :logo).each do |fl| %>
-      <div class="col-sm-1">
-        <%= link_to (fl.logo && !fl.logo.empty? ? image_tag(fl.logo, alt: fl.name, class: 'fill-div') : fl.name), fl.home, target: '_blank' %>
-      </div>
-  <% end %>
-</div>
-<hr/>
-<footer>
-  <p class="pull-right">
-    <%= link_to image_tag('famfamfam-flags/dist/png/cn.png'), url_for(locale: 'zh-CN'), target: '_blank' %>
-    &nbsp;
-    <%= link_to image_tag('famfamfam-flags/dist/png/us.png'), url_for(locale: 'en'), target: '_blank' %>
-    &nbsp;
-    <%= link_to image_tag('famfamfam-silk/dist/png/rss.png'), rss_path, target: '_blank' %>
-    &nbsp;
-    <%= link_to t('links.back_to_top'), request.fullpath %>
-  </p>
+    <hr/>
+    <div class="row">
+      <% FriendLink.select(:home, :name, :logo).each do |fl| %>
+          <div class="col-sm-1">
+            <%= link_to (fl.logo && !fl.logo.empty? ? image_tag(fl.logo, alt: fl.name, class: 'fill-div') : fl.name), fl.home, target: '_blank' %>
+          </div>
+      <% end %>
+    </div>
+    <hr/>
+    <footer>
+      <p class="pull-right">
+        <%= link_to image_tag('famfamfam-flags/dist/png/cn.png'), url_for(locale: 'zh-CN'), target: '_blank' %>
+        &nbsp;
+        <%= link_to image_tag('famfamfam-flags/dist/png/us.png'), url_for(locale: 'en'), target: '_blank' %>
+        &nbsp;
+        <%= link_to image_tag('famfamfam-silk/dist/png/rss.png'), rss_path, target: '_blank' %>
+        &nbsp;
+        <%= link_to t('links.back_to_top'), request.fullpath %>
+      </p>
 
-  <p>
-    <%= raw t('links.build_by_html', version:current_version) %>
-    &nbsp;
-    <%= "#{t 'simple_form.labels.about_us.address'}: #{Setting.site_address}" %>
-    &nbsp;
-    <%= Setting.get_site_info 'copyright' %>
-  </p>
-</footer>
+      <p>
+        <%= raw t('links.build_by_html', version: current_version) %>
+        &nbsp;
+        <%= "#{t 'simple_form.labels.about_us.address'}: #{Setting.site_address}" %>
+        &nbsp;
+        <%= Setting.get_site_info 'copyright' %>
+      </p>
+    </footer>
 <% end %>

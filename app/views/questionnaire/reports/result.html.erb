@@ -1,0 +1,24 @@
+<div class="row">
+  <div class="col-md-offset-1 col-md-10">
+
+    <h3><%= @title = t '.title', title: @report.title %></h3>
+    <hr/>
+    <p>
+      <%= raw to_html(@report.summary) %>
+    </p>
+    <% @answers.each do |a| %>
+        <blockquote class="blockquote">
+          <p>
+            <%= raw a.fetch(:args).join('<br/>') %>
+          </p>
+          <footer>
+            <% time_ago_in_words a.fetch(:created_at) %>
+            <em>
+              <%= render 'shared/button', title: :remove, sm: true, href: questionnaire_answer_path(a.fetch(:id), report_id: @report.id) %>
+            </em>
+          </footer>
+        </blockquote>
+    <% end %>
+
+  </div>
+</div>

@@ -9,6 +9,8 @@ en:
     search: Search in site
   questionnaire:
     reports:
+      result:
+        title: result of [%{title}]
       index:
         title: Questionnaires
       edit:

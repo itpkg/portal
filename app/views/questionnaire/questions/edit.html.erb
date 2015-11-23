@@ -1,8 +1,8 @@
 <%= simple_form_for @question do |f| %>
     <%= f.input :report_id, as: :hidden %>
     <%= f.input :name, autofocus: true %>
-    <%= f.input :flag, as: :radio_buttons, collection: Questionnaire::Question.flags.map { |k, _| k.to_sym }, label_method: lambda {|f| t "simple_form.labels.questionnaire_question.flag_#{f}" }, item_wrapper_class: 'radio-inline' %>
+    <%= f.input :flag, as: :radio_buttons, collection: Questionnaire::Question.flags.map { |k, _| k.to_sym }, label_method: lambda { |f| t "simple_form.labels.questionnaire_question.flag_#{f}" }, item_wrapper_class: 'radio-inline' %>
     <%= f.input :args, as: :text %>
     <%= f.button :submit, t('buttons.submit') %>
-    <%= link_to t('buttons.back'), :back%>
+    <%= link_to t('buttons.back'), :back %>
 <% end %>
