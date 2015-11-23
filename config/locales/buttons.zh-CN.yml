@@ -18,4 +18,8 @@ zh-CN:
     comment: 评论
     previous: 前一个
     next: 后一个
+    y: 是
+    n: 否
+    ok: 确定
+    cance: 取消
 

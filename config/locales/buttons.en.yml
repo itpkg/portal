@@ -18,3 +18,7 @@ en:
     comment: Comment
     previous: Previous
     next: Next
+    y: Yes
+    n: No
+    ok: Ok
+    cance: Cancel

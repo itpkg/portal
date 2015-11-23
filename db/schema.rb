@@ -107,14 +107,14 @@ ActiveRecord::Schema.define(version: 20151123181335) do
 
   create_table "questionnaire_answers", force: :cascade do |t|
     t.integer  "question_id",            null: false
-    t.text     "content",                null: false
+    t.text     "content"
     t.string   "uid",         limit: 36, null: false
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end
 
   add_index "questionnaire_answers", ["question_id"], name: "index_questionnaire_answers_on_question_id", using: :btree
-  add_index "questionnaire_answers", ["uid"], name: "index_questionnaire_answers_on_uid", unique: true, using: :btree
+  add_index "questionnaire_answers", ["uid"], name: "index_questionnaire_answers_on_uid", using: :btree
 
   create_table "questionnaire_questions", force: :cascade do |t|
     t.integer  "report_id",                          null: false

@@ -1,10 +1,41 @@
-<h3>
-  <%= @title = t '.title', title:@report.title %>
-  <% if current_user && current_user.is_admin? %>
-      <%= render 'shared/button', title: :edit, href: edit_questionnaire_report_path(@report), sm: true %>
-  <% end %>
-</h3>
-<hr/>
-<p>
-  <%= raw to_html(@report.summary)%>
-</p>
+<div class="row">
+  <div class="col-md-offset-1 col-md-10">
+    <h3>
+      <%= @title = t '.title', title: @report.title %>
+      <% if current_user && current_user.is_admin? %>
+          <%= render 'shared/button', title: :edit, href: edit_questionnaire_report_path(@report), sm: true %>
+      <% end %>
+    </h3>
+    <hr/>
+    <p>
+      <%= raw to_html(@report.summary) %>
+    </p>
+    <%= form_tag questionnaire_report_answer_path(@report) do |q| %>
+        <% @report.questions.order(id: :asc).each do |q| %>
+            <% id = "f_#{q.id}" %>
+            <div class="form-group">
+              <%= label_tag id, q.name %>
+              <% case %>
+              <% when q.y_n? %>
+                  <label>
+                    <input type="radio" name="<%= id %>" value=true><%= t 'buttons.y' %>
+                  </label>
+                  <label>
+                    <input type="radio" name="<%= id %>" value=false><%= t 'buttons.n' %>
+                  </label>
+              <% when q.single? %>
+                  <%= text_field_tag id, '', class: 'form-control' %>
+              <% when q.multi? %>
+                  <%= text_area_tag id, '', class: 'form-control' %>
+              <% else %>
+              <% end %>
+            </div>
+        <% end %>
+
+        <p>
+          <%= render 'shared/recaptcha' %>
+        </p>
+        <%= submit_tag t('buttons.submit'), class: 'btn btn-primary' %>
+    <% end %>
+  </div>
+</div>

@@ -38,9 +38,11 @@ Rails.application.routes.draw do
 
 
   namespace :questionnaire do
-    resources :answers
     resources :questions, except: [:index, :show]
-    resources :reports
+    resources :reports do
+      post :answer
+      get :result
+    end
   end
 
   resources :friend_links, only:[:index, :create, :destroy]
