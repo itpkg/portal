@@ -7,10 +7,9 @@
       <%= (@article.top ? link_to(t('.top_off'), cms_article_top_path(@article, act: :disable), method: :post, class: 'btn btn-sm btn-info') : link_to(t('.top_on'), cms_article_top_path(@article, act: :enable), method: :post, class: 'btn btn-sm btn-danger')) if current_user && current_user.is_admin? %>
     </h2>
     <hr/>
-    <p></p>
 
     <p>
-      <%= t '.summary' %> : <%= @article.summary %>
+      <%= t '.summary' %> : <b><%= @article.summary %></b>
       <br/>
       <%= t '.author' %>: <%= link_to @article.user.username, cms_user_path(@article.user) %>
       <% if @article.can_edit? current_user %>
@@ -60,7 +59,9 @@
   <div class="col-sm-2">
     <%= render 'cms/articles/shared/article_panel', title: 'cms.articles.show.hot_articles', articles: @hot_articles %>
     <br/>
-    <%= render 'cms/articles/shared/article_panel', title: 'cms.articles.show.latest_articles', articles: @latest_articles %>
+    <% cache "latest_articles/#{I18n.locale}", expires_in: 1.day do %>
+        <%= render 'cms/articles/shared/article_panel', title: 'cms.articles.show.latest_articles', articles: @latest_articles %>
+    <% end %>
     <br/>
     <%= render 'cms/articles/shared/article_panel', title: 'cms.articles.show.near_articles', articles: @near_articles %>
 

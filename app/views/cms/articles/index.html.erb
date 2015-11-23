@@ -1,3 +1,4 @@
+<% cache expires_in: 1.day do %>
 <div class="row">
   <% @articles.each do |a| %>
       <div class="col-sm-3">
@@ -16,3 +17,4 @@
 <div class="row text-center">
   <%= paginate @articles %>
 </div>
+<% end %>

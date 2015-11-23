@@ -5,8 +5,11 @@ Portal system (by rails)
 
 ### On server
 
-#### Setup mail server
-    sudo apt-get install exim4
+#### Setup mail server(as root)
+    apt-get install exim4
+    
+##### "** no-reply@xxx.com R=nonlocal: Mailing to remote domains not supported"
+    dpkg-reconfigure exim4-config # change to internet
 
 
 #### Create deploy user (as root)
