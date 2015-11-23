@@ -7,12 +7,7 @@ en:
     are_you_sure: Are you sure?
   placeholders:
     search: Search in site
-  questionnaires:
-    index:
-      title: Questionnaires
   home:
-    index:
-      title: Home
     about_us:
       leave_message: Leave me a messsage(only master can see it)
     search:
