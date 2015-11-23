@@ -1,0 +1,5 @@
+en:
+  table:
+    columns:
+      created_at: Created at
+      updated_at: 上次更新

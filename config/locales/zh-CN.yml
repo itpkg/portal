@@ -8,12 +8,17 @@ zh-CN:
   placeholders:
     search: 站内搜索
   home:
+    index:
+      title: 主页
     about_us:
       leave_message: 给我留言(仅管理员可见)
     search:
       title:
         index: 站内搜索
         results: 搜索[%{keyword}]的结果
+  questionnaires:
+    index:
+      title: 问卷调查
   utils:
     index:
       encode: 编码

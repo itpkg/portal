@@ -1,0 +1,6 @@
+zh-CN:
+  table:
+    columns:
+      title: 标题
+      created_at: 创建时间
+      updated_at: 上次更新

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151121155603) do
+ActiveRecord::Schema.define(version: 20151123181335) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -104,6 +104,38 @@ ActiveRecord::Schema.define(version: 20151121155603) do
   end
 
   add_index "notices", ["lang"], name: "index_notices_on_lang", using: :btree
+
+  create_table "questionnaire_answers", force: :cascade do |t|
+    t.integer  "question_id",            null: false
+    t.text     "content",                null: false
+    t.string   "uid",         limit: 36, null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "questionnaire_answers", ["question_id"], name: "index_questionnaire_answers_on_question_id", using: :btree
+  add_index "questionnaire_answers", ["uid"], name: "index_questionnaire_answers_on_uid", unique: true, using: :btree
+
+  create_table "questionnaire_questions", force: :cascade do |t|
+    t.integer  "report_id",                          null: false
+    t.string   "name",       limit: 255,             null: false
+    t.integer  "flag",                   default: 0, null: false
+    t.string   "def_val",    limit: 800
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+  end
+
+  add_index "questionnaire_questions", ["report_id"], name: "index_questionnaire_questions_on_report_id", using: :btree
+
+  create_table "questionnaire_reports", force: :cascade do |t|
+    t.string   "title",      limit: 255,                null: false
+    t.string   "lang",       limit: 5,   default: "en"
+    t.string   "summary",    limit: 800,                null: false
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+  end
+
+  add_index "questionnaire_reports", ["lang"], name: "index_questionnaire_reports_on_lang", using: :btree
 
   create_table "roles", force: :cascade do |t|
     t.string   "name"

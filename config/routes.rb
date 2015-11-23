@@ -37,6 +37,12 @@ Rails.application.routes.draw do
   get 'google(*id)', to: 'home#google', as: :google, format: true, constraints: {format: :html}
 
 
+  namespace :questionnaire do
+    resources :answers
+    resources :questions
+    resources :reports
+  end
+
   resources :friend_links, only:[:index, :create, :destroy]
   resources :leave_words, only:[:index, :create, :destroy]
   get 'utils' =>'utils#index'
