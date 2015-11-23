@@ -3,7 +3,7 @@ class Questionnaire::ReportsController < ApplicationController
   layout 'personal'
 
   def index
-    @reports = initialize_grid(Questionnaire::Report.select(:id, :title, :updated_at).where(lang: params[:locale]).order(id: :desc))
+    @reports = initialize_grid(Questionnaire::Report.select(:id, :title, :updated_at).order(id: :desc))
   end
 
   def new
@@ -12,7 +12,6 @@ class Questionnaire::ReportsController < ApplicationController
 
   def create
     r = Questionnaire::Report.new __params
-    r.lang = params[:locale]
     if r.save
       flash[:notice] = t 'messages.success'
 

@@ -13,9 +13,9 @@ en:
         title: Questionnaires
       edit:
         title: Edit questionnaire for [%{title}]
+        add: Add question
       show:
         title: Questionnaire for [%{title}]
-    questions:
   home:
     index:
       title: Home

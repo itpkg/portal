@@ -1,6 +1,13 @@
 zh-CN:
   simple_form:
     labels:
+      questionnaire_question:
+        name: 名称
+        args: 参数
+        flag: 类型
+        flag_y_n: 是或否
+        flag_single: 单行输入
+        flag_multi: 多行输入
       questionnaire_report:
         title: 名称
         summary: 简介

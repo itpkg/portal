@@ -39,7 +39,7 @@ Rails.application.routes.draw do
 
   namespace :questionnaire do
     resources :answers
-    resources :questions
+    resources :questions, except: [:index, :show]
     resources :reports
   end
 

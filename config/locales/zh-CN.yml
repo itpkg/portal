@@ -12,6 +12,8 @@ zh-CN:
     reports:
       edit:
         title: 编辑问卷 [%{title}]
+        add: 添加问题
+        questions: 问题列表
       show:
         title: 问卷调查[%{title}]
       index:

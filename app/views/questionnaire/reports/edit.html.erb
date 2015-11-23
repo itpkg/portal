@@ -1,7 +1,26 @@
-<h3><%= @title = t '.title', title:@report.title%></h3>
+<h3>
+  <%= @title = t '.title', title: @report.title %>
+  <%= link_to t('.add'), new_questionnaire_question_path(report_id: @report.id), class: 'btn btn-success btn-sm' %>
+</h3>
 <hr/>
-<%= simple_form_for(@report, html: {id: 'notice'}) do |f| %>
+<%= simple_form_for @report do |f| %>
     <%= f.input :title, autofocus: true %>
     <%= f.input :summary, as: :text %>
+    <h4><%= t '.questions' %></h4>
+    <hr/>
+
+    <% @report.questions.each do |q| %>
+        <blockquote class="blockquote">
+          <p>
+            <%= q.name %>
+          </p>
+          <footer>
+            <%= render 'shared/button', title: :edit, href: edit_questionnaire_question_path(q), sm: true %>
+            <%= render 'shared/button', title: :remove, href: questionnaire_question_path(q), sm: true %>
+          </footer>
+        </blockquote>
+    <% end %>
+
     <%= f.button :submit, t('buttons.submit') %>
+    <%= link_to t('buttons.back'), :back%>
 <% end %>

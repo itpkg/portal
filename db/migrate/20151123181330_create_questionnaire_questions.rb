@@ -4,7 +4,7 @@ class CreateQuestionnaireQuestions < ActiveRecord::Migration
       t.belongs_to :report, index: true, null: false
       t.string :name, limit:255, null:false
       t.integer :flag, null:false, default:0
-      t.string :def_val, limit:800
+      t.string :args, limit:800
       t.timestamps null: false
     end
   end

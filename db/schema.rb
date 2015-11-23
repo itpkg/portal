@@ -120,7 +120,7 @@ ActiveRecord::Schema.define(version: 20151123181335) do
     t.integer  "report_id",                          null: false
     t.string   "name",       limit: 255,             null: false
     t.integer  "flag",                   default: 0, null: false
-    t.string   "def_val",    limit: 800
+    t.string   "args",       limit: 800
     t.datetime "created_at",                         null: false
     t.datetime "updated_at",                         null: false
   end
@@ -128,14 +128,11 @@ ActiveRecord::Schema.define(version: 20151123181335) do
   add_index "questionnaire_questions", ["report_id"], name: "index_questionnaire_questions_on_report_id", using: :btree
 
   create_table "questionnaire_reports", force: :cascade do |t|
-    t.string   "title",      limit: 255,                null: false
-    t.string   "lang",       limit: 5,   default: "en"
-    t.string   "summary",    limit: 800,                null: false
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
+    t.string   "title",      limit: 255, null: false
+    t.string   "summary",    limit: 800, null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
-
-  add_index "questionnaire_reports", ["lang"], name: "index_questionnaire_reports_on_lang", using: :btree
 
   create_table "roles", force: :cascade do |t|
     t.string   "name"

@@ -1,6 +1,11 @@
 en:
   simple_form:
     labels:
+      questionnaire_question:
+        flag: Type
+        flag_y_n: Yes or No
+        flag_single: Single line text
+        flag_multi: Multi lines text
       cms_article:
         pictures: Pictures (one line per url)
       about_us:
