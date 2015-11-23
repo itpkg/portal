@@ -7,7 +7,18 @@ en:
     are_you_sure: Are you sure?
   placeholders:
     search: Search in site
+  questionnaire:
+    reports:
+      index:
+        title: Questionnaires
+      edit:
+        title: Edit questionnaire for [%{title}]
+      show:
+        title: Questionnaire for [%{title}]
+    questions:
   home:
+    index:
+      title: Home
     about_us:
       leave_message: Leave me a messsage(only master can see it)
     search:

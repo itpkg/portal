@@ -8,7 +8,17 @@ zh-CN:
     unknown: 未知
   placeholders:
     search: 站内搜索
+  questionnaire:
+    reports:
+      edit:
+        title: 编辑问卷 [%{title}]
+      show:
+        title: 问卷调查[%{title}]
+      index:
+        title: 问卷调查
   home:
+    index:
+      title: 主页
     about_us:
       leave_message: 给我留言(仅管理员可见)
     search:

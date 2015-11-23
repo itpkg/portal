@@ -1,0 +1,15 @@
+<% @title = t '.title' %>
+<p>
+  <%= render 'shared/button', title: :new, href: new_questionnaire_report_path, sm: true %>
+</p>
+<%= grid(@reports) do |g|
+  g.column name: t('table.columns.title') do |i|
+    link_to i.title, questionnaire_report_path(i), target: '_blank'
+  end
+  g.column name: t('table.columns.updated_at') do |i|
+    time_ago_in_words i.updated_at
+  end
+  g.column name: t('buttons.manage') do |i|
+    render 'shared/button', title: :remove, href: questionnaire_report_path(i), sm: true
+  end
+end -%>

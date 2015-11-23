@@ -1,5 +1,6 @@
 en:
   table:
     columns:
+      title: Title
       created_at: Created at
-      updated_at: 上次更新
+      updated_at: Updated at

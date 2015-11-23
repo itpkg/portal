@@ -1,6 +1,9 @@
 zh-CN:
   simple_form:
     labels:
+      questionnaire_report:
+        title: 名称
+        summary: 简介
       leave_word:
         content: 内容
       friend_link:

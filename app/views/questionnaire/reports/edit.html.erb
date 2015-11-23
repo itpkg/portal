@@ -1,0 +1,7 @@
+<h3><%= @title = t '.title', title:@report.title%></h3>
+<hr/>
+<%= simple_form_for(@report, html: {id: 'notice'}) do |f| %>
+    <%= f.input :title, autofocus: true %>
+    <%= f.input :summary, as: :text %>
+    <%= f.button :submit, t('buttons.submit') %>
+<% end %>
