@@ -10,5 +10,6 @@ SitemapGenerator::Sitemap.create(default_host: "https://#{ENV['PORTAL_DOMAIN']}"
     User.select(:id).each { |u| add cms_users_path(u, locale: l), changefreq: :daily, priority: 0.2 }
   end
 
+  Questionnaire::Report.select(:id).order(id: :desc).each { |r| add questionnaire_report_path(r), changefreq: :yearly, priority: 0.3 }
 
 end
