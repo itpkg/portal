@@ -11,6 +11,9 @@ Portal system (by rails)
 ##### "** no-reply@xxx.com R=nonlocal: Mailing to remote domains not supported"
     dpkg-reconfigure exim4-config # change to internet
 
+#### For ec2
+ * [https://aws.amazon.com/forms/ec2-email-limit-rdns-request?catalog=true&isauthcode=true]
+
 
 #### Create deploy user (as root)
     useradd -s /bin/bash -m deploy

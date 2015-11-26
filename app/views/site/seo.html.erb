@@ -1,6 +1,7 @@
 <div id="seo-msg"></div>
 <%= simple_form_for 'seo', html: {id: 'seo'} do |f| %>
     <%= f.input :google_search_id, autofocus: true, input_html: {value: Setting.google_search_id} %>
+    <%= f.input :google_tracking_id, input_html: {value: Setting.google_tracking_id} %>
     <%= f.input :google_site_id, input_html: {value: Setting.google_site_id} %>
     <br/>
     <%= f.input :baidu_site_id, input_html: {value: Setting.baidu_site_id} %>

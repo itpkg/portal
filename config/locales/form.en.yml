@@ -18,6 +18,7 @@ en:
         server_key: Google map server key
       seo:
         google_search_id: Google search id
+        google_tracking_id: Google tracking id
         google_site_id: Google site id
         baidu_site_id: Baidu site id
         robots_txt: robots.txt

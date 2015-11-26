@@ -40,6 +40,7 @@ zh-CN:
         google_search_id: 谷歌搜索ID
         google_site_id: 谷歌站点ID
         baidu_site_id: 百度站点ID
+        google_tracking_id: 谷歌统计ID
         robots_txt: robots.txt
       site:
         favicon: favicon.ico
