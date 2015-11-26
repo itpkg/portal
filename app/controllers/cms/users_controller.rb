@@ -3,9 +3,13 @@ class Cms::UsersController < ApplicationController
 
   def show
     user=User.select(:id, :username).find params[:id]
-    @articles = user.articles.select(:id, :summary, :title, :logo).order(id: :desc).page params[:page]
-    @title = t 'cms.users.show.title', name: user.username
-    render 'cms/articles/index'
+    if user.is_admin?
+      head :not_found
+    else
+      @articles = user.articles.select(:id, :summary, :title, :logo).order(id: :desc).page params[:page]
+      @title = t 'cms.users.show.title', name: user.username
+      render 'cms/articles/index'
+    end
   end
 
   def index
