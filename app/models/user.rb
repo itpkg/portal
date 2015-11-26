@@ -27,7 +27,7 @@ class User < ActiveRecord::Base
   private
   def set_logo
     unless self.logo
-      self.logo = "http://gravatar.com/avatar/#{Digest::MD5.hexdigest(self.email.downcase.strip)}.png"
+      self.logo = "https://gravatar.com/avatar/#{Digest::MD5.hexdigest(self.email.downcase.strip)}.png"
     end
   end
 end
