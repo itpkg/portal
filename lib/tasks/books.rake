@@ -1,8 +1,9 @@
+require 'portal/book'
 
 namespace :books do
   desc 'convert books to html'
   task :convert do
-    root ="#{Rails.root}/tmp/books"
+    root = Portal::Book::ROOT
     Dir["#{root}/*.tex"].each do |f|
       puts "find file #{f}"
       tf = f[(root.size+1)..-1]
