@@ -3,7 +3,7 @@ namespace :cache do
   task :clear do
     on roles(:web) do |_|
       within release_path do | |
-        execute :rake, 'tmp:cache:clear'
+        execute :rake, 'cache:clear'
       end
     end
   end
