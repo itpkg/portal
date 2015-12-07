@@ -28,6 +28,8 @@ Rails.application.routes.draw do
 
   get 'personal/logs'
 
+  resources :books, only: [:index, :show]
+
   get 'about_us' => 'home#about_us'
   get 'search' => 'home#search'
   #get ':sitemap.xml.gz' => 'home#sitemap', format: false, as: :sitemap

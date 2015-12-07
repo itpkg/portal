@@ -18,6 +18,9 @@ en:
         add: Add question
       show:
         title: Questionnaire for [%{title}]
+  books:
+    index:
+      title: Books
   home:
     index:
       title: Home

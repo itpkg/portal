@@ -20,6 +20,9 @@ zh-CN:
         title: 问卷调查[%{title}]
       index:
         title: 问卷调查
+  books:
+    index:
+      title: 书籍列表
   home:
     index:
       title: 主页

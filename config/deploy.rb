@@ -31,7 +31,7 @@ set :linked_files, fetch(:linked_files, []).push('config/database.yml',
 
 # Default value for linked_dirs is []
 set :linked_dirs, fetch(:linked_dirs, []).push('log',
-                                               'tmp/pids', 'tmp/cache', 'tmp/sockets',
+                                               'tmp/pids', 'tmp/cache', 'tmp/sockets', 'tmp/books',
                                                'vendor/assets/bower_components',
                                                'public/3rd', 'public/attachments')
 

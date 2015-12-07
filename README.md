@@ -31,7 +31,7 @@ Portal system (by rails)
     apt-get update
     apt-get install build-essential
     apt-get install nginx postgresql redis-server 
-    apt-get install nodejs git npm imagemagick  
+    apt-get install nodejs git npm imagemagick pandoc
     apt-get install libreadline-dev libpq-dev
     apt-get clean
     
