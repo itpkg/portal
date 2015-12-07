@@ -1,4 +1,4 @@
-<% cache "footer/#{I18n.locale}", expires_in: 1.day do %>
+<% cache "footer/#{I18n.locale}" do %>
     <hr/>
     <div class="row">
       <% FriendLink.select(:home, :name, :logo).each do |fl| %>

@@ -1,11 +1,13 @@
 <% @title = t '.title' %>
-<div class="row">
-  <% @books.each do |b| %>
-      <div class="col-sm-3">
-        <div class="card card-block">
-          <h4 class="card-title"><%= b %></h4>
-          <%= link_to t('buttons.view'), book_path(b), class: 'card-link' %>
-        </div>
-      </div>
-  <% end %>
-</div>
+<% cache 'books' do %>
+    <div class="row">
+      <% @books.each do |b| %>
+          <div class="col-sm-3">
+            <div class="card card-block">
+              <h4 class="card-title"><%= b %></h4>
+              <%= link_to t('buttons.view'), book_path(b), class: 'card-link' %>
+            </div>
+          </div>
+      <% end %>
+    </div>
+<% end %>

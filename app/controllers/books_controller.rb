@@ -7,6 +7,7 @@ class BooksController < ApplicationController
     @title = params[:id]
     name = "#{Portal::Book::ROOT}/#{@title}.html"
     if File.exists?(name)
+      @books = Portal::Book.names
       @body = File.read name
     else
       head :not_found

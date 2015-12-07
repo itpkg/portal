@@ -103,3 +103,17 @@
         </div>
     <% end %>
 <% end %>
+
+<% cache 'books/sample' do %>
+    <hr/>
+    <div class="row">
+      <% @books.each do |b| %>
+          <div class="col-sm-2">
+            <div class="card card-block">
+              <h4 class="card-title"><%= b %></h4>
+              <%= link_to t('buttons.view'), book_path(b), class: 'card-link' %>
+            </div>
+          </div>
+      <% end %>
+    </div>
+<% end %>

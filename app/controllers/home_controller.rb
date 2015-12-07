@@ -1,10 +1,12 @@
 require 'rss'
+require 'portal/book'
 
 class HomeController < ApplicationController
   def index
     @hot = Cms::Article.select(:id, :title, :summary, :logo).where(lang: I18n.locale).order(visits: :desc).limit(8).select { |a| a.logo }
     @top = Cms::Article.select(:id, :title, :summary, :logo).where(top: true)
     @users = User.select(:id, :username, :details, :logo).order(sign_in_count: :desc).limit(4).select { |u| !u.is_admin? }
+    @books = Portal::Book.names.sample 6
     render layout: 'cms'
   end
 
