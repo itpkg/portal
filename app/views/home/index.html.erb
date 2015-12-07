@@ -38,10 +38,23 @@
     </a>
   </div>
 </div>
-<hr/>
+<br/>
 
 <div class="row">
-  <div class="col-md-10 col-md-offset-1">
+  <% @notices.each do |n| %>
+      <div class="col-md-2">
+        <blockquote class="blockquote">
+          <p><%= raw to_html(n.content)%></p>
+          <footer><%= time_ago_in_words n.created_at %></footer>
+        </blockquote>
+      </div>
+  <% end %>
+</div>
+
+
+<hr/>
+<div class="row">
+  <div class="col-md-offset-1 col-md-10">
     <div class="row">
       <% @users.each do |u| %>
           <div class="col-md-3">

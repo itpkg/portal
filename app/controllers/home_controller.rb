@@ -7,6 +7,7 @@ class HomeController < ApplicationController
     @top = Cms::Article.select(:id, :title, :summary, :logo).where(top: true)
     @users = User.select(:id, :username, :details, :logo).order(sign_in_count: :desc).limit(4).select { |u| !u.is_admin? }
     @books = Portal::Book.names.sample 6
+    @notices = Notice.select(:content, :created_at).where(lang: I18n.locale).order(id: :desc).limit(6)
     render layout: 'cms'
   end
 
