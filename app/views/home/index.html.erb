@@ -117,7 +117,7 @@
     <% end %>
 <% end %>
 
-<% cache 'books/sample' do %>
+<% cache "books/sample/#{I18n.locale}" do %>
     <hr/>
     <div class="row">
       <% @books.each do |b| %>
