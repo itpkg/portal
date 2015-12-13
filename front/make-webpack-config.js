@@ -50,6 +50,13 @@ module.exports = function (options) {
             }
         }));
 
+        plugins.push(new webpack.DefinePlugin({
+            "process.env": {
+                NODE_ENV: JSON.stringify("production")
+            }
+        }));
+        plugins.push(new webpack.NoErrorsPlugin());
+
     }
     plugins.push(new HtmlWebpackPlugin(htmlOptions));
 

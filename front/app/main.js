@@ -1,15 +1,19 @@
+"use strict";
+
 import React from 'react'
 import  ReactDOM  from 'react-dom'
-import { Router, Route, Link } from 'react-router'
+import { Router, Route, IndexRoute} from 'react-router'
 
-import {aboutUs, Home, noMatch, Version} from './Widgets'
+import {App, AboutUsPage, HomePage, NoMatchPage, Version} from './Widgets'
 
 
 ReactDOM.render(
     (<Router>
-        <Route path="about-us" component={aboutUs}/>
-        <Route path="home" component={Home}/>
-        <Route path="*" component={noMatch}/>
+        <Route path="/" component={App}>
+            <IndexRoute component={HomePage}/>
+            <Route path="about-us" component={AboutUsPage}/>
+        </Route>
+        <Route path="*" component={NoMatchPage}/>
     </Router>),
     document.getElementById('root')
 );

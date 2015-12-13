@@ -1,6 +1,4 @@
-module.exports = [
-	require("./make-webpack-config")({
-		prerender: true,
-		minimize: true
-	})
-];
+module.exports = require("./make-webpack-config")({
+    prerender: true,
+    minimize: true
+});

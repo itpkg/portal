@@ -12,27 +12,31 @@ const Footer = React.createClass({
     }
 });
 
-const aboutUs = React.createClass({
-    render(){
-        return (<div>About us</div>)
-    }
-});
-
-const home = React.createClass({
-    render(){
-        return (<div>Home</div>)
-    }
-});
-
-const noMatch = React.createClass({
-    render(){
-        return (<div>No match</div>)
-    }
-});
-
 module.exports = {
-    Home: home,
-    AboutUs: aboutUs,
-    NoMatch: noMatch,
+    App: React.createClass({
+        render(){
+            return (
+                <div>
+                    App
+                    <br/>
+                    {this.props.children}
+                </div>)
+        }
+    }),
+    HomePage: React.createClass({
+        render(){
+            return (<div>Home</div>)
+        }
+    }),
+    AboutUsPage: React.createClass({
+        render(){
+            return (<div>About us</div>)
+        }
+    }),
+    NoMatchPage: React.createClass({
+        render(){
+            return (<div>No match</div>)
+        }
+    }),
     Version: 'v20151212'
 };
