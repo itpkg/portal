@@ -1,42 +1,29 @@
 import React from 'react'
+import {Link} from 'react-router'
 
-const Header = React.createClass({
+const header = React.createClass({
     render(){
         return (<div> header </div>)
     }
 });
 
-const Footer = React.createClass({
+const footer = React.createClass({
     render(){
         return (<div>footer</div>)
     }
 });
 
+const noMatch = React.createClass({
+    render(){
+        return (<div>No match</div>)
+    }
+});
+
+const version = 'v20151212';
+
 module.exports = {
-    App: React.createClass({
-        render(){
-            return (
-                <div>
-                    App
-                    <br/>
-                    {this.props.children}
-                </div>)
-        }
-    }),
-    HomePage: React.createClass({
-        render(){
-            return (<div>Home</div>)
-        }
-    }),
-    AboutUsPage: React.createClass({
-        render(){
-            return (<div>About us</div>)
-        }
-    }),
-    NoMatchPage: React.createClass({
-        render(){
-            return (<div>No match</div>)
-        }
-    }),
-    Version: 'v20151212'
+    Header: header,
+    Footer: footer,
+    NoMatch: noMatch,
+    Version: version
 };
