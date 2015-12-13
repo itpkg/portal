@@ -13,15 +13,18 @@ module.exports = function (options) {
         ],
         react: [
             'react',
+            'react-dom',
+            'react-intl',
             'react-bootstrap',
             'react-router'
         ],
-        main: options.prerender ? "./config/mainPrerender" : "./config/mainApp"
+        main: "./app/main"
     };
 
 
     var loaders = [
-        {test: /\.jsx?$/, exclude: /node_modules/, loader: 'babel'},
+        {test: /\.jsx?$/, exclude: /node_modules/, loader: 'babel', query: {presets: ['react', 'es2015']}},
+
         {test: /\.css$/, loader: "style!css"},
         {test: /\.jpg$/, loader: "file-loader"},
         {test: /\.png$/, loader: "url-loader?mimetype=image/png"}
@@ -30,9 +33,11 @@ module.exports = function (options) {
     var plugins = [];
 
     var htmlOptions = {
-        favicon: './favicon.ico',
-        title: 'IT-PACKAGE Portal'
+        title: 'IT-PACKAGE Portal',
+        inject: true,
+        template: './app/index.html'
     };
+
     if (options.minimize) {
         htmlOptions.minify = {
             collapseWhitespace: true,
