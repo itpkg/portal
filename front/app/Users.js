@@ -1,18 +1,44 @@
 import React from 'react';
-import {Link} from 'react-router';
+import {IndexLink} from 'react-router';
+import i18next from 'i18next/lib';
 
+import {Form} from './Form'
 
 const users = React.createClass({
     render(){
         return (
-            <div>
-                Users
-                <br/>
-                <Link to="/">Home</Link>
-                &nbsp;
-                <Link to="/about_us">About Us</Link>
-                <br/>
-                {this.props.children}
+            <div className="row">
+                <div className="col-md-offset-2 col-md-8">
+                    {this.props.children}
+                    <br/>
+                    <ul>
+                        <li>
+                            <IndexLink to="/users/sign-in">
+                                {i18next.t('users.titles.sign_in')}
+                            </IndexLink>
+                        </li>
+                        <li>
+                            <IndexLink to="/users/sign-up">
+                                {i18next.t('users.titles.sign_up')}
+                            </IndexLink>
+                        </li>
+                        <li>
+                            <IndexLink to="/users/forgot-password">
+                                {i18next.t('users.titles.forgot_your_password')}
+                            </IndexLink>
+                        </li>
+                        <li>
+                            <IndexLink to="/users/confirm">
+                                {i18next.t('users.titles.did_not_receive_confirmation_instructions')}
+                            </IndexLink>
+                        </li>
+                        <li>
+                            <IndexLink to="/users/unlock">
+                                {i18next.t('users.titles.did_not_receive_unlock_instructions')}
+                            </IndexLink>
+                        </li>
+                    </ul>
+                </div>
             </div>)
     }
 });
@@ -20,9 +46,16 @@ const users = React.createClass({
 const signIn = React.createClass({
     render(){
         return (
-            <div>
-                Sign In
-            </div>)
+            <Form
+                action="/users/sign_in"
+                resource="users"
+                title={i18next.t("users.titles.sign_in")}
+                fields={[
+            {id:"email", type:'email', focus:true, required: true},
+            {id:"password", type:'password', required: true},
+            {id:"remember_me", type:'checkbox'}
+            ]}
+            />)
     }
 });
 
@@ -62,11 +95,11 @@ const forgotPassword = React.createClass({
     }
 });
 
-const resetPassword = React.createClass({
+const changePassword = React.createClass({
     render(){
         return (
             <div>
-                Reset Passwrod
+                Change Passwrod
             </div>)
     }
 });
@@ -87,6 +120,6 @@ module.exports = {
     Confirm: confirm,
     Unlock: unlock,
     ForgotPassword: forgotPassword,
-    ResetPassword: resetPassword,
+    ChangePassword: changePassword,
     Profile: profile
 };

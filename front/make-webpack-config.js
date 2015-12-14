@@ -10,12 +10,13 @@ module.exports = function (options) {
             'history',
             'js-base64',
             'highlight.js',
-            'markdown'
+            'markdown',
+            'i18next/lib',
+            'i18next-browser-languagedetector/lib'
         ],
         react: [
             'react',
             'react-dom',
-            'react-intl',
             'react-bootstrap',
             'react-router'
         ],
@@ -25,16 +26,17 @@ module.exports = function (options) {
 
     var loaders = [
         {test: /\.jsx?$/, exclude: /node_modules/, loader: 'babel', query: {presets: ['react', 'es2015']}},
-
         {test: /\.css$/, loader: "style!css"},
-        {test: /\.jpg$/, loader: "file-loader"},
-        {test: /\.png$/, loader: "url-loader?mimetype=image/png"}
+        {test: /\.(png|jpg|jpeg|gif|svg|ttf|woff|woff2|eot)$/, loader: "file-loader"}
     ];
 
     var plugins = [
         new webpack.ProvidePlugin({
+            //fix 'jQuery is not defined' bug
             $: "jquery",
-            jQuery: "jquery"
+            jQuery: "jquery",
+            //fix 'ReactIntl is not defined' bug
+            ReactIntl: 'react-intl'
         })
     ];
 
