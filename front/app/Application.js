@@ -1,5 +1,6 @@
 import React from 'react';
-import {Link} from 'react-router';
+import {IndexLink} from 'react-router';
+
 
 const application = React.createClass({
     render(){
@@ -7,9 +8,9 @@ const application = React.createClass({
             <div>
                 Application
                 <br/>
-                <Link to="/">Home</Link>
+                <IndexLink to="/">Home</IndexLink>
                 &nbsp;
-                <Link to="/about_us">About Us</Link>
+                <IndexLink to="/about_us">About Us</IndexLink>
                 <br/>
                 {this.props.children}
             </div>)
@@ -21,7 +22,7 @@ const home = React.createClass({
         return (<div>
             home
             <br/>
-            <Link to="/about_us">About Us</Link>
+            <IndexLink to="/about_us">About Us</IndexLink>
 
         </div>)
     }

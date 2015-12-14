@@ -6,6 +6,7 @@ module.exports = function (options) {
     var entry = {
         vendor: [
             'jquery',
+            'bootstrap',
             'history',
             'js-base64',
             'highlight.js',
@@ -30,7 +31,12 @@ module.exports = function (options) {
         {test: /\.png$/, loader: "url-loader?mimetype=image/png"}
     ];
 
-    var plugins = [];
+    var plugins = [
+        new webpack.ProvidePlugin({
+            $: "jquery",
+            jQuery: "jquery"
+        })
+    ];
 
     var htmlOptions = {
         title: 'IT-PACKAGE Portal',
