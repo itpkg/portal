@@ -55,48 +55,72 @@ const signIn = React.createClass({
             {id:"password", type:'password', required: true},
             {id:"remember_me", type:'checkbox'}
             ]}
-            />)
+            />
+        )
     }
 });
 
 const signUp = React.createClass({
     render(){
         return (
-            <div>
-                Sign up
-            </div>)
+            <Form
+                action="/users"
+                resource="users"
+                title={i18next.t("users.titles.sign_up")}
+                fields={[
+                {id:"username", type:'text', size:6, focus:true, required: true},
+            {id:"email", type:'email', required: true},
+            {id:"password", type:'password', required: true},
+            {id:"password_confirmation", type:'password', required: true}
+
+            ]}
+            />
+        )
     }
 });
 
 const confirm = React.createClass({
     render(){
-        return (
-            <div>
-                Confirm
-            </div>)
+        return (<Form
+                action="/users/confirm"
+                resource="users"
+                title={i18next.t("users.buttons.resend_confirmation_instructions")}
+                fields={[
+            {id:"email", type:'email', focus:true, required: true},
+            ]}
+            />
+        )
     }
 });
 
 const unlock = React.createClass({
     render(){
-        return (
-            <div>
-                Unlock
-            </div>)
+        return (<Form
+            action="/users/unlock"
+            resource="users"
+            title={i18next.t("users.buttons.resend_unlock_instructions")}
+            fields={[
+            {id:"email", type:'email', focus:true, required: true},
+            ]}
+        />)
     }
 });
 
 const forgotPassword = React.createClass({
     render(){
-        return (
-            <div>
-                Forgot password
-            </div>)
+        return (<Form
+            action="/users/forgot_password"
+            resource="users"
+            title={i18next.t("users.buttons.send_me_reset_password_instructions")}
+            fields={[
+            {id:"email", type:'email', focus:true, required: true},
+            ]}
+        />)
     }
 });
 
 const changePassword = React.createClass({
-    render(){
+    render(){//todo
         return (
             <div>
                 Change Passwrod
@@ -106,7 +130,7 @@ const changePassword = React.createClass({
 
 const profile = React.createClass({
     render(){
-        return (
+        return (//todo
             <div>
                 Profile
             </div>)

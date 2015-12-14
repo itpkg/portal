@@ -69,7 +69,7 @@ module.exports = function (options) {
     plugins.push(new HtmlWebpackPlugin(htmlOptions));
 
     var output = {
-        path: path.join(__dirname, options.prerender ? 'assets' : 'public'),
+        path: path.join(__dirname, options.prerender ? 'assets' : '../public'),
         filename: options.prerender ? "[id]-[chunkhash].js" : '[name].js'
     };
 
@@ -79,6 +79,13 @@ module.exports = function (options) {
         plugins: plugins,
         module: {
             loaders: loaders
+        },
+        devServer: {
+            inline: true,
+            port: 8080,
+            proxy: {
+                "*": "http://127.0.0.1:3000/"
+            }
         }
     }
 };

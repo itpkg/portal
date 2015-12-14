@@ -1,6 +1,14 @@
 Portal system (by rails)
 ---
 
+## Development mode
+
+### Start
+    cd front && npm run start
+    rails s -b 127.0.0.1
+    open http://localhost:8080
+
+
 ## Deploy
 
 ### On server
