@@ -2,13 +2,51 @@ package base
 
 import (
 	"fmt"
-	"log"
 
 	"github.com/codegangsta/cli"
+	re "github.com/garyburd/redigo/redis"
 	"github.com/itpkg/portal/base/cfg"
 	"github.com/itpkg/portal/base/cmd"
+	"github.com/itpkg/portal/base/engine"
+	"github.com/itpkg/portal/base/ioc"
 	"github.com/itpkg/portal/base/utils"
+	"github.com/jinzhu/gorm"
 )
+
+func Init(env string) error {
+	var db *gorm.DB
+	if dbc, err := Database(env); err == nil {
+		if db, err = dbc.Open(); err != nil {
+			return err
+		}
+
+	} else {
+		return err
+	}
+
+	var redis *re.Pool
+	if rec, err := Redis(env); err == nil {
+		redis = rec.Open()
+	} else {
+		return err
+	}
+
+	var err error
+	var http *cfg.Http
+	if http, err = Http(env); err != nil {
+		return err
+	}
+
+	if err = ioc.Use(map[string]interface{}{
+		"db":    db,
+		"redis": redis,
+		"http":  http,
+	}); err != nil {
+		return err
+	}
+
+	return ioc.Init()
+}
 
 func Database(env string) (*cfg.Database, error) {
 	db := make(map[string]*cfg.Database)
@@ -48,24 +86,6 @@ func init() {
 				//todo
 				return nil
 			}),
-		},
-		cli.Command{
-			Name:    "cache",
-			Aliases: []string{"c"},
-			Usage:   "cache operations",
-			Subcommands: []cli.Command{
-				{
-					Name:    "clear",
-					Aliases: []string{"c"},
-					Usage:   "clear cache items",
-					Flags:   []cli.Flag{cmd.ENV},
-					Action: cmd.Action(func(env string) error {
-						//todo
-						log.Println("db m env ", env)
-						return nil
-					}),
-				},
-			},
 		},
 		cli.Command{
 			Name:    "database",
@@ -108,9 +128,13 @@ func init() {
 					Usage:   "migrate the database",
 					Flags:   []cli.Flag{cmd.ENV},
 					Action: cmd.Action(func(env string) error {
-						//todo
-						log.Println("db m env ", env)
-						return nil
+						if err := Init(env); err != nil {
+							return err
+						}
+						return engine.Loop(func(en engine.Engine) error {
+							en.Migrate()
+							return nil
+						})
 					}),
 				},
 				{
@@ -119,8 +143,13 @@ func init() {
 					Usage:   "load the seed data",
 					Flags:   []cli.Flag{cmd.ENV},
 					Action: cmd.Action(func(env string) error {
-						//todo
-						return nil
+						if err := Init(env); err != nil {
+							return err
+						}
+						return engine.Loop(func(en engine.Engine) error {
+							en.Seed()
+							return nil
+						})
 					}),
 				},
 				{

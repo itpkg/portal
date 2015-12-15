@@ -41,7 +41,7 @@ func (p *Database) Open() (*gorm.DB, error) {
 	var err error
 	switch p.Adapter {
 	case "postgres":
-		if db, err = gorm.Open("postgres", fmt.Sprintf("host=%s port=%d dbname=%s user=%s password=%s sslmode=%s", p.Host, p.Port, p.Name, p.User, p.Password, p.Extra["sslmode"])); err != nil {
+		if db, err = gorm.Open("postgres", fmt.Sprintf("user=%s password=%s host=%s port=%d dbname=%s sslmode=%s", p.User, p.Password, p.Host, p.Port, p.Name, p.Extra["sslmode"])); err != nil {
 			return nil, err
 		}
 
