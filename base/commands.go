@@ -5,6 +5,7 @@ import (
 
 	"github.com/codegangsta/cli"
 	re "github.com/garyburd/redigo/redis"
+	"github.com/gin-gonic/gin"
 	"github.com/itpkg/portal/base/cfg"
 	"github.com/itpkg/portal/base/cmd"
 	"github.com/itpkg/portal/base/engine"
@@ -22,6 +23,9 @@ func Init(env string) error {
 
 	} else {
 		return err
+	}
+	if env != "production" {
+		db.LogMode(true)
 	}
 
 	var redis *re.Pool
@@ -41,6 +45,12 @@ func Init(env string) error {
 		"db":    db,
 		"redis": redis,
 		"http":  http,
+	}); err != nil {
+		return err
+	}
+
+	if err = engine.Loop(func(en engine.Engine) error {
+		return ioc.In(en)
 	}); err != nil {
 		return err
 	}
@@ -83,8 +93,21 @@ func init() {
 			Usage:   "start the web server",
 			Flags:   []cli.Flag{cmd.ENV},
 			Action: cmd.Action(func(env string) error {
-				//todo
-				return nil
+				if err := Init(env); err != nil {
+					return err
+				}
+				if env == "production" {
+					gin.SetMode(gin.ReleaseMode)
+				}
+				route := gin.Default()
+				if err := engine.Loop(func(en engine.Engine) error {
+					en.Mount(route)
+					return nil
+				}); err != nil {
+					return err
+				}
+				http := ioc.Get("http").(*cfg.Http)
+				return route.Run(fmt.Sprintf(":%d", http.Port))
 			}),
 		},
 		cli.Command{

@@ -6,6 +6,15 @@ import (
 
 var beans inject.Graph
 
+func In(objects ...interface{}) error {
+	for _, v := range objects {
+		if e := beans.Provide(&inject.Object{Value: v}); e != nil {
+			return e
+		}
+	}
+	return nil
+}
+
 func Use(objects map[string]interface{}) error {
 	for n, v := range objects {
 		if e := beans.Provide(&inject.Object{Name: n, Value: v}); e != nil {

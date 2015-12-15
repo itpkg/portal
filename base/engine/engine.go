@@ -1,6 +1,11 @@
 package engine
 
+import (
+	"github.com/gin-gonic/gin"
+)
+
 type Engine interface {
+	Mount(*gin.Engine)
 	Seed()
 	Migrate()
 }
