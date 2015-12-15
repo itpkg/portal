@@ -150,7 +150,7 @@ func (p *UsersEngine) Seed() {
 		now := time.Now()
 		dur := 24 * 365 * 10 * time.Hour
 
-		if err = tx.Model(&root).Update("confirmed_at", &now).Error; err != nil {
+		if err = tx.Model(&root).UpdateColumn("confirmed_at", &now).Error; err != nil {
 			tx.Rollback()
 			return
 		}
