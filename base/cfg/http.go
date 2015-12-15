@@ -11,7 +11,7 @@ type Http struct {
 }
 
 func (p *Http) Key(begin, end int) ([]byte, error) {
-	if b, e := utils.String2Bytes(p.Secrets); e == nil {
+	if b, e := utils.FromBase64(p.Secrets); e == nil {
 		return b[begin:end], nil
 	} else {
 		return nil, e

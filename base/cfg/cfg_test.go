@@ -1,10 +1,8 @@
 package cfg_test
 
 import (
-	"os"
 	"testing"
 
-	"github.com/BurntSushi/toml"
 	"github.com/itpkg/portal/base/cfg"
 	"github.com/itpkg/portal/base/utils"
 )
@@ -28,7 +26,7 @@ func TestHttp(t *testing.T) {
 		},
 	}
 
-	if e := write("http.toml", http); e != nil {
+	if e := utils.ToToml("http.toml", http); e != nil {
 		t.Errorf("http error: %v", e)
 	}
 
@@ -62,7 +60,7 @@ func TestDatabase(t *testing.T) {
 		},
 	}
 
-	if e := write("database.toml", database); e != nil {
+	if e := utils.ToToml("database.toml", database); e != nil {
 		t.Errorf("database error: %v", e)
 	}
 
@@ -87,7 +85,7 @@ func TestRedis(t *testing.T) {
 		},
 	}
 
-	if e := write("redis.toml", redis); e != nil {
+	if e := utils.ToToml("redis.toml", redis); e != nil {
 		t.Errorf("redis error: %v", e)
 	}
 
@@ -101,16 +99,7 @@ func TestLoad(t *testing.T) {
 	}
 }
 
-func write(name string, val map[string]interface{}) error {
-	f, e := os.Create(name)
-	if e != nil {
-		return e
-	}
-	defer f.Close()
-	return toml.NewEncoder(f).Encode(val)
-}
-
 func random() string {
 	b, _ := utils.RandomBytes(512)
-	return utils.Bytes2String(b)
+	return utils.ToBase64(b)
 }
