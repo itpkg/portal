@@ -92,8 +92,9 @@ func TestRedis(t *testing.T) {
 }
 
 func TestLoad(t *testing.T) {
-	if r, e := cfg.Load("redis.toml", "test"); e == nil {
-		t.Logf("redis test: %v", r)
+	r := make(map[string]*cfg.Redis)
+	if e := utils.FromToml("redis.toml", r); e == nil {
+		t.Logf("redis test: %v", r["test"])
 	} else {
 		t.Errorf("load error: %v", e)
 	}

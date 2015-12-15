@@ -1,11 +1,41 @@
 package base
 
 import (
+	"fmt"
 	"log"
 
 	"github.com/codegangsta/cli"
+	"github.com/itpkg/portal/base/cfg"
 	"github.com/itpkg/portal/base/cmd"
+	"github.com/itpkg/portal/base/utils"
 )
+
+func Database(env string) (*cfg.Database, error) {
+	db := make(map[string]*cfg.Database)
+	if err := utils.FromToml("config/database.toml", db); err != nil {
+		return nil, err
+	} else {
+		return db[env], err
+	}
+}
+
+func Redis(env string) (*cfg.Redis, error) {
+	r := make(map[string]*cfg.Redis)
+	if err := utils.FromToml("config/redis.toml", r); err != nil {
+		return nil, err
+	} else {
+		return r[env], err
+	}
+}
+
+func Http(env string) (*cfg.Http, error) {
+	h := make(map[string]*cfg.Http)
+	if err := utils.FromToml("config/http.toml", h); err != nil {
+		return nil, err
+	} else {
+		return h[env], err
+	}
+}
 
 func init() {
 	cmd.Register(
@@ -48,9 +78,12 @@ func init() {
 					Usage:   "creates the database",
 					Flags:   []cli.Flag{cmd.ENV},
 					Action: cmd.Action(func(env string) error {
-						//todo
-						log.Println("db m env ", env)
-						return nil
+						db, e := Database(env)
+						if e != nil {
+							return e
+						}
+						c, a := db.Execute(fmt.Sprintf("CREATE DATABASE %s WITH ENCODING='UTF8'", db.Name))
+						return utils.Shell(c, a...)
 					}),
 				},
 				{
@@ -59,9 +92,14 @@ func init() {
 					Usage:   "start a console for the database",
 					Flags:   []cli.Flag{cmd.ENV},
 					Action: cmd.Action(func(env string) error {
-						//todo
-						log.Println("db m env ", env)
-						return nil
+
+						db, e := Database(env)
+						if e != nil {
+							return e
+						}
+
+						c, a := db.Console()
+						return utils.Shell(c, a...)
 					}),
 				},
 				{
@@ -82,7 +120,6 @@ func init() {
 					Flags:   []cli.Flag{cmd.ENV},
 					Action: cmd.Action(func(env string) error {
 						//todo
-						log.Println("db m env ", env)
 						return nil
 					}),
 				},
@@ -92,9 +129,14 @@ func init() {
 					Usage:   "drops the database",
 					Flags:   []cli.Flag{cmd.ENV},
 					Action: cmd.Action(func(env string) error {
-						//todo
-						log.Println("db m env ", env)
-						return nil
+
+						db, e := Database(env)
+						if e != nil {
+							return e
+						}
+
+						c, a := db.Execute(fmt.Sprintf("DROP DATABASE %s", db.Name))
+						return utils.Shell(c, a...)
 					}),
 				},
 			},

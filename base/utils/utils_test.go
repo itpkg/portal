@@ -7,7 +7,7 @@ import (
 )
 
 func TestShell(t *testing.T) {
-	if e := utils.Shell("telnet", "www.google.com", "80"); e != nil {
+	if e := utils.Shell("uname", "-a"); e != nil {
 		t.Errorf("bad in shell: %v", e)
 	}
 }

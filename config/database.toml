@@ -1,0 +1,29 @@
+[development]
+  adapter = "postgres"
+  host = "localhost"
+  port = 5432
+  name = "itpkg_portal_dev"
+  user = "postgres"
+  password = ""
+  [development.extra]
+    sslmode = "disable"
+
+[production]
+  adapter = "postgres"
+  host = "localhost"
+  port = 5432
+  name = "itpkg_portal_prod"
+  user = "portal"
+  password = ""
+  [production.extra]
+    sslmode = "disable"
+
+[test]
+  adapter = "postgres"
+  host = "localhost"
+  port = 5432
+  name = "itpkg_portal_test"
+  user = "postgres"
+  password = ""
+  [test.extra]
+    sslmode = "disable"
