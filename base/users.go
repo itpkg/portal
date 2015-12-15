@@ -133,7 +133,7 @@ type UsersEngine struct {
 func (p *UsersEngine) Mount(*gin.Engine) {
 }
 
-func (p *UsersEngine) Seed() {
+func (p *UsersEngine) Seed() error {
 	tx := p.Db.Begin()
 	var count int
 	tx.Model(User{}).Count(&count)
@@ -144,7 +144,7 @@ func (p *UsersEngine) Seed() {
 		var err error
 		if root, err = p.Dao.NewEmailUser(tx, "root", fmt.Sprintf("root@%s", p.Http.Domain), "changeme"); err != nil {
 			tx.Rollback()
-			return
+			return err
 		}
 
 		now := time.Now()
@@ -152,27 +152,28 @@ func (p *UsersEngine) Seed() {
 
 		if err = tx.Model(&root).UpdateColumn("confirmed_at", &now).Error; err != nil {
 			tx.Rollback()
-			return
+			return err
 		}
 		if rootR, err = p.Dao.NewRole(tx, "root", "-", 0); err != nil {
 			tx.Rollback()
-			return
+			return err
 		}
 		if err = p.Dao.Apply(tx, rootR.ID, root.ID, dur); err != nil {
 			tx.Rollback()
-			return
+			return err
 		}
 		if adminR, err = p.Dao.NewRole(tx, "admin", "-", 0); err != nil {
 			tx.Rollback()
-			return
+			return err
 		}
 		if err = p.Dao.Apply(tx, adminR.ID, root.ID, dur); err != nil {
 			tx.Rollback()
-			return
+			return err
 		}
 
 	}
 	tx.Commit()
+	return nil
 }
 
 func (p *UsersEngine) Migrate() {

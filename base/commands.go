@@ -170,8 +170,7 @@ func init() {
 							return err
 						}
 						return engine.Loop(func(en engine.Engine) error {
-							en.Seed()
-							return nil
+							return en.Seed()
 						})
 					}),
 				},

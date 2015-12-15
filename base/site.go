@@ -1,6 +1,13 @@
 package base
 
 import (
+	"bufio"
+	"errors"
+	"fmt"
+	"io/ioutil"
+	"log"
+	"os"
+	"strings"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -22,7 +29,7 @@ type Setting struct {
 }
 
 type Locale struct {
-	Model
+	ID      uint   `gorm:"primary_key"`
 	Code    string `sql:"not null;index:idx_locales_code"`
 	Lang    string `sql:"not null;default:'en';type:varchar(5);index:idx_locales_lang"`
 	Message string `sql:"not null;type:text"`
@@ -36,8 +43,47 @@ type SiteEngine struct {
 func (p *SiteEngine) Mount(*gin.Engine) {
 }
 
-func (p *SiteEngine) Seed() {
+func (p *SiteEngine) Seed() error {
+	root := "locales"
+	files, err := ioutil.ReadDir(root)
+	if err != nil {
+		return err
+	}
+	for _, file := range files {
+		log.Printf("Find file %s/%s", root, file.Name())
+		ss := strings.Split(file.Name(), ".")
+		if len(ss) < 3 {
+			return errors.New(fmt.Sprintf("bad filename %s", file.Name()))
+		}
+		lang := ss[1]
 
+		var fd *os.File
+
+		if fd, err = os.Open(fmt.Sprintf("%s/%s", root, file.Name())); err != nil {
+			return err
+		}
+		scanner := bufio.NewScanner(fd)
+
+		for scanner.Scan() {
+			line := scanner.Text()
+			si := strings.Split(strings.TrimSpace(line), "=")
+			if len(si) < 2 {
+				log.Printf("ingnore line %s", line)
+			}
+
+			code := fmt.Sprintf("%s.%s", ss[0], si[0])
+			var c int
+			p.Db.Model(&Locale{}).Where("code = ? AND lang = ?", code, lang).Count(&c)
+			if c == 0 {
+				if err = p.Db.Create(&Locale{Code: code, Lang: lang, Message: strings.Join(si[1:], "=")}).Error; err != nil {
+					return err
+				}
+			}
+		}
+
+	}
+
+	return nil
 }
 
 func (p *SiteEngine) Migrate() {
