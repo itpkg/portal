@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"net/http"
 	"os"
 	"strings"
 	"time"
@@ -40,7 +41,29 @@ type SiteEngine struct {
 	Db *gorm.DB `inject:"db"`
 }
 
-func (p *SiteEngine) Mount(*gin.Engine) {
+func (p *SiteEngine) Mount(router *gin.Engine) {
+	router.GET("/locales/:lang", func(c *gin.Context) {
+		lang := c.Param("lang")
+		items := make([]Locale, 0)
+		p.Db.Select("code, message").Where("code LIKE ? AND lang = ?", "web.%", lang).Order("code").Find(&items)
+
+		rt := make(map[string]interface{})
+		for _, item := range items {
+			codes := strings.Split(item.Code[4:], ".")
+			tmp := rt
+			for i, c := range codes {
+				if i+1 == len(codes) {
+					tmp[c] = item.Message
+				} else {
+					if tmp[c] == nil {
+						tmp[c] = make(map[string]interface{})
+					}
+					tmp = tmp[c].(map[string]interface{})
+				}
+			}
+		}
+		c.JSON(http.StatusOK, rt)
+	})
 }
 
 func (p *SiteEngine) Seed() error {
