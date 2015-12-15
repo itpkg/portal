@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/itpkg/portal/ioc"
+	"github.com/itpkg/portal/base/ioc"
 )
 
 type S struct {

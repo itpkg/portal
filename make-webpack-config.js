@@ -42,6 +42,7 @@ module.exports = function (options) {
 
     var htmlOptions = {
         title: 'IT-PACKAGE Portal',
+	favicon: './favicon.ico',
         inject: true,
         template: './app/index.html'
     };
