@@ -6,6 +6,7 @@ import (
 
 	"github.com/BurntSushi/toml"
 	"github.com/itpkg/portal/base/cfg"
+	"github.com/itpkg/portal/base/utils"
 )
 
 func TestHttp(t *testing.T) {
@@ -110,6 +111,6 @@ func write(name string, val map[string]interface{}) error {
 }
 
 func random() string {
-	b, _ := cfg.RandomBytes(512)
-	return cfg.Bytes2String(b)
+	b, _ := utils.RandomBytes(512)
+	return utils.Bytes2String(b)
 }
