@@ -102,6 +102,7 @@ func (p *SiteEngine) Seed() error {
 		if len(ss) < 3 {
 			return errors.New(fmt.Sprintf("bad filename %s", file.Name()))
 		}
+		zone := ss[0]
 		lang := ss[1]
 
 		var fd *os.File
@@ -112,17 +113,25 @@ func (p *SiteEngine) Seed() error {
 		scanner := bufio.NewScanner(fd)
 
 		for scanner.Scan() {
-			line := scanner.Text()
-			si := strings.Split(strings.TrimSpace(line), "=")
-			if len(si) < 2 {
-				log.Printf("ingnore line %s", line)
+			line := strings.TrimSpace(scanner.Text())
+			if len(line) == 0 || line[0] == '#' {
+				continue
+			}
+			idx := strings.Index(line, "=")
+			var key, val string
+			if idx == -1 {
+				key = line
+				val = " "
+			} else {
+				key = strings.TrimSpace(line[0:idx])
+				val = strings.TrimSpace(line[idx+1:])
 			}
 
-			code := fmt.Sprintf("%s.%s", ss[0], si[0])
+			code := fmt.Sprintf("%s.%s", zone, key)
 			var c int
 			p.Db.Model(&Locale{}).Where("code = ? AND lang = ?", code, lang).Count(&c)
 			if c == 0 {
-				if err = p.Db.Create(&Locale{Code: code, Lang: lang, Message: strings.Join(si[1:], "=")}).Error; err != nil {
+				if err = p.Db.Create(&Locale{Code: code, Lang: lang, Message: val}).Error; err != nil {
 					return err
 				}
 			}

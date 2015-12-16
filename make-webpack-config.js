@@ -12,7 +12,8 @@ module.exports = function (options) {
             'highlight.js',
             'markdown',
             'i18next/lib',
-            'i18next-browser-languagedetector/lib'
+            'i18next-browser-languagedetector/lib',
+            'i18next-xhr-backend/lib'
         ],
         react: [
             'react',

@@ -1,9 +1,9 @@
 package base
 
 import (
+	"fmt"
 	"os"
 	"text/template"
-	"fmt"
 
 	"github.com/codegangsta/cli"
 	re "github.com/garyburd/redigo/redis"
@@ -146,20 +146,20 @@ func init() {
 			Aliases: []string{"n"},
 			Usage:   "generate nginx files",
 			Flags:   []cli.Flag{cmd.ENV},
-			Action: cmd.Action(func(env string) error {				
-				h, e1:= Http(env)
-				if e1!=nil{
+			Action: cmd.Action(func(env string) error {
+				h, e1 := Http(env)
+				if e1 != nil {
 					return e1
 				}
-				t, e2:= template.ParseFiles("views/nginx.conf")
-				if e2!=nil{
+				t, e2 := template.ParseFiles("views/nginx.conf")
+				if e2 != nil {
 					return e2
 				}
-				f,e3 := os.OpenFile("config/nginx.conf", os.O_WRONLY|os.O_CREATE, 0600)
-				if e3!=nil{
+				f, e3 := os.OpenFile("config/nginx.conf", os.O_WRONLY|os.O_CREATE, 0600)
+				if e3 != nil {
 					return e3
 				}
-				return t.Execute(f, h)				
+				return t.Execute(f, h)
 			}),
 		},
 		cli.Command{

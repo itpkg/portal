@@ -29,6 +29,7 @@
     "history": "^1.13.1",
     "i18next": "^2.0.1",
     "i18next-browser-languagedetector": "0.0.10",
+    "i18next-xhr-backend": "0.0.4",
     "jquery": "^2.1.4",
     "js-base64": "^2.1.9",
     "markdown": "^0.5.0",
