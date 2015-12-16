@@ -16,6 +16,12 @@ import (
 )
 
 func Init(env string) error {
+	var err error
+	var http *cfg.Http
+	if http, err = Http(env); err != nil {
+		return err
+	}
+
 	var db *gorm.DB
 	if dbc, err := Database(env); err == nil {
 		if db, err = dbc.Open(); err != nil {
@@ -25,7 +31,7 @@ func Init(env string) error {
 	} else {
 		return err
 	}
-	if env != "production" {
+	if !http.IsProduction() {
 		db.LogMode(true)
 	}
 
@@ -36,13 +42,14 @@ func Init(env string) error {
 		return err
 	}
 
-	var err error
-	var http *cfg.Http
-	if http, err = Http(env); err != nil {
-		return err
+	var cdnP cdn.Provider
+	if http.IsProduction() {
+		cdnP = &cdn.LocalProvider{Root: "public/assets"}
+	} else {
+		cdnP = &cdn.LocalProvider{Root: "assets"}
 	}
 
-	if err = ioc.In(db, redis, &cdn.LocalProvider{Root: "public"}); err != nil {
+	if err = ioc.In(db, redis, cdnP); err != nil {
 		return err
 	}
 	if err = ioc.Use(map[string]interface{}{"http": http}); err != nil {
@@ -81,7 +88,9 @@ func Http(env string) (*cfg.Http, error) {
 	if err := utils.FromToml("config/http.toml", h); err != nil {
 		return nil, err
 	} else {
-		return h[env], err
+		e := h[env]
+		e.Env = env
+		return e, err
 	}
 }
 
@@ -96,18 +105,24 @@ func init() {
 				if err := Init(env); err != nil {
 					return err
 				}
-				if env == "production" {
+				http := ioc.Get("http").(*cfg.Http)
+
+				if http.IsProduction() {
 					gin.SetMode(gin.ReleaseMode)
 				}
-				route := gin.Default()
+				router := gin.Default()
+				if !http.IsProduction() {
+					router.Static("/assets", "assets")
+				}
+
 				if err := engine.Loop(func(en engine.Engine) error {
-					en.Mount(route)
+					en.Mount(router)
 					return nil
 				}); err != nil {
 					return err
 				}
-				http := ioc.Get("http").(*cfg.Http)
-				return route.Run(fmt.Sprintf(":%d", http.Port))
+
+				return router.Run(fmt.Sprintf(":%d", http.Port))
 			}),
 		},
 		cli.Command{

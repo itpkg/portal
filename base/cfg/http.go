@@ -5,6 +5,7 @@ import (
 )
 
 type Http struct {
+	Env     string `toml:"-"`
 	Domain  string `toml:"domain"`
 	Port    int    `toml:"port"`
 	Secrets string `toml:"secret"`
@@ -17,4 +18,8 @@ func (p *Http) Key(begin, end int) ([]byte, error) {
 		return nil, e
 	}
 
+}
+
+func (p *Http) IsProduction() bool {
+	return p.Env == "production"
 }

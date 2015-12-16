@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="{{.Lang}}">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="refresh"  content="10;url={{.Url}}"/>
+    <meta name="author" content="{{.Author}}">
+    <meta name="keywords" content="{{.Keywords}}">
+    <meta name="description" content="{{.Description}}">    
+    <title>{{.Title}}</title>
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+	<div class="col-md-offset-2 col-md-8">
+	  <h2><a href="{{.Url}}">{{.Title}}</a></h2>
+	  <hr/>
+	  {{.BodyH}}
+	</div>
+      </div>      
+    </div>
+  </body>
+</html>
+  
+    
