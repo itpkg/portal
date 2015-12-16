@@ -1,6 +1,12 @@
 it-package portal(golang version)
 ---
 ## Development
+
+### Editor
+ * [Intellij Idea](https://github.com/go-lang-plugin-org/go-lang-idea-plugin/wiki/v1.0.0-Setup-initial-project)
+ * [Emacs](.emacs)
+ 
+ 
 ### Install gvm
     bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)
     gvm install go1.4

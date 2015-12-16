@@ -14,22 +14,22 @@ const form = React.createClass({
 
         return {fields: sfs}
     },
-    handleChange: function(e) {
+    handleChange: function (e) {
         var sfs = this.state.fields;
         sfs[e.target.id] = e.target.value;
-        this.setState({fields:sfs});
+        this.setState({fields: sfs});
     },
     handleSubmit: function (e) {
         e.preventDefault();
-        switch (this.props.method){
+        switch (this.props.method) {
             default:
-                $.post(this.props.action, this.state.fields, function(rs){
+                $.post(this.props.action, this.state.fields, function (rs) {
                     console.log(rs);
-                } );
+                });
         }
     },
     render: function () {
-        var handleChange= this.handleChange;
+        var handleChange = this.handleChange;
         var resource = this.props.resource;
         var fields = this.props.fields.map(function (field) {
             var key = 'k-' + field.id;
@@ -40,13 +40,16 @@ const form = React.createClass({
             }
             switch (field.type) {
                 case "email":
-                    return <Input id={field.id} key={key} onChange={handleChange} type="email" label={label+":"} labelClassName="col-xs-2"
+                    return <Input id={field.id} key={key} onChange={handleChange} type="email" label={label+":"}
+                                  labelClassName="col-xs-2"
                                   wrapperClassName="col-xs-6"/>;
                 case "text":
-                    return <Input id={field.id} key={key} onChange={handleChange} type="text" label={label+":"} labelClassName="col-xs-2"
+                    return <Input id={field.id} key={key} onChange={handleChange} type="text" label={label+":"}
+                                  labelClassName="col-xs-2"
                                   wrapperClassName="col-xs-10"/>;
                 case "password":
-                    return <Input id={field.id} key={key} onChange={handleChange} type="password" label={label+":"} labelClassName="col-xs-2"
+                    return <Input id={field.id} key={key} onChange={handleChange} type="password" label={label+":"}
+                                  labelClassName="col-xs-2"
                                   wrapperClassName="col-xs-8"/>;
                 case "checkbox":
                     return <Input id={field.id} key={key} onChange={handleChange} type="checkbox" label={label}
@@ -68,7 +71,8 @@ const form = React.createClass({
                     {fields}
                     <div className="form-group">
                         <div className="col-xs-offset-2 col-xs-10">
-                            <button type="submit" onClick={this.handleSubmit} className="btn btn-primary">{i18next.t("buttons.submit")}</button>
+                            <button type="submit" onClick={this.handleSubmit}
+                                    className="btn btn-primary">{i18next.t("buttons.submit")}</button>
                             &nbsp; &nbsp;
                             <button type="reset" className="btn btn-default">{i18next.t("buttons.reset")}</button>
                         </div>

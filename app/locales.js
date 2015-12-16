@@ -9,7 +9,7 @@ const en_US = {
                 forgot_your_password: "Forgot your password?",
                 change_your_password: 'Change your password'
             },
-            buttons:{
+            buttons: {
                 resend_confirmation_instructions: "Resend confirmation instructions",
                 send_me_reset_password_instructions: "Send me reset password instructions",
                 resend_unlock_instructions: "Resend unlock instructions"
@@ -22,8 +22,8 @@ const en_US = {
                 remember_me: 'Remember me'
             }
         },
-        buttons:{
-          submit: "Submit",
+        buttons: {
+            submit: "Submit",
             reset: "Reset"
         },
 
@@ -42,7 +42,7 @@ const zh_CN = {
                 forgot_your_password: "忘记密码？",
                 change_your_password: '修改密码'
             },
-            buttons:{
+            buttons: {
                 resend_confirmation_instructions: "重新发送激活邮件",
                 send_me_reset_password_instructions: "发送重置密码邮件",
                 resend_unlock_instructions: "重新发送解锁邮件"
@@ -55,7 +55,7 @@ const zh_CN = {
                 remember_me: '记住我'
             }
         },
-        buttons:{
+        buttons: {
             submit: "提交",
             reset: "重写"
         },
