@@ -3,11 +3,11 @@ target=release
 build:
 	npm run build
 	go build -ldflags "-s" -o $(target)/itpkg main.go
-	cp -a config templates locales $(target)/itpkg
+	cp -a config views locales $(target)
 
 
 clean:
-	-rm $(target)
+	-rm -r $(target)
 
 
 format:

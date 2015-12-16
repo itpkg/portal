@@ -23,4 +23,15 @@ it-package portal(golang version)
     make
     ls release
 
+### Run
+    export ITPKG_ENV=production
+    ls config # edit config files
+    ./itpkg -h
+    ./itpkg db migrate
+    ./itpkg db seed
+    ./itpkg nginx
+    ./itpkg build
+    ./itpkg server
+     
+
 
