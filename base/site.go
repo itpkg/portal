@@ -15,7 +15,9 @@ import (
 	"github.com/gin-gonic/contrib/expvar"
 	"github.com/gin-gonic/gin"
 	"github.com/itpkg/portal/base/cdn"
+	"github.com/itpkg/portal/base/cfg"
 	"github.com/itpkg/portal/base/engine"
+	"github.com/itpkg/portal/base/seo"
 	"github.com/jinzhu/gorm"
 )
 
@@ -41,11 +43,14 @@ type Locale struct {
 
 //==============================================================================
 type SiteEngine struct {
-	Db  *gorm.DB     `inject:""`
-	Cdn cdn.Provider `inject:""`
+	Db   *gorm.DB     `inject:""`
+	Cdn  cdn.Provider `inject:""`
+	Dao  *Dao         `inject:""`
+	Http *cfg.Http    `inject:""`
 }
 
 func (p *SiteEngine) Build(dir string) error {
+	//------------------------- by lang ------------------------------------
 	rows, err := p.Db.Model(&Locale{}).Select("DISTINCT(lang)").Rows()
 	if err != nil {
 		return err
@@ -53,6 +58,7 @@ func (p *SiteEngine) Build(dir string) error {
 	defer rows.Close()
 
 	for rows.Next() {
+		//-------------------------locales------------------------------------
 		var lang string
 		rows.Scan(&lang)
 
@@ -81,8 +87,50 @@ func (p *SiteEngine) Build(dir string) error {
 		}); err != nil {
 			return err
 		}
+
+		//------------------rss.atom--------------------------------------
+		if err := p.Cdn.Write("", "rss.atom", func(wrt io.Writer) error {
+			return seo.Rss(wrt, lang,
+				p.Dao.GetSiteInfo("title", lang),
+				fmt.Sprintf("https://www.%s", p.Http.Domain),
+				p.Dao.GetSiteInfo("author.name", ""),
+				p.Dao.GetSiteInfo("author.email", ""),
+			)
+		}); err != nil {
+			return err
+		}
 	}
 
+	//------------------sitemap.xml.gz--------------------------------
+	p.Cdn.Write("", "sitemap.xml.gz", func(wrt io.Writer) error {
+		return seo.Sitemap(wrt)
+	})
+	//------------------robots.txt------------------------------------
+	rn, rb := seo.Robots(p.Dao.GetSiteInfo("robots.txt", ""))
+	if err := p.Cdn.Write("", rn, func(wrt io.Writer) error {
+		_, e := wrt.Write([]byte(rb))
+		return e
+	}); err != nil {
+		return err
+	}
+	//------------------google----------------------------------------
+	gn, gb := seo.GoogleVerify(p.Dao.GetSiteInfo("google.verify", ""))
+	if err := p.Cdn.Write("", gn, func(wrt io.Writer) error {
+		_, e := wrt.Write([]byte(gb))
+		return e
+	}); err != nil {
+		return err
+	}
+	//------------------baidu----------------------------------------
+	bn, bb := seo.BaiduVerify(p.Dao.GetSiteInfo("baidu.verify", ""))
+	if err := p.Cdn.Write("", bn, func(wrt io.Writer) error {
+		_, e := wrt.Write([]byte(bb))
+		return e
+	}); err != nil {
+		return err
+	}
+
+	//-------------------------
 	return nil
 }
 

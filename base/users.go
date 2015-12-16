@@ -99,10 +99,9 @@ func (p *UsersEngine) Seed() error {
 			return err
 		}
 
-		now := time.Now()
 		dur := 24 * 365 * 10 * time.Hour
 
-		if err = tx.Model(&root).UpdateColumn("confirmed_at", &now).Error; err != nil {
+		if err = p.Dao.ConfirmUser(tx, root.ID); err != nil {
 			tx.Rollback()
 			return err
 		}

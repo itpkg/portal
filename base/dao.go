@@ -1,6 +1,7 @@
 package base
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/itpkg/portal/base/utils"
@@ -8,6 +9,76 @@ import (
 )
 
 type Dao struct {
+	Db  *gorm.DB   `inject:""`
+	Aes *utils.Aes `inject:""`
+}
+
+func (*Dao) site_key(key, lang string) string {
+	if lang == "" {
+		return fmt.Sprintf("site://%s", key)
+	} else {
+		return fmt.Sprintf("site://%s/%s", lang, key)
+	}
+
+}
+
+func (p *Dao) SetSiteInfo(tx *gorm.DB, key, lang string, val interface{}, flag bool) error {
+	return p.Set(tx, p.site_key(key, lang), val, flag)
+}
+
+func (p *Dao) GetSiteInfo(key, lang string) string {
+	var val string
+	p.Get(p.site_key(key, lang), &val)
+	return val
+}
+
+func (p *Dao) Set(tx *gorm.DB, key string, val interface{}, flag bool) error {
+	buf, err := utils.ToBits(val)
+	if err != nil {
+		return err
+	}
+
+	s := Setting{Key: key, Flag: flag}
+	if flag {
+		if v, e := p.Aes.Encrypt(buf); e == nil {
+			s.Val = v
+		} else {
+			return e
+		}
+	} else {
+		s.Val = buf
+	}
+
+	var c int
+	tx.Where("key = ?", key).Count(&c)
+	if c == 0 {
+		return tx.Create(&s).Error
+	} else {
+		return tx.Model(&Setting{}).Where("key = ?", key).UpdateColumn(val, s.Val).Error
+	}
+
+}
+
+func (p *Dao) Get(key string, val interface{}) error {
+	var s Setting
+	err := p.Db.Where("key = ?", key).First(&s).Error
+	if err != nil {
+		return err
+	}
+
+	var buf []byte
+	if s.Flag {
+		if buf, err = p.Aes.Decrypt(s.Val); err != nil {
+			return err
+		}
+	} else {
+		buf = s.Val
+	}
+	return utils.FromBits(buf, val)
+}
+
+func (*Dao) ConfirmUser(tx *gorm.DB, id uint) error {
+	return tx.Model(&User{}).Where("id = ?", id).UpdateColumn("confirmed_at", time.Now()).Error
 }
 
 func (*Dao) NewEmailUser(tx *gorm.DB, name, email, password string) (*User, error) {

@@ -21,7 +21,7 @@ module.exports = function (options) {
             'react-bootstrap',
             'react-router'
         ],
-        main: "./app/main"
+        main: options.debug ? "./app/development": "./app/production"
     };
 
 

@@ -1,6 +1,7 @@
 package base
 
 import (
+	"crypto/cipher"
 	"fmt"
 	"os"
 	"text/template"
@@ -23,7 +24,17 @@ func Init(env string) error {
 	if http, err = Http(env); err != nil {
 		return err
 	}
+	//-----------------aes
+	var aesKey []byte
+	if aesKey, err = http.Key(60, 92); err != nil {
+		return err
+	}
+	var cip cipher.Block
+	if cip, err = utils.NewAesCipher(aesKey); err != nil {
+		return err
+	}
 
+	//--------------database
 	var db *gorm.DB
 	if dbc, err := Database(env); err == nil {
 		if db, err = dbc.Open(); err != nil {
@@ -37,6 +48,7 @@ func Init(env string) error {
 		db.LogMode(true)
 	}
 
+	//------------redis
 	var redis *re.Pool
 	if rec, err := Redis(env); err == nil {
 		redis = rec.Open()
@@ -44,17 +56,22 @@ func Init(env string) error {
 		return err
 	}
 
+	//--------------cdn
 	var cdnP cdn.Provider
 	if http.IsProduction() {
-		cdnP = &cdn.LocalProvider{Root: "public/assets"}
+		cdnP = &cdn.LocalProvider{Root: "public"}
 	} else {
 		cdnP = &cdn.LocalProvider{Root: "assets"}
 	}
 
+	//--------------
 	if err = ioc.In(db, redis, cdnP); err != nil {
 		return err
 	}
-	if err = ioc.Use(map[string]interface{}{"http": http}); err != nil {
+	if err = ioc.Use(map[string]interface{}{
+		"http":       http,
+		"aes.cipher": cip,
+	}); err != nil {
 		return err
 	}
 
