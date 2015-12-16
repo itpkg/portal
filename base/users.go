@@ -78,6 +78,10 @@ type UsersEngine struct {
 	Http *cfg.Http `inject:""`
 }
 
+func (p *UsersEngine) Build(dir string) error {
+	return nil
+}
+
 func (p *UsersEngine) Mount(*gin.Engine) {
 }
 

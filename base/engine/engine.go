@@ -7,6 +7,7 @@ import (
 type Engine interface {
 	Mount(*gin.Engine)
 	Seed() error
+	Build(string) error
 	Migrate()
 }
 

@@ -111,6 +111,20 @@ func init() {
 			}),
 		},
 		cli.Command{
+			Name:    "build",
+			Aliases: []string{"b"},
+			Usage:   "build static files",
+			Flags:   []cli.Flag{cmd.ENV},
+			Action: cmd.Action(func(env string) error {
+				if err := Init(env); err != nil {
+					return err
+				}
+				return engine.Loop(func(en engine.Engine) error {
+					return en.Build("public")
+				})
+			}),
+		},
+		cli.Command{
 			Name:    "database",
 			Aliases: []string{"db"},
 			Usage:   "database operations",

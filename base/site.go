@@ -11,6 +11,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/gin-gonic/contrib/expvar"
 	"github.com/gin-gonic/gin"
 	"github.com/itpkg/portal/base/engine"
 	"github.com/jinzhu/gorm"
@@ -41,7 +42,13 @@ type SiteEngine struct {
 	Db *gorm.DB `inject:"db"`
 }
 
+func (p *SiteEngine) Build(dir string) error {
+	return nil
+}
+
 func (p *SiteEngine) Mount(router *gin.Engine) {
+	router.GET("/debug/vars", expvar.Handler()) //todo only admin can
+
 	router.GET("/locales/:lang", func(c *gin.Context) {
 		lang := c.Param("lang")
 		items := make([]Locale, 0)
