@@ -2,17 +2,19 @@ package base
 
 import (
 	"bufio"
+	"encoding/json"
 	"errors"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"log"
-	"net/http"
 	"os"
 	"strings"
 	"time"
 
 	"github.com/gin-gonic/contrib/expvar"
 	"github.com/gin-gonic/gin"
+	"github.com/itpkg/portal/base/cdn"
 	"github.com/itpkg/portal/base/engine"
 	"github.com/jinzhu/gorm"
 )
@@ -39,18 +41,21 @@ type Locale struct {
 
 //==============================================================================
 type SiteEngine struct {
-	Db *gorm.DB `inject:"db"`
+	Db  *gorm.DB     `inject:""`
+	Cdn cdn.Provider `inject:""`
 }
 
 func (p *SiteEngine) Build(dir string) error {
-	return nil
-}
+	rows, err := p.Db.Model(&Locale{}).Select("DISTINCT(lang)").Rows()
+	if err != nil {
+		return err
+	}
+	defer rows.Close()
 
-func (p *SiteEngine) Mount(router *gin.Engine) {
-	router.GET("/debug/vars", expvar.Handler()) //todo only admin can
+	for rows.Next() {
+		var lang string
+		rows.Scan(&lang)
 
-	router.GET("/locales/:lang", func(c *gin.Context) {
-		lang := c.Param("lang")
 		items := make([]Locale, 0)
 		p.Db.Select("code, message").Where("code LIKE ? AND lang = ?", "web.%", lang).Order("code").Find(&items)
 
@@ -69,8 +74,20 @@ func (p *SiteEngine) Mount(router *gin.Engine) {
 				}
 			}
 		}
-		c.JSON(http.StatusOK, rt)
-	})
+
+		if err := p.Cdn.Write("locales", fmt.Sprintf("%s.json", lang), func(wrt io.Writer) error {
+			end := json.NewEncoder(wrt)
+			return end.Encode(rt)
+		}); err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (p *SiteEngine) Mount(router *gin.Engine) {
+	router.GET("/debug/vars", expvar.Handler()) //todo only admin can
 }
 
 func (p *SiteEngine) Seed() error {

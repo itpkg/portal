@@ -73,7 +73,7 @@ type Permission struct {
 
 //==============================================================================
 type UsersEngine struct {
-	Db   *gorm.DB  `inject:"db"`
+	Db   *gorm.DB  `inject:""`
 	Dao  *Dao      `inject:""`
 	Http *cfg.Http `inject:""`
 }

@@ -6,6 +6,7 @@ import (
 	"github.com/codegangsta/cli"
 	re "github.com/garyburd/redigo/redis"
 	"github.com/gin-gonic/gin"
+	"github.com/itpkg/portal/base/cdn"
 	"github.com/itpkg/portal/base/cfg"
 	"github.com/itpkg/portal/base/cmd"
 	"github.com/itpkg/portal/base/engine"
@@ -41,11 +42,10 @@ func Init(env string) error {
 		return err
 	}
 
-	if err = ioc.Use(map[string]interface{}{
-		"db":    db,
-		"redis": redis,
-		"http":  http,
-	}); err != nil {
+	if err = ioc.In(db, redis, &cdn.LocalProvider{Root: "public"}); err != nil {
+		return err
+	}
+	if err = ioc.Use(map[string]interface{}{"http": http}); err != nil {
 		return err
 	}
 
