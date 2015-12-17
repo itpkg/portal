@@ -4,8 +4,6 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
-	"net/http"
-	"strings"
 	"text/template"
 	"time"
 
@@ -96,20 +94,6 @@ type EmailForm struct {
 	Email string `form:"email" binding:"email"`
 }
 
-func Form(fm interface{}, fn func(*gin.Context, interface{}) (interface{}, error)) func(c *gin.Context) {
-	return func(c *gin.Context) {
-		if err := c.Bind(fm); err == nil {
-			if data, err := fn(c, fm); err == nil {
-				c.JSON(http.StatusOK, gin.H{"ok": true, "data": data})
-			} else {
-				c.JSON(http.StatusOK, gin.H{"ok": false, "errors": []string{err.Error()}})
-			}
-		} else {
-			c.JSON(http.StatusOK, gin.H{"ok": false, "errors": strings.Split(err.Error(), "\n")})
-		}
-	}
-}
-
 //==============================================================================
 type UsersEngine struct {
 	Db     *gorm.DB        `inject:""`
@@ -139,7 +123,7 @@ func (p *UsersEngine) sendMail(ctx *gin.Context, action string, user *User) {
 		return
 	}
 
-	tkn, err := p.Token.New(map[string]interface{}{"act": action, "uid": user.Uid}, 60)
+	tkn, err := p.Token.New(map[string]interface{}{"action": action, "user": user.Uid}, 60)
 	if err != nil {
 		p.Logger.Error("bad in generate token: %v", err)
 		return
@@ -147,7 +131,7 @@ func (p *UsersEngine) sendMail(ctx *gin.Context, action string, user *User) {
 
 	var buf bytes.Buffer
 	if tpl, err := template.New("").Parse(p.I18n.T(ctx, fmt.Sprintf("email.user.%s.body", action))); err == nil {
-		if err := tpl.Execute(&buf, &Model{Username: user.Name, Url: fmt.Sprintf("/users/%s/%s?token=%s", p.Http.Home(), action, tkn)}); err != nil {
+		if err := tpl.Execute(&buf, &Model{Username: user.Name, Url: fmt.Sprintf("%s/users/%s?token=%s", p.Http.Home(), action, tkn)}); err != nil {
 			p.Logger.Error("bad in parse email template email.user.%s.body: %v", action, err)
 			return
 		}
@@ -163,6 +147,27 @@ func (p *UsersEngine) sendMail(ctx *gin.Context, action string, user *User) {
 
 }
 
+func (p *UsersEngine) token(action string, fn func(*gin.Context, *User) (bool, string)) func(*gin.Context) {
+	return func(c *gin.Context) {
+		tkn, err := p.Token.Parse(c.DefaultQuery("token", ""))
+		if err != nil {
+			Message(c, false, err.Error())
+			return
+		}
+		if tkn["action"].(string) != action {
+			Message(c, false, p.I18n.T(c, "bad_action"))
+			return
+		}
+		user, err := p.Dao.GetUserByUid(tkn["user"].(string))
+		if err != nil {
+			Message(c, false, err.Error())
+			return
+		}
+		ok, msg := fn(c, user)
+		Message(c, ok, msg)
+	}
+}
+
 func (p *UsersEngine) Mount(r *gin.Engine) {
 	r.POST("/users/sign_in", func(c *gin.Context) {
 		//todo
@@ -172,20 +177,29 @@ func (p *UsersEngine) Mount(r *gin.Engine) {
 		if u, _ := p.Dao.GetUserByEmail(fm.Email); u != nil {
 			return nil, errors.New(p.I18n.T(c, "valid.user.email.exists", fm.Email))
 		}
-		tx := p.Db.Begin()
-		u, e := p.Dao.NewEmailUser(tx, fm.Username, fm.Email, fm.Password)
+
+		u, e := p.Dao.NewEmailUser(fm.Username, fm.Email, fm.Password)
 		if e != nil {
-			tx.Rollback()
 			return nil, e
 		}
-		p.Dao.Log(tx, u.ID, p.I18n.T(c, "log.user.sign_up"))
-		tx.Commit()
+		p.Dao.Log(u.ID, p.I18n.T(c, "log.user.sign_up"))
 		p.sendMail(c, "confirm", u)
-		return []string{p.I18n.T(c, "log.users.messages.send_instructions")}, nil
+		return []string{p.I18n.T(c, "log.user.messages.send_confirm_instructions")}, nil
 	}))
-	r.GET("/users/confirm", func(c *gin.Context) {
-		//todo
-	})
+	r.GET("/users/confirm", p.token("confirm", func(c *gin.Context, user *User) (bool, string) {
+
+		if user.ConfirmedAt != nil {
+			return false, p.I18n.T(c, "valid.user.already_confirmed")
+		}
+
+		err := p.Dao.ConfirmUser(user.ID)
+		if err != nil {
+			return false, err.Error()
+		}
+		p.Dao.Log(user.ID, p.I18n.T(c, "log.user.confirm"))
+		return true, p.I18n.T(c, "log.user.messages.confirmed")
+
+	}))
 	r.POST("/users/confirm", Form(&EmailForm{}, func(c *gin.Context, f interface{}) (interface{}, error) {
 		fm := f.(*EmailForm)
 		u, e := p.Dao.GetUserByEmail(fm.Email)
@@ -196,20 +210,35 @@ func (p *UsersEngine) Mount(r *gin.Engine) {
 			return nil, errors.New(p.I18n.T(c, "valid.user.already_confirmed"))
 		}
 		p.sendMail(c, "confirm", u)
-		return []string{p.I18n.T(c, "log.users.messages.send_instructions")}, nil
+		return []string{p.I18n.T(c, "log.user.messages.send_confirm_instructions")}, nil
 	}))
-	r.POST("/users/forgot_password", func(c *gin.Context) {
-		//todo
-	})
+	r.POST("/users/forgot_password", Form(&EmailForm{}, func(c *gin.Context, f interface{}) (interface{}, error) {
+		fm := f.(*EmailForm)
+		u, e := p.Dao.GetUserByEmail(fm.Email)
+		if e != nil {
+			return nil, errors.New(p.I18n.T(c, "valid.user.email.not_exists", fm.Email))
+		}
+		p.sendMail(c, "reset_password", u)
+		return []string{p.I18n.T(c, "log.user.messages.send_reset_password_instructions")}, nil
+	}))
 	r.POST("/users/reset_password", func(c *gin.Context) {
 		//todo
 	})
 	r.GET("/users/unlock", func(c *gin.Context) {
 		//todo
 	})
-	r.POST("/users/unlock", func(c *gin.Context) {
-		//todo
-	})
+	r.POST("/users/unlock", Form(&EmailForm{}, func(c *gin.Context, f interface{}) (interface{}, error) {
+		fm := f.(*EmailForm)
+		u, e := p.Dao.GetUserByEmail(fm.Email)
+		if e != nil {
+			return nil, errors.New(p.I18n.T(c, "valid.user.email.not_exists", fm.Email))
+		}
+		if u.LockedAt == nil {
+			return nil, errors.New(p.I18n.T(c, "valid.user.not_locked"))
+		}
+		p.sendMail(c, "unlock", u)
+		return []string{p.I18n.T(c, "log.user.messages.send_unlock_instructions")}, nil
+	}))
 	r.GET("/users/profile", func(c *gin.Context) {
 		//todo
 	})
@@ -219,44 +248,36 @@ func (p *UsersEngine) Mount(r *gin.Engine) {
 }
 
 func (p *UsersEngine) Seed() error {
-	tx := p.Db.Begin()
 	var count int
-	tx.Model(User{}).Count(&count)
+	p.Db.Model(User{}).Count(&count)
 	if count == 0 {
 		var root *User
 		var adminR *Role
 		var rootR *Role
 		var err error
-		if root, err = p.Dao.NewEmailUser(tx, "root", fmt.Sprintf("root@%s", p.Http.Domain), "changeme"); err != nil {
-			tx.Rollback()
+		if root, err = p.Dao.NewEmailUser("root", fmt.Sprintf("root@%s", p.Http.Domain), "changeme"); err != nil {
 			return err
 		}
 
 		dur := 24 * 365 * 10 * time.Hour
 
-		if err = p.Dao.ConfirmUser(tx, root.ID); err != nil {
-			tx.Rollback()
+		if err = p.Dao.ConfirmUser(root.ID); err != nil {
 			return err
 		}
-		if rootR, err = p.Dao.NewRole(tx, "root", "-", 0); err != nil {
-			tx.Rollback()
+		if rootR, err = p.Dao.NewRole("root", "-", 0); err != nil {
 			return err
 		}
-		if err = p.Dao.Apply(tx, rootR.ID, root.ID, dur); err != nil {
-			tx.Rollback()
+		if err = p.Dao.Apply(rootR.ID, root.ID, dur); err != nil {
 			return err
 		}
-		if adminR, err = p.Dao.NewRole(tx, "admin", "-", 0); err != nil {
-			tx.Rollback()
+		if adminR, err = p.Dao.NewRole("admin", "-", 0); err != nil {
 			return err
 		}
-		if err = p.Dao.Apply(tx, adminR.ID, root.ID, dur); err != nil {
-			tx.Rollback()
+		if err = p.Dao.Apply(adminR.ID, root.ID, dur); err != nil {
 			return err
 		}
 
 	}
-	tx.Commit()
 	return nil
 }
 

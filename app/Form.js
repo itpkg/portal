@@ -3,7 +3,7 @@ require('./custom.css');
 import $ from 'jquery';
 import React from 'react';
 import i18next from 'i18next/lib';
-import {Input, ButtonInput} from 'react-bootstrap';
+import {Input, ButtonInput, Alert} from 'react-bootstrap';
 
 const form = React.createClass({
     getInitialState: function () {
@@ -19,6 +19,9 @@ const form = React.createClass({
         sfs[e.target.id] = e.target.value;
         this.setState({fields: sfs});
     },
+    handleAlertDismiss: function (e) {
+        this.setState({result: undefined});
+    },
     handleSubmit: function (e) {
         e.preventDefault();
         switch (this.props.method) {
@@ -27,13 +30,35 @@ const form = React.createClass({
                     this.props.action + "?locale=" + i18next.language,
                     this.state.fields,
                     function (rs) {
-                        console.log(rs);
-                    });
+                        this.setState({result: rs});
+                    }.bind(this));
         }
     },
     render: function () {
         var handleChange = this.handleChange;
         var resource = this.props.resource;
+
+        var dialog = function (rs, dis) {
+            if (rs) {
+                var style = "danger";
+                var data = rs.errors;
+                if (rs.ok) {
+                    style = "success";
+                    data = rs.data;
+                }
+                return (<Alert bsStyle={style} onDismiss={dis}>
+                    <h4>{data[0]}</h4>
+                    <ul>
+                        {data.slice(1).map(function (msg, idx) {
+                            return (<li key={"item-"+idx}>{msg}</li>)
+                        })}
+                    </ul>
+                </Alert>)
+            } else {
+                return <br/>
+            }
+
+        };
         var fields = this.props.fields.map(function (field) {
             var key = 'k-' + field.id;
             var label = i18next.t(resource + ".fields." + field.id);
@@ -69,6 +94,7 @@ const form = React.createClass({
         return (
             <fieldset>
                 <legend>{this.props.title}</legend>
+                {dialog(this.state.result, this.handleAlertDismiss)}
                 <form method={method} action={this.props.action}
                       className="form-horizontal">
                     {fields}

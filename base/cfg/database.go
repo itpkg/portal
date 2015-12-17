@@ -49,6 +49,8 @@ func (p *Database) Open() (*gorm.DB, error) {
 		return nil, errors.New(fmt.Sprintf("Unsupported adapter %s", p.Adapter))
 	}
 	if err := db.DB().Ping(); err == nil {
+		db.DB().SetMaxIdleConns(10)
+		db.DB().SetMaxOpenConns(100)
 		return &db, nil
 	} else {
 		return nil, err

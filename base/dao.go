@@ -22,14 +22,23 @@ func (*Dao) site_key(key, lang string) string {
 
 }
 
-func (p *Dao) SetSiteInfo(tx *gorm.DB, key, lang string, val interface{}, flag bool) error {
-	return p.Set(tx, p.site_key(key, lang), val, flag)
+func (p *Dao) SetSiteInfo(key, lang string, val interface{}, flag bool) error {
+	return p.Set(p.site_key(key, lang), val, flag)
 }
 
 func (p *Dao) GetSiteInfo(key, lang string) string {
 	var val string
 	p.Get(p.site_key(key, lang), &val)
 	return val
+}
+
+func (p *Dao) GetUserByUid(uid string) (*User, error) {
+	var u User
+	if e := p.Db.Where("uid = ?", uid).First(&u).Error; e == nil {
+		return &u, e
+	} else {
+		return nil, e
+	}
 }
 
 func (p *Dao) GetUserByEmail(email string) (*User, error) {
@@ -41,7 +50,7 @@ func (p *Dao) GetUserByEmail(email string) (*User, error) {
 	}
 }
 
-func (p *Dao) Set(tx *gorm.DB, key string, val interface{}, flag bool) error {
+func (p *Dao) Set(key string, val interface{}, flag bool) error {
 	buf, err := utils.ToBits(val)
 	if err != nil {
 		return err
@@ -59,11 +68,11 @@ func (p *Dao) Set(tx *gorm.DB, key string, val interface{}, flag bool) error {
 	}
 
 	var c int
-	tx.Where("key = ?", key).Count(&c)
+	p.Db.Where("key = ?", key).Count(&c)
 	if c == 0 {
-		return tx.Create(&s).Error
+		return p.Db.Create(&s).Error
 	} else {
-		return tx.Model(&Setting{}).Where("key = ?", key).UpdateColumn(val, s.Val).Error
+		return p.Db.Model(&Setting{}).Where("key = ?", key).UpdateColumn(val, s.Val).Error
 	}
 
 }
@@ -86,15 +95,15 @@ func (p *Dao) Get(key string, val interface{}) error {
 	return utils.FromBits(buf, val)
 }
 
-func (*Dao) Log(tx *gorm.DB, user uint, message string) error {
-	return tx.Create(&Log{UserID: user, Message: message}).Error
+func (p *Dao) Log(user uint, message string) error {
+	return p.Db.Create(&Log{UserID: user, Message: message}).Error
 }
 
-func (*Dao) ConfirmUser(tx *gorm.DB, id uint) error {
-	return tx.Model(&User{}).Where("id = ?", id).UpdateColumn("confirmed_at", time.Now()).Error
+func (p *Dao) ConfirmUser(id uint) error {
+	return p.Db.Model(&User{}).Where("id = ?", id).UpdateColumn("confirmed_at", time.Now()).Error
 }
 
-func (*Dao) NewEmailUser(tx *gorm.DB, name, email, password string) (*User, error) {
+func (p *Dao) NewEmailUser(name, email, password string) (*User, error) {
 	passwd, err := utils.Ssha512([]byte(password), 8)
 	if err != nil {
 		return nil, err
@@ -107,37 +116,37 @@ func (*Dao) NewEmailUser(tx *gorm.DB, name, email, password string) (*User, erro
 		Uid:        utils.Uuid(),
 		ProviderId: email,
 	}
-	if err = tx.Create(&u).Error; err != nil {
+	if err = p.Db.Create(&u).Error; err != nil {
 		return nil, err
 	}
 	return &u, nil
 }
 
-func (Dao) NewRole(tx *gorm.DB, name string, resource_type string, resource_id uint) (*Role, error) {
+func (p *Dao) NewRole(name string, resource_type string, resource_id uint) (*Role, error) {
 	r := Role{
 		Name:         name,
 		ResourceType: resource_type,
 		ResourceId:   resource_id,
 	}
-	if err := tx.Create(&r).Error; err != nil {
+	if err := p.Db.Create(&r).Error; err != nil {
 		return nil, err
 	}
 	return &r, nil
 }
 
-func (Dao) Apply(tx *gorm.DB, role uint, user uint, dur time.Duration) error {
+func (p *Dao) Apply(role uint, user uint, dur time.Duration) error {
 	begin := time.Now()
 	end := begin.Add(dur)
 	var count int
-	tx.Model(Permission{}).Where("role_id = ? AND user_id = ?", role, user).Count(&count)
+	p.Db.Model(Permission{}).Where("role_id = ? AND user_id = ?", role, user).Count(&count)
 	if count == 0 {
-		return tx.Create(&Permission{
+		return p.Db.Create(&Permission{
 			UserID: user,
 			RoleID: role,
 			Begin:  begin,
 			End:    end,
 		}).Error
 	} else {
-		return tx.Model(&Permission{}).Where("role_id = ? AND user_id = ?", role, user).Updates(map[string]interface{}{"begin": begin, "end": end}).Error
+		return p.Db.Model(&Permission{}).Where("role_id = ? AND user_id = ?", role, user).Updates(map[string]interface{}{"begin": begin, "end": end}).Error
 	}
 }

@@ -11,6 +11,7 @@ module.exports = function (options) {
             'js-base64',
             'highlight.js',
             'markdown',
+            'url-parse',
             'i18next/lib',
             'i18next-browser-languagedetector/lib',
             'i18next-xhr-backend/lib'
