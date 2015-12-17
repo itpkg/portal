@@ -9,6 +9,7 @@ import (
 	"github.com/itpkg/portal/base/email"
 	"github.com/itpkg/portal/base/engine"
 	"github.com/itpkg/portal/base/ioc"
+	"github.com/itpkg/portal/base/token"
 	"github.com/itpkg/portal/base/utils"
 	"github.com/jinzhu/gorm"
 	"github.com/op/go-logging"
@@ -85,8 +86,14 @@ func Init(env string) error {
 		cdnP = &cdn.LocalProvider{Root: "assets"}
 	}
 
+	//---------------token
+	var tokenP token.Provider
+	tokenP = &token.RedisProvider{}
+
 	//--------------
-	if err = ioc.In(db, redis, cdnP, logger, emailP); err != nil {
+	if err = ioc.In(db, redis, logger,
+		cdnP, dao,
+		emailP, tokenP); err != nil {
 		return err
 	}
 	if err = ioc.Use(map[string]interface{}{

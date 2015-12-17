@@ -13,6 +13,7 @@ import (
 	"github.com/itpkg/portal/base/cfg"
 	"github.com/itpkg/portal/base/email"
 	"github.com/itpkg/portal/base/engine"
+	"github.com/itpkg/portal/base/token"
 	"github.com/jinzhu/gorm"
 	"github.com/op/go-logging"
 )
@@ -91,6 +92,10 @@ type SignUpForm struct {
 	PasswordConfirmation string `form:"password_confirmation" binding:"eqfield=Password"`
 }
 
+type EmailForm struct {
+	Email string `form:"email" binding:"email"`
+}
+
 func Form(fm interface{}, fn func(*gin.Context, interface{}) (interface{}, error)) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		if err := c.Bind(fm); err == nil {
@@ -113,6 +118,7 @@ type UsersEngine struct {
 	I18n   *I18n           `inject:""`
 	Smtp   email.Provider  `inject:""`
 	Logger *logging.Logger `inject:""`
+	Token  token.Provider  `inject:""`
 }
 
 func (p *UsersEngine) Build(dir string) error {
@@ -125,21 +131,23 @@ func (p *UsersEngine) sendMail(ctx *gin.Context, action string, user *User) {
 		Url      string
 	}
 
-	var href string
-	var token string
 	switch action {
 	case "confirm":
-		href = "confirm"
 	case "unlock":
-		href = "unlock"
 	case "reset_password":
 	default:
 		return
 	}
 
+	tkn, err := p.Token.New(map[string]interface{}{"act": action, "uid": user.Uid}, 60)
+	if err != nil {
+		p.Logger.Error("bad in generate token: %v", err)
+		return
+	}
+
 	var buf bytes.Buffer
 	if tpl, err := template.New("").Parse(p.I18n.T(ctx, fmt.Sprintf("email.user.%s.body", action))); err == nil {
-		if err := tpl.Execute(&buf, &Model{Username: user.Name, Url: fmt.Sprintf("%s/%s?token=%s", p.Http.Home(), href, token)}); err != nil {
+		if err := tpl.Execute(&buf, &Model{Username: user.Name, Url: fmt.Sprintf("/users/%s/%s?token=%s", p.Http.Home(), action, tkn)}); err != nil {
 			p.Logger.Error("bad in parse email template email.user.%s.body: %v", action, err)
 			return
 		}
@@ -173,18 +181,27 @@ func (p *UsersEngine) Mount(r *gin.Engine) {
 		p.Dao.Log(tx, u.ID, p.I18n.T(c, "log.user.sign_up"))
 		tx.Commit()
 		p.sendMail(c, "confirm", u)
-		return nil, nil
+		return []string{p.I18n.T(c, "log.users.messages.send_instructions")}, nil
 	}))
 	r.GET("/users/confirm", func(c *gin.Context) {
 		//todo
 	})
-	r.POST("/users/confirm", func(c *gin.Context) {
-		//todo
-	})
+	r.POST("/users/confirm", Form(&EmailForm{}, func(c *gin.Context, f interface{}) (interface{}, error) {
+		fm := f.(*EmailForm)
+		u, e := p.Dao.GetUserByEmail(fm.Email)
+		if e != nil {
+			return nil, errors.New(p.I18n.T(c, "valid.user.email.not_exists", fm.Email))
+		}
+		if u.ConfirmedAt != nil {
+			return nil, errors.New(p.I18n.T(c, "valid.user.already_confirmed"))
+		}
+		p.sendMail(c, "confirm", u)
+		return []string{p.I18n.T(c, "log.users.messages.send_instructions")}, nil
+	}))
 	r.POST("/users/forgot_password", func(c *gin.Context) {
 		//todo
 	})
-	r.POST("/users/change_password", func(c *gin.Context) {
+	r.POST("/users/reset_password", func(c *gin.Context) {
 		//todo
 	})
 	r.GET("/users/unlock", func(c *gin.Context) {

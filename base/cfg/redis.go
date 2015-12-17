@@ -18,7 +18,7 @@ func (p *Redis) Open() *redis.Pool {
 		MaxIdle:     3,
 		IdleTimeout: 240 * time.Second,
 		Dial: func() (redis.Conn, error) {
-			c, e := redis.Dial("tcp", fmt.Sprint("%s:%d", p.Host, p.Port))
+			c, e := redis.Dial("tcp", fmt.Sprintf("%s:%d", p.Host, p.Port))
 			if e != nil {
 				return nil, e
 			}
