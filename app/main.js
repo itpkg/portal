@@ -19,7 +19,7 @@ function main(options) {
         .use(XHR)
         .use(LanguageDetector)
         .init({
-            fallbackLng: 'en',
+            fallbackLng: 'en-US',
             backend: {
                 loadPath: options.assets_path + '/locales/{{lng}}.json'
             },
