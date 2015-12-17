@@ -1,16 +1,20 @@
 package base
 
 import (
+	"bytes"
 	"errors"
 	"fmt"
 	"net/http"
 	"strings"
+	"text/template"
 	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/itpkg/portal/base/cfg"
+	"github.com/itpkg/portal/base/email"
 	"github.com/itpkg/portal/base/engine"
 	"github.com/jinzhu/gorm"
+	"github.com/op/go-logging"
 )
 
 type User struct {
@@ -103,14 +107,52 @@ func Form(fm interface{}, fn func(*gin.Context, interface{}) (interface{}, error
 
 //==============================================================================
 type UsersEngine struct {
-	Db   *gorm.DB  `inject:""`
-	Dao  *Dao      `inject:""`
-	Http *cfg.Http `inject:""`
-	I18n *I18n     `inject:""`
+	Db     *gorm.DB        `inject:""`
+	Dao    *Dao            `inject:""`
+	Http   *cfg.Http       `inject:"http"`
+	I18n   *I18n           `inject:""`
+	Smtp   email.Provider  `inject:""`
+	Logger *logging.Logger `inject:""`
 }
 
 func (p *UsersEngine) Build(dir string) error {
 	return nil
+}
+
+func (p *UsersEngine) sendMail(ctx *gin.Context, action string, user *User) {
+	type Model struct {
+		Username string
+		Url      string
+	}
+
+	var href string
+	var token string
+	switch action {
+	case "confirm":
+		href = "confirm"
+	case "unlock":
+		href = "unlock"
+	case "reset_password":
+	default:
+		return
+	}
+
+	var buf bytes.Buffer
+	if tpl, err := template.New("").Parse(p.I18n.T(ctx, fmt.Sprintf("email.user.%s.body", action))); err == nil {
+		if err := tpl.Execute(&buf, &Model{Username: user.Name, Url: fmt.Sprintf("%s/%s?token=%s", p.Http.Home(), href, token)}); err != nil {
+			p.Logger.Error("bad in parse email template email.user.%s.body: %v", action, err)
+			return
+		}
+	} else {
+		p.Logger.Error("bad template email.user.%s.body: %v", action, err)
+		return
+	}
+	p.Smtp.Send(
+		[]string{user.Email},
+		p.I18n.T(ctx, fmt.Sprintf("email.user.%s.subject", action)),
+		buf.String(),
+	)
+
 }
 
 func (p *UsersEngine) Mount(r *gin.Engine) {
@@ -130,6 +172,7 @@ func (p *UsersEngine) Mount(r *gin.Engine) {
 		}
 		p.Dao.Log(tx, u.ID, p.I18n.T(c, "log.user.sign_up"))
 		tx.Commit()
+		p.sendMail(c, "confirm", u)
 		return nil, nil
 	}))
 	r.GET("/users/confirm", func(c *gin.Context) {

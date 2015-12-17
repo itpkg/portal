@@ -1,6 +1,8 @@
 package cfg
 
 import (
+	"fmt"
+
 	"github.com/itpkg/portal/base/utils"
 )
 
@@ -9,6 +11,14 @@ type Http struct {
 	Domain  string `toml:"domain"`
 	Port    int    `toml:"port"`
 	Secrets string `toml:"secret"`
+}
+
+func (p *Http) Home() string {
+	if p.IsProduction() {
+		return fmt.Sprintf("https://www.%s", p.Domain)
+	} else {
+		return fmt.Sprintf("http://www.%s:%d", p.Domain, p.Port)
+	}
 }
 
 func (p *Http) Key(begin, end int) ([]byte, error) {

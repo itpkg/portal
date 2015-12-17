@@ -46,7 +46,7 @@ type SiteEngine struct {
 	Db   *gorm.DB     `inject:""`
 	Cdn  cdn.Provider `inject:""`
 	Dao  *Dao         `inject:""`
-	Http *cfg.Http    `inject:""`
+	Http *cfg.Http    `inject:"http"`
 }
 
 func (p *SiteEngine) Build(dir string) error {
@@ -92,7 +92,7 @@ func (p *SiteEngine) Build(dir string) error {
 		if err := p.Cdn.Write("", "rss.atom", func(wrt io.Writer) error {
 			return seo.Rss(wrt, lang,
 				p.Dao.GetSiteInfo("title", lang),
-				fmt.Sprintf("https://www.%s", p.Http.Domain),
+				p.Http.Home(),
 				p.Dao.GetSiteInfo("author.name", ""),
 				p.Dao.GetSiteInfo("author.email", ""),
 			)

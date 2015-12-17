@@ -1,117 +1,18 @@
 package base
 
 import (
-	"crypto/cipher"
 	"fmt"
 	"os"
 	"text/template"
 
 	"github.com/codegangsta/cli"
-	re "github.com/garyburd/redigo/redis"
 	"github.com/gin-gonic/gin"
-	"github.com/itpkg/portal/base/cdn"
 	"github.com/itpkg/portal/base/cfg"
 	"github.com/itpkg/portal/base/cmd"
 	"github.com/itpkg/portal/base/engine"
 	"github.com/itpkg/portal/base/ioc"
 	"github.com/itpkg/portal/base/utils"
-	"github.com/jinzhu/gorm"
 )
-
-func Init(env string) error {
-	var err error
-	var http *cfg.Http
-	if http, err = Http(env); err != nil {
-		return err
-	}
-	//-----------------aes
-	var aesKey []byte
-	if aesKey, err = http.Key(60, 92); err != nil {
-		return err
-	}
-	var cip cipher.Block
-	if cip, err = utils.NewAesCipher(aesKey); err != nil {
-		return err
-	}
-
-	//--------------database
-	var db *gorm.DB
-	if dbc, err := Database(env); err == nil {
-		if db, err = dbc.Open(); err != nil {
-			return err
-		}
-
-	} else {
-		return err
-	}
-	if !http.IsProduction() {
-		db.LogMode(true)
-	}
-
-	//------------redis
-	var redis *re.Pool
-	if rec, err := Redis(env); err == nil {
-		redis = rec.Open()
-	} else {
-		return err
-	}
-
-	//--------------cdn
-	var cdnP cdn.Provider
-	if http.IsProduction() {
-		cdnP = &cdn.LocalProvider{Root: "public"}
-	} else {
-		cdnP = &cdn.LocalProvider{Root: "assets"}
-	}
-
-	//--------------
-	if err = ioc.In(db, redis, cdnP); err != nil {
-		return err
-	}
-	if err = ioc.Use(map[string]interface{}{
-		"http":       http,
-		"aes.cipher": cip,
-	}); err != nil {
-		return err
-	}
-
-	if err = engine.Loop(func(en engine.Engine) error {
-		return ioc.In(en)
-	}); err != nil {
-		return err
-	}
-
-	return ioc.Init()
-}
-
-func Database(env string) (*cfg.Database, error) {
-	db := make(map[string]*cfg.Database)
-	if err := utils.FromToml("config/database.toml", db); err != nil {
-		return nil, err
-	} else {
-		return db[env], err
-	}
-}
-
-func Redis(env string) (*cfg.Redis, error) {
-	r := make(map[string]*cfg.Redis)
-	if err := utils.FromToml("config/redis.toml", r); err != nil {
-		return nil, err
-	} else {
-		return r[env], err
-	}
-}
-
-func Http(env string) (*cfg.Http, error) {
-	h := make(map[string]*cfg.Http)
-	if err := utils.FromToml("config/http.toml", h); err != nil {
-		return nil, err
-	} else {
-		e := h[env]
-		e.Env = env
-		return e, err
-	}
-}
 
 func init() {
 	cmd.Register(
