@@ -32,6 +32,15 @@ func (p *Dao) GetSiteInfo(key, lang string) string {
 	return val
 }
 
+func (p *Dao) GetUserByEmail(email string) (*User, error) {
+	var u User
+	if e := p.Db.Where("email = ?", email).First(&u).Error; e == nil {
+		return &u, e
+	} else {
+		return nil, e
+	}
+}
+
 func (p *Dao) Set(tx *gorm.DB, key string, val interface{}, flag bool) error {
 	buf, err := utils.ToBits(val)
 	if err != nil {
@@ -77,6 +86,10 @@ func (p *Dao) Get(key string, val interface{}) error {
 	return utils.FromBits(buf, val)
 }
 
+func (*Dao) Log(tx *gorm.DB, user uint, message string) error {
+	return tx.Create(&Log{UserID: user, Message: message}).Error
+}
+
 func (*Dao) ConfirmUser(tx *gorm.DB, id uint) error {
 	return tx.Model(&User{}).Where("id = ?", id).UpdateColumn("confirmed_at", time.Now()).Error
 }
@@ -88,10 +101,11 @@ func (*Dao) NewEmailUser(tx *gorm.DB, name, email, password string) (*User, erro
 	}
 
 	u := User{
-		Name:     name,
-		Email:    email,
-		Password: passwd,
-		Uid:      utils.Uuid(),
+		Name:       name,
+		Email:      email,
+		Password:   passwd,
+		Uid:        utils.Uuid(),
+		ProviderId: email,
 	}
 	if err = tx.Create(&u).Error; err != nil {
 		return nil, err

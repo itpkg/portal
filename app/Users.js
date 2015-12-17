@@ -8,7 +8,7 @@ const users = React.createClass({
     render(){
         return (
             <div className="row">
-                <div className="col-md-offset-2 col-md-8">
+                <div className="col-md-offset-1 col-md-10">
                     {this.props.children}
                     <br/>
                     <ul>
@@ -64,7 +64,7 @@ const signUp = React.createClass({
     render(){
         return (
             <Form
-                action="/users"
+                action="/users/sign_up"
                 resource="users"
                 title={i18next.t("users.titles.sign_up")}
                 fields={[

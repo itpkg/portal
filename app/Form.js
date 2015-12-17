@@ -23,9 +23,12 @@ const form = React.createClass({
         e.preventDefault();
         switch (this.props.method) {
             default:
-                $.post(this.props.action, this.state.fields, function (rs) {
-                    console.log(rs);
-                });
+                $.post(
+                    this.props.action + "?locale=" + i18next.language,
+                    this.state.fields,
+                    function (rs) {
+                        console.log(rs);
+                    });
         }
     },
     render: function () {
@@ -66,7 +69,7 @@ const form = React.createClass({
         return (
             <fieldset>
                 <legend>{this.props.title}</legend>
-                <form method={method} action={this.props.action+"?locale="+i18next.language}
+                <form method={method} action={this.props.action}
                       className="form-horizontal">
                     {fields}
                     <div className="form-group">

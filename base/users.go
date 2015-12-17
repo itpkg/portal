@@ -1,7 +1,10 @@
 package base
 
 import (
+	"errors"
 	"fmt"
+	"net/http"
+	"strings"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -72,17 +75,87 @@ type Permission struct {
 }
 
 //==============================================================================
+type SignInForm struct {
+	RememberMe bool   `form:"remember_me"`
+	Email      string `from:"email" binding:"email"`
+	Password   string `form:"password" binding:"min=8"`
+}
+type SignUpForm struct {
+	Username             string `form:"username" binding:"min=2,max=20"`
+	Email                string `form:"email" binding:"email"`
+	Password             string `form:"password" binding:"min=8"`
+	PasswordConfirmation string `form:"password_confirmation" binding:"eqfield=Password"`
+}
+
+func Form(fm interface{}, fn func(*gin.Context, interface{}) (interface{}, error)) func(c *gin.Context) {
+	return func(c *gin.Context) {
+		if err := c.Bind(fm); err == nil {
+			if data, err := fn(c, fm); err == nil {
+				c.JSON(http.StatusOK, gin.H{"ok": true, "data": data})
+			} else {
+				c.JSON(http.StatusOK, gin.H{"ok": false, "errors": []string{err.Error()}})
+			}
+		} else {
+			c.JSON(http.StatusOK, gin.H{"ok": false, "errors": strings.Split(err.Error(), "\n")})
+		}
+	}
+}
+
+//==============================================================================
 type UsersEngine struct {
 	Db   *gorm.DB  `inject:""`
 	Dao  *Dao      `inject:""`
 	Http *cfg.Http `inject:""`
+	I18n *I18n     `inject:""`
 }
 
 func (p *UsersEngine) Build(dir string) error {
 	return nil
 }
 
-func (p *UsersEngine) Mount(*gin.Engine) {
+func (p *UsersEngine) Mount(r *gin.Engine) {
+	r.POST("/users/sign_in", func(c *gin.Context) {
+		//todo
+	})
+	r.POST("/users/sign_up", Form(&SignUpForm{}, func(c *gin.Context, f interface{}) (interface{}, error) {
+		fm := f.(*SignUpForm)
+		if u, _ := p.Dao.GetUserByEmail(fm.Email); u != nil {
+			return nil, errors.New(p.I18n.T(c, "valid.user.email.exists", fm.Email))
+		}
+		tx := p.Db.Begin()
+		u, e := p.Dao.NewEmailUser(tx, fm.Username, fm.Email, fm.Password)
+		if e != nil {
+			tx.Rollback()
+			return nil, e
+		}
+		p.Dao.Log(tx, u.ID, p.I18n.T(c, "log.user.sign_up"))
+		tx.Commit()
+		return nil, nil
+	}))
+	r.GET("/users/confirm", func(c *gin.Context) {
+		//todo
+	})
+	r.POST("/users/confirm", func(c *gin.Context) {
+		//todo
+	})
+	r.POST("/users/forgot_password", func(c *gin.Context) {
+		//todo
+	})
+	r.POST("/users/change_password", func(c *gin.Context) {
+		//todo
+	})
+	r.GET("/users/unlock", func(c *gin.Context) {
+		//todo
+	})
+	r.POST("/users/unlock", func(c *gin.Context) {
+		//todo
+	})
+	r.GET("/users/profile", func(c *gin.Context) {
+		//todo
+	})
+	r.POST("/users/profile", func(c *gin.Context) {
+		//todo
+	})
 }
 
 func (p *UsersEngine) Seed() error {
