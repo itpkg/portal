@@ -1,5 +1,12 @@
 package cms
 
+/**
+ * html压缩Bug列表
+ * 1: 属性会转小写
+ * 2: 会去掉引号
+ * 3: 会去掉iframe之后的内容
+ */
+
 import (
 	"io"
 	"io/ioutil"
@@ -43,6 +50,36 @@ func (p *Engine) Build(string) error {
 		lang := dir[6:11]
 
 		switch {
+		case ext == ".youku":
+			//todo
+			return nil
+		case ext == ".youtube":
+			vid := name[:len(name)-8]
+			name = name[:len(name)-8] + ".html"
+			p.Logger.Info("[youtube] %s => %s/%s", path, dir, name)
+
+			body := fmt.Sprintf(
+				`
+			<p>
+				%s
+			</p>
+			<p>
+				<iframe type="text/html" width="640" height="390"
+				src="http://www.youtube.com/embed/%s?autoplay=1" frameborder="0"/>
+			</p>
+				`,
+				string(Md2Hm(buf)),
+				vid,
+			)
+
+			p.Logger.Debug(body)
+			return p.Cdn.Write(dir, name, func(wrt io.Writer) error {
+				mod := p.BaseDao.GetSiteModel(lang)
+				mod.Url = fmt.Sprintf("%s%s/%s", p.Http.Assets(), dir, name)
+				mod.SubTitle = FirstLine(path)
+				mod.SetBody(body)
+				return tpl.Dump(wrt, base.LAYOUT, mod)
+			})
 		case ext == ".html" || ext == ".htm":
 			p.Logger.Info("[%s] %s => %s/%s", lang, path, dir, name)
 			return p.Cdn.Write(dir, name, func(wrt io.Writer) error {
@@ -54,7 +91,6 @@ func (p *Engine) Build(string) error {
 				return tpl.Dump(wrt, base.LAYOUT, mod)
 			})
 		case ext == ".md":
-
 			name = name[:len(name)-3] + ".html"
 			p.Logger.Info("[%s] %s => %s/%s", lang, path, dir, name)
 
@@ -62,7 +98,8 @@ func (p *Engine) Build(string) error {
 				mod := p.BaseDao.GetSiteModel(lang)
 				mod.Url = fmt.Sprintf("%s%s/%s", p.Http.Assets(), dir, name)
 				mod.SubTitle = FirstLine(path)
-				mod.SetBody(string(Md2Hm([]byte(strings.Replace(string(buf), ".md)", ".html)", -1)))))
+				//mod.SetBody(string(Md2Hm([]byte(strings.Replace(string(buf), ".md)", ".html)", -1)))))
+				mod.SetBody(string(Md2Hm(buf)))
 				return tpl.Dump(wrt, base.LAYOUT, mod)
 			})
 		default:
