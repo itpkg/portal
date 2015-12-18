@@ -44,11 +44,15 @@ const users = React.createClass({
 });
 
 const signIn = React.createClass({
+    onSubmit(data){
+        console.log(data);
+    },
     render(){
         return (
             <Form
                 action="/users/sign_in"
                 resource="users"
+                submit={this.onSubmit}
                 title={i18next.t("users.titles.sign_in")}
                 fields={[
             {id:"email", type:'email', focus:true, required: true},

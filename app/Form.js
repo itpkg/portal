@@ -30,7 +30,12 @@ const form = React.createClass({
                     this.props.action + "?locale=" + i18next.language,
                     this.state.fields,
                     function (rs) {
-                        this.setState({result: rs});
+                        var submit=this.props.submit;
+                        if(submit && rs.ok){
+                            submit(rs.data);
+                        }else{
+                            this.setState({result: rs});
+                        }
                     }.bind(this));
         }
     },

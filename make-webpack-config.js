@@ -20,7 +20,8 @@ module.exports = function (options) {
             'react',
             'react-dom',
             'react-bootstrap',
-            'react-router'
+            'react-router',
+            'reflux'
         ],
         main: options.debug ? "./app/development": "./app/production"
     };
