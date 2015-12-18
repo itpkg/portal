@@ -5,7 +5,9 @@ import (
 	"io"
 
 	"github.com/tdewolff/minify"
+	"github.com/tdewolff/minify/css"
 	"github.com/tdewolff/minify/html"
+	"github.com/tdewolff/minify/js"
 )
 
 type Model struct {
@@ -30,7 +32,10 @@ func (p *Model) SetCopyright(cp string) {
 
 func Dump(wrt io.Writer, view string, mod *Model) error {
 	m := minify.New()
+	m.AddFunc("text/css", css.Minify)
 	m.AddFunc("text/html", html.Minify)
+	m.AddFunc("text/javascript", js.Minify)
+
 	mw := m.Writer("text/html", wrt)
 	defer mw.Close()
 
