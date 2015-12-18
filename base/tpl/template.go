@@ -16,11 +16,16 @@ type Model struct {
 	Description string
 	Title       string
 	SubTitle    string
+	Copyright   template.HTML
 	Body        template.HTML
 }
 
 func (p *Model) SetBody(body string) {
 	p.Body = template.HTML(body)
+}
+
+func (p *Model) SetCopyright(cp string) {
+	p.Copyright = template.HTML(cp)
 }
 
 func Dump(wrt io.Writer, view string, mod *Model) error {

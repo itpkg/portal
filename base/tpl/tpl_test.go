@@ -20,6 +20,7 @@ func TestDump(t *testing.T) {
 		Title:       "title",
 		SubTitle:    "sub title",
 		Body:        template.HTML("<p>Body</p>"),
+		Copyright:   template.HTML("<a href='aaa'>aaa</a>"),
 	}); err != nil {
 		t.Errorf("bad in dump: %v", err)
 	}

@@ -14,13 +14,17 @@
 </head>
 <body>
 <div class="container-fluid">
+    <h1><a target="_blank" href="{{.Url}}">{{.SubTitle}}-{{.Title}}</a></h1>
+    <hr/>
     <div class="row">
         <div class="col-md-offset-2 col-md-8">
-            <h2><a target="_blank" href="{{.Url}}">{{.SubTitle}}</a></h2>
-            <hr/>
             {{.Body}}
         </div>
     </div>
+    <hr/>
+    <footer>
+        <p>{{.Copyright}}</p>
+    </footer>
 </div>
 </body>
 </html>

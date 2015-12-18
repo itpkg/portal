@@ -39,6 +39,7 @@ func (p *Dao) GetSiteModel(lang string) *tpl.Model {
 		m.Description = p.GetSiteInfo("description", lang)
 		m.Keywords = p.GetSiteInfo("keywords", lang)
 		m.Author = fmt.Sprintf("%s %s", p.GetSiteInfo("author.username", lang), p.GetSiteInfo("author.email", lang))
+		m.SetCopyright(p.GetSiteInfo("copyright", lang))
 		return 60 * 24, nil
 	})
 	return &mod

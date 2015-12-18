@@ -4,9 +4,7 @@ package cms
  * html压缩Bug列表
  * 1: 属性会转小写
  * 2: 会去掉引号
- * 3: 会去掉iframe之后的内容
  *
- * 优酷使用iframe 会出错
  */
 
 import (
@@ -57,19 +55,18 @@ func (p *Engine) Build(string) error {
 			vid := name[:len(name)-6]
 			name = name[:len(name)-6] + ".html"
 			p.Logger.Info("[优酷] %s => %s/%s", path, dir, name)
-			body := fmt.Sprintf(`
-<p>
-	%s
-</p>
-<p>
-	<embed src="http://player.youku.com/player.php/sid/%s/v.swf"
-	allowFullScreen="true" quality="high" width="480" height="400" align="middle"
-	allowScriptAccess="always" type="application/x-shockwave-flash">
-	</embed>
-</p>
-			`,
-				string(Md2Hm(buf)),
+			body := fmt.Sprintf(
+				`
+				<br/>
+				<iframe height=498 width=510
+					src="http://player.youku.com/embed/%s" frameborder=0 allowfullscreen>
+				</iframe>
+				<br/>
+				%s
+				<br/>
+				`,
 				vid,
+				string(Md2Hm(buf)),
 			)
 			return p.Cdn.Write(dir, name, func(wrt io.Writer) error {
 				mod := p.BaseDao.GetSiteModel(lang)
@@ -86,16 +83,15 @@ func (p *Engine) Build(string) error {
 
 			body := fmt.Sprintf(
 				`
-			<p>
-				%s
-			</p>
-			<p>
-				<iframe type="text/html" width="640" height="390"
-				src="http://www.youtube.com/embed/%s?autoplay=1" frameborder="0"/>
-			</p>
+			<iframe type="text/html" width="640" height="390"
+				src="http://www.youtube.com/embed/%s?autoplay=1" frameborder="0">
+			</iframe>
+			<br/>
+			%s
+			<br/>
 				`,
-				string(Md2Hm(buf)),
 				vid,
+				string(Md2Hm(buf)),
 			)
 
 			return p.Cdn.Write(dir, name, func(wrt io.Writer) error {
