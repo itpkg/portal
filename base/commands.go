@@ -73,7 +73,7 @@ func init() {
 				if e2 != nil {
 					return e2
 				}
-				f, e3 := os.OpenFile("config/nginx.conf", os.O_WRONLY|os.O_CREATE, 0600)
+				f, e3 := os.OpenFile("config/nginx.conf", os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0600)
 				if e3 != nil {
 					return e3
 				}

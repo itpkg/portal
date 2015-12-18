@@ -15,6 +15,8 @@ import (
 	"github.com/op/go-logging"
 )
 
+const LAYOUT = "views/layout.html"
+
 func Init(env string) error {
 	var err error
 	var http *cfg.Http

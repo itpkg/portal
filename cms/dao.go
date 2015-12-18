@@ -1,5 +1,8 @@
 package cms
 
+type Dao struct {
+}
+
 //-----------------------------------------------------------------------------
 func (p *Engine) Seed() error {
 	return nil

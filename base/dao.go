@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/itpkg/portal/base/tpl"
 	"github.com/itpkg/portal/base/utils"
 	"github.com/jinzhu/gorm"
 )
@@ -26,10 +27,25 @@ func (p *Dao) SetSiteInfo(key, lang string, val interface{}, flag bool) error {
 	return p.Set(p.site_key(key, lang), val, flag)
 }
 
+func (p *Dao) GetSiteModel(lang string) *tpl.Model {
+	m := tpl.Model{
+		Lang:        lang,
+		Title:       p.GetSiteInfo("title", lang),
+		Description: p.GetSiteInfo("description", lang),
+		Keywords:    p.GetSiteInfo("keywords", lang),
+		Author:      fmt.Sprintf("%s %s", p.GetSiteInfo("author.username", lang), p.GetSiteInfo("author.email", lang)),
+	}
+	return &m
+}
+
 func (p *Dao) GetSiteInfo(key, lang string) string {
 	var val string
 	p.Get(p.site_key(key, lang), &val)
-	return val
+	if val == "" {
+		return key
+	} else {
+		return val
+	}
 }
 
 func (p *Dao) GetUserByUid(uid string) (*User, error) {

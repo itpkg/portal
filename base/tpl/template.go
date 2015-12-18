@@ -15,27 +15,33 @@ type Model struct {
 	Keywords    string
 	Description string
 	Title       string
-	Body        string
-	BodyH       template.HTML
+	SubTitle    string
+	Body        template.HTML
 }
 
-type Template func() (io.Writer, []*Model)
-
-var templates = make([]Template, 0)
-
-func Register(ts ...Template) {
-	templates = append(templates, ts...)
+func (p *Model) SetBody(body string) {
+	p.Body = template.HTML(body)
 }
 
-func Dump(wrt io.Writer, view string, mod Model) error {
+func Dump(wrt io.Writer, view string, mod *Model) error {
 	m := minify.New()
 	m.AddFunc("text/html", html.Minify)
 	mw := m.Writer("text/html", wrt)
+	defer mw.Close()
 
-	mod.BodyH = template.HTML(mod.Body)
 	t, e := template.ParseFiles(view)
 	if e != nil {
 		return e
 	}
 	return t.Execute(mw, mod)
+
+}
+
+func DumpF(wrt io.Writer, view string, mod *Model) error {
+	t, e := template.ParseFiles(view)
+	if e != nil {
+		return e
+	}
+	return t.Execute(wrt, mod)
+
 }

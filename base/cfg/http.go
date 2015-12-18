@@ -13,6 +13,13 @@ type Http struct {
 	Secrets string `toml:"secret"`
 }
 
+func (p *Http) Assets() string {
+	if p.IsProduction() {
+		return "/"
+	} else {
+		return "/assets/"
+	}
+}
 func (p *Http) Home() string {
 	if p.IsProduction() {
 		return fmt.Sprintf("https://www.%s", p.Domain)
