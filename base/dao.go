@@ -103,6 +103,13 @@ func (p *Dao) ConfirmUser(id uint) error {
 	return p.Db.Model(&User{}).Where("id = ?", id).UpdateColumn("confirmed_at", time.Now()).Error
 }
 
+func (p *Dao) SetUserSignIn(u *User) error {
+	return p.Db.Model(&User{}).Where("id = ?", u.ID).UpdateColumns(map[string]interface{}{
+		"last_sign_in":  time.Now(),
+		"sign_in_count": u.SignInCount + 1,
+	}).Error
+}
+
 func (p *Dao) SetUserPassword(id uint, password string) error {
 	passwd, err := utils.Ssha512([]byte(password), 8)
 	if err != nil {
@@ -135,6 +142,7 @@ func (p *Dao) NewEmailUser(name, email, password string) (*User, error) {
 		Uid:        utils.Uuid(),
 		ProviderId: email,
 	}
+	u.SetLogoByGravatar()
 	if err = p.Db.Create(&u).Error; err != nil {
 		return nil, err
 	}

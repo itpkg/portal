@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
+	"strings"
 	"text/template"
 	"time"
 
@@ -12,6 +13,7 @@ import (
 	"github.com/itpkg/portal/base/email"
 	"github.com/itpkg/portal/base/engine"
 	"github.com/itpkg/portal/base/token"
+	"github.com/itpkg/portal/base/utils"
 	"github.com/jinzhu/gorm"
 	"github.com/op/go-logging"
 )
@@ -31,6 +33,17 @@ type User struct {
 
 	ConfirmedAt *time.Time
 	LockedAt    *time.Time
+}
+
+func (p *User) SetLogoByGravatar() {
+	p.Logo = fmt.Sprintf("https://gravatar.com/avatar/%s.png", utils.Md5([]byte(strings.ToLower(p.Email))))
+}
+
+func (p *User) IsLocked() bool {
+	return p.LockedAt != nil
+}
+func (p *User) IsConfirmed() bool {
+	return p.ConfirmedAt != nil
 }
 
 type Contact struct {
@@ -80,7 +93,7 @@ type Permission struct {
 //==============================================================================
 type SignInForm struct {
 	RememberMe bool   `form:"remember_me"`
-	Email      string `from:"email" binding:"email"`
+	Email      string `form:"email" binding:"email"`
 	Password   string `form:"password" binding:"min=8"`
 }
 type SignUpForm struct {
@@ -177,9 +190,40 @@ func (p *UsersEngine) token(action string, fn func(*gin.Context, *User) (bool, s
 }
 
 func (p *UsersEngine) Mount(r *gin.Engine) {
-	r.POST("/users/sign_in", func(c *gin.Context) {
-		//todo
-	})
+	r.POST("/users/sign_in", Form(&SignInForm{}, func(c *gin.Context, f interface{}) (interface{}, error) {
+		fm := f.(*SignInForm)
+		u, e := p.Dao.GetUserByEmail(fm.Email)
+		if e != nil {
+			return nil, errors.New(p.I18n.T(c, "valid.user.email.not_exists", fm.Email))
+		}
+		if b, e := utils.Csha512(u.Password, []byte(fm.Password)); e != nil || !b {
+			return nil, errors.New(p.I18n.T(c, "valid.user.email_password_not_match"))
+		}
+		if u.IsLocked() {
+			return nil, errors.New(p.I18n.T(c, "valid.user.locked"))
+		}
+		if !u.IsConfirmed() {
+			return nil, errors.New(p.I18n.T(c, "valid.user.not_confirmed"))
+		}
+		p.Dao.SetUserSignIn(u)
+		p.Dao.Log(u.ID, p.I18n.T(c, "log.user.sign_in"))
+
+		if tk, err := p.Token.New(
+			map[string]interface{}{
+				"uid": u.Uid,
+			},
+			60*24); err == nil {
+			return map[string]interface{}{
+				"token":    tk,
+				"username": u.Name,
+				"email":    u.Email,
+				"logo":     u.Logo,
+			}, nil
+		} else {
+			return nil, err
+		}
+
+	}))
 	r.POST("/users/sign_up", Form(&SignUpForm{}, func(c *gin.Context, f interface{}) (interface{}, error) {
 		fm := f.(*SignUpForm)
 		if u, _ := p.Dao.GetUserByEmail(fm.Email); u != nil {
@@ -196,7 +240,7 @@ func (p *UsersEngine) Mount(r *gin.Engine) {
 	}))
 	r.GET("/users/confirm", p.token("confirm", func(c *gin.Context, user *User) (bool, string) {
 
-		if user.ConfirmedAt != nil {
+		if user.IsConfirmed() {
 			return false, p.I18n.T(c, "valid.user.already_confirmed")
 		}
 
@@ -214,7 +258,7 @@ func (p *UsersEngine) Mount(r *gin.Engine) {
 		if e != nil {
 			return nil, errors.New(p.I18n.T(c, "valid.user.email.not_exists", fm.Email))
 		}
-		if u.ConfirmedAt != nil {
+		if u.IsConfirmed() {
 			return nil, errors.New(p.I18n.T(c, "valid.user.already_confirmed"))
 		}
 		p.sendMail(c, "confirm", u)
@@ -253,7 +297,7 @@ func (p *UsersEngine) Mount(r *gin.Engine) {
 	}))
 
 	r.GET("/users/unlock", p.token("unlock", func(c *gin.Context, user *User) (bool, string) {
-		if user.LockedAt == nil {
+		if !user.IsLocked() {
 			return false, p.I18n.T(c, "valid.user.not_locked")
 		}
 		err := p.Dao.LockUser(user.ID, false)
@@ -269,7 +313,7 @@ func (p *UsersEngine) Mount(r *gin.Engine) {
 		if e != nil {
 			return nil, errors.New(p.I18n.T(c, "valid.user.email.not_exists", fm.Email))
 		}
-		if u.LockedAt == nil {
+		if !u.IsLocked() {
 			return nil, errors.New(p.I18n.T(c, "valid.user.not_locked"))
 		}
 		p.sendMail(c, "unlock", u)
