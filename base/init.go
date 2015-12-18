@@ -4,6 +4,7 @@ import (
 	"crypto/cipher"
 
 	re "github.com/garyburd/redigo/redis"
+	"github.com/itpkg/portal/base/cache"
 	"github.com/itpkg/portal/base/cdn"
 	"github.com/itpkg/portal/base/cfg"
 	"github.com/itpkg/portal/base/email"
@@ -88,14 +89,18 @@ func Init(env string) error {
 		cdnP = &cdn.LocalProvider{Root: "assets"}
 	}
 
+	//---------------cache
+	var cacheP cache.Provider
+	cacheP = &cache.RedisProvider{}
+
 	//---------------token
 	var tokenP token.Provider
 	tokenP = &token.RedisProvider{}
 
 	//--------------
 	if err = ioc.In(db, redis, logger,
-		cdnP, dao,
-		emailP, tokenP); err != nil {
+		dao,
+		cdnP, cacheP, emailP, tokenP); err != nil {
 		return err
 	}
 	if err = ioc.Use(map[string]interface{}{

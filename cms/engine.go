@@ -43,13 +43,13 @@ func (p *Engine) Build(string) error {
 		lang := dir[6:11]
 
 		switch {
-		case ext == ".html"||ext == ".htm":
+		case ext == ".html" || ext == ".htm":
 			p.Logger.Info("[%s] %s => %s/%s", lang, path, dir, name)
 			return p.Cdn.Write(dir, name, func(wrt io.Writer) error {
 				mod := p.BaseDao.GetSiteModel(lang)
 				mod.Url = fmt.Sprintf("%s%s/%s", p.Http.Assets(), dir, name)
 				st := FirstLine(path)
-				mod.SubTitle = st[4:len(st)-5]
+				mod.SubTitle = st[4 : len(st)-5]
 				mod.SetBody(string(buf))
 				return tpl.Dump(wrt, base.LAYOUT, mod)
 			})

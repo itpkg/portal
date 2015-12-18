@@ -4,14 +4,16 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/itpkg/portal/base/cache"
 	"github.com/itpkg/portal/base/tpl"
 	"github.com/itpkg/portal/base/utils"
 	"github.com/jinzhu/gorm"
 )
 
 type Dao struct {
-	Db  *gorm.DB   `inject:""`
-	Aes *utils.Aes `inject:""`
+	Db    *gorm.DB       `inject:""`
+	Aes   *utils.Aes     `inject:""`
+	Cache cache.Provider `inject:""`
 }
 
 func (*Dao) site_key(key, lang string) string {
@@ -28,14 +30,18 @@ func (p *Dao) SetSiteInfo(key, lang string, val interface{}, flag bool) error {
 }
 
 func (p *Dao) GetSiteModel(lang string) *tpl.Model {
-	m := tpl.Model{
-		Lang:        lang,
-		Title:       p.GetSiteInfo("title", lang),
-		Description: p.GetSiteInfo("description", lang),
-		Keywords:    p.GetSiteInfo("keywords", lang),
-		Author:      fmt.Sprintf("%s %s", p.GetSiteInfo("author.username", lang), p.GetSiteInfo("author.email", lang)),
-	}
-	return &m
+	mod := tpl.Model{}
+	p.Cache.GetOrSet(fmt.Sprintf("%s/site.template.model", lang), &mod, func(o interface{}) (uint, error) {
+		m := o.(*tpl.Model)
+
+		m.Lang = lang
+		m.Title = p.GetSiteInfo("title", lang)
+		m.Description = p.GetSiteInfo("description", lang)
+		m.Keywords = p.GetSiteInfo("keywords", lang)
+		m.Author = fmt.Sprintf("%s %s", p.GetSiteInfo("author.username", lang), p.GetSiteInfo("author.email", lang))
+		return 60 * 24, nil
+	})
+	return &mod
 }
 
 func (p *Dao) GetSiteInfo(key, lang string) string {
