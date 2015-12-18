@@ -43,6 +43,16 @@ func (p *Engine) Build(string) error {
 		lang := dir[6:11]
 
 		switch {
+		case ext == ".html"||ext == ".htm":
+			p.Logger.Info("[%s] %s => %s/%s", lang, path, dir, name)
+			return p.Cdn.Write(dir, name, func(wrt io.Writer) error {
+				mod := p.BaseDao.GetSiteModel(lang)
+				mod.Url = fmt.Sprintf("%s%s/%s", p.Http.Assets(), dir, name)
+				st := FirstLine(path)
+				mod.SubTitle = st[4:len(st)-5]
+				mod.SetBody(string(buf))
+				return tpl.Dump(wrt, base.LAYOUT, mod)
+			})
 		case ext == ".md":
 
 			name = name[:len(name)-3] + ".html"
@@ -50,11 +60,10 @@ func (p *Engine) Build(string) error {
 
 			return p.Cdn.Write(dir, name, func(wrt io.Writer) error {
 				mod := p.BaseDao.GetSiteModel(lang)
-				mod.SubTitle = FirstLine(path)
 				mod.Url = fmt.Sprintf("%s%s/%s", p.Http.Assets(), dir, name)
+				mod.SubTitle = FirstLine(path)
 				mod.SetBody(string(Md2Hm([]byte(strings.Replace(string(buf), ".md)", ".html)", -1)))))
 				return tpl.Dump(wrt, base.LAYOUT, mod)
-
 			})
 		default:
 			p.Logger.Info("%s => %s/%s", path, dir, name)
