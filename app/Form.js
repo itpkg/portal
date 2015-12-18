@@ -30,10 +30,10 @@ const form = React.createClass({
                     this.props.action + "?locale=" + i18next.language,
                     this.state.fields,
                     function (rs) {
-                        var submit=this.props.submit;
-                        if(submit && rs.ok){
+                        var submit = this.props.submit;
+                        if (submit && rs.ok) {
                             submit(rs.data);
-                        }else{
+                        } else {
                             this.setState({result: rs});
                         }
                     }.bind(this));
@@ -88,7 +88,7 @@ const form = React.createClass({
                     return <Input id={field.id} key={key} onChange={handleChange} type="checkbox" label={label}
                                   wrapperClassName="col-xs-offset-2 col-xs-10"/>;
                 default:
-                    return <input id={field.id} key={key}  type="hidden"/>;
+                    return <input id={field.id} key={key} type="hidden"/>;
             }
         });
         var method = this.props.method;

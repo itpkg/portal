@@ -1,15 +1,30 @@
 import React from 'react';
-import {IndexLink} from 'react-router';
+import {IndexLink, History} from 'react-router';
 import i18next from 'i18next/lib';
 
+import Reflux from 'reflux';
+import ReactMixin from 'react-mixin';
+
 import {Form} from './Form'
+import {Alert} from 'react-bootstrap'
+import {Actions, Store} from './flux'
+
 
 const users = React.createClass({
+    hideIfSignIn: function () {
+        if (this.state.current_user) {
+            return (<Alert bsStyle="danger">
+                <h4>{i18next.t("users.already_sign_in")}</h4>
+            </Alert>);
+        } else {
+            return this.props.children;
+        }
+    },
     render(){
         return (
             <div className="row">
                 <div className="col-md-offset-1 col-md-10">
-                    {this.props.children}
+                    {this.hideIfSignIn()}
                     <br/>
                     <ul>
                         <li>
@@ -37,15 +52,46 @@ const users = React.createClass({
                                 {i18next.t('users.titles.did_not_receive_unlock_instructions')}
                             </IndexLink>
                         </li>
+                        <br/>
+                        <li>
+                            <IndexLink to="/">
+                                {i18next.t('back_to_home')}
+                            </IndexLink>
+                        </li>
                     </ul>
                 </div>
             </div>)
     }
 });
 
+//
+//const alreadySignIn1 = React.createClass({
+//    render(){
+//        return (<Alert bsStyle="danger">
+//            <h4>{i18next.t("users.already_sign_in")}</h4>
+//        </Alert>)
+//    }
+//});
+//
+//const alreadySignIn = React.createClass({
+//    render(){
+//        return (<div>fuck</div>)
+//    }
+//});
+//
+//const notAllow = React.createClass({
+//    render(){
+//        return (<Alert bsStyle="danger">
+//            <h4>{i18next.t("forbidden")}</h4>
+//        </Alert>)
+//    }
+//});
+
 const signIn = React.createClass({
+    mixins: [History],
     onSubmit(data){
-        console.log(data);
+        Actions.signIn(data);
+        this.history.pushState(null, `/about-us`);
     },
     render(){
         return (
@@ -63,6 +109,7 @@ const signIn = React.createClass({
         )
     }
 });
+
 
 const signUp = React.createClass({
     render(){
@@ -127,7 +174,7 @@ var parse = require('url-parse');
 const resetPassword = React.createClass({
     getInitialState: function () {
         var query = parse(window.location.href, true).query;
-        return {token:query.token}
+        return {token: query.token}
     },
     render(){
         return (<Form
@@ -151,6 +198,8 @@ const profile = React.createClass({
             </div>)
     }
 });
+
+ReactMixin.onClass(users, Reflux.connect(Store));
 
 module.exports = {
     Users: users,
