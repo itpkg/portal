@@ -24,6 +24,7 @@ const users = React.createClass({
         return (
             <div className="row">
                 <div className="col-md-offset-1 col-md-10">
+                    <br/>
                     {this.hideIfSignIn()}
                     <br/>
                     <ul>
@@ -63,29 +64,6 @@ const users = React.createClass({
             </div>)
     }
 });
-
-//
-//const alreadySignIn1 = React.createClass({
-//    render(){
-//        return (<Alert bsStyle="danger">
-//            <h4>{i18next.t("users.already_sign_in")}</h4>
-//        </Alert>)
-//    }
-//});
-//
-//const alreadySignIn = React.createClass({
-//    render(){
-//        return (<div>fuck</div>)
-//    }
-//});
-//
-//const notAllow = React.createClass({
-//    render(){
-//        return (<Alert bsStyle="danger">
-//            <h4>{i18next.t("forbidden")}</h4>
-//        </Alert>)
-//    }
-//});
 
 const signIn = React.createClass({
     mixins: [History],

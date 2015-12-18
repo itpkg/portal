@@ -4,26 +4,6 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = function (options) {
     var entry = {
-        vendor: [
-            'jquery',
-            'bootstrap',
-            'history',
-            'js-base64',
-            'highlight.js',
-            'markdown',
-            'url-parse',
-            'i18next/lib',
-            'i18next-browser-languagedetector/lib',
-            'i18next-xhr-backend/lib'
-        ],
-        react: [
-            'react',
-            'react-dom',
-            'react-bootstrap',
-            'react-router',
-            'react-mixin',
-            'reflux'
-        ],
         main: options.debug ? "./app/development": "./app/production"
     };
 

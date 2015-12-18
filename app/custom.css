@@ -1,4 +1,8 @@
-.form-group.required .control-label:after {
-    content: "*";
-    color: red;
+div#header {
+    background-color: black;
+}
+
+body {
+    padding-top: 50px;
+    padding-bottom: 20px;
 }

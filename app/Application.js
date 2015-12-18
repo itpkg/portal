@@ -1,11 +1,12 @@
 import React from 'react';
 import {IndexLink} from 'react-router';
 
+import {Header, Footer} from './Widgets';
 
 const application = React.createClass({
     render(){
         return (
-            <div>
+            <div >
                 Application
                 <br/>
                 <IndexLink to="/">Home</IndexLink>
@@ -13,7 +14,8 @@ const application = React.createClass({
                 <IndexLink to="/about_us">About Us</IndexLink>
                 <br/>
                 {this.props.children}
-            </div>)
+            </div>
+        )
     }
 });
 

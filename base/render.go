@@ -8,6 +8,10 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+func ParseLocale(c *gin.Context)  string{
+	return c.DefaultQuery("locale", "en-US")
+}
+
 func Form(fm interface{}, fn func(*gin.Context, interface{}) (interface{}, error)) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		if err := c.Bind(fm); err == nil {

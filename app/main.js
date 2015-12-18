@@ -10,7 +10,7 @@ import i18next from 'i18next/lib';
 import XHR from 'i18next-xhr-backend/lib';
 import LanguageDetector from 'i18next-browser-languagedetector/lib';
 
-import {NoMatch, Version} from './Widgets'
+import {NoMatch, Version, Header, Footer} from './Widgets'
 import {Application, Home, AboutUs, Notice} from  './Application'
 import {Users, SignIn, SignUp, Confirm, Unlock, ForgotPassword, ResetPassword, Profile} from './Users'
 import {Message} from "./Message"
@@ -32,6 +32,8 @@ function main(options) {
                 caches: ['localStorage', 'cookie']
             }
         }, (err, t)=> {
+            ReactDOM.render((<Header/>), document.getElementById('header'));
+            ReactDOM.render((<Footer/>), document.getElementById('footer'));
             ReactDOM.render(
                 (<Router>
                     <Route path="/users" component={Users}>
