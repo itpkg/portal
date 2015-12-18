@@ -81,7 +81,7 @@ func TestRedis(t *testing.T) {
 		"test": &cfg.Redis{
 			Host: "localhost",
 			Port: 6379,
-			Db:   2,
+			Db:   3,
 		},
 	}
 
