@@ -15,7 +15,7 @@ type Http struct {
 
 func (p *Http) Assets() string {
 	if p.IsProduction() {
-		return "/"
+		return "/"//robots.txt google/baidu verify ...
 	} else {
 		return "/assets/"
 	}

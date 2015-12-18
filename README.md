@@ -19,6 +19,23 @@ it-package portal(golang version)
     git checkout go
     npm install
 
+### Setup database (as postgres)
+
+    psql
+    CREATE USER portal WITH PASSWORD 'changeme';
+    CREATE DATABASE portal_production WITH ENCODING='UTF8';
+    GRANT ALL PRIVILEGES ON DATABASE portal_production TO portal;
+    \q
+    
+#### test database connection
+
+
+    psql -U portal -d portal_production    
+
+* if report 'FATAL:  Peer authentication failed for user "portal"', open file "/etc/postgresql/9.3/main/pg_hba.conf" change line "local   all             all                                     peer" to "local   all             all                                     md5" and then run: 
+
+    service postgresql restart
+
 ### Start
     go run app.go
     npm run start

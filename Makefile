@@ -4,6 +4,7 @@ build:
 	npm run build
 	go build -ldflags "-s" -o $(target)/itpkg main.go
 	cp -a config views locales $(target)
+	mkdir -p $(target)/tmp/blogs
 
 
 clean:
