@@ -11,17 +11,18 @@ import ReactMixin from 'react-mixin';
 import {Actions, Store} from './flux'
 
 const header = React.createClass({
+    onSignOut: function () {
+
+    },
     personalBar: function () {
         var user = this.state.current_user;
         if (user) {
             return (
                 <NavDropdown eventKey={3} title={i18next.t("users.titles.welcome", {name:user.name})}
                              id="basic-nav-dropdown">
-                    <MenuItem eventKey={3.1}>Action</MenuItem>
-                    <MenuItem eventKey={3.2}>Another action</MenuItem>
-                    <MenuItem eventKey={3.3}>Something else here</MenuItem>
+                    <MenuItem eventKey={3.1} href="/#/personal/profile">{i18next.t("users.titles.profile")}</MenuItem>
                     <MenuItem divider/>
-                    <MenuItem eventKey={3.3}>Separated link</MenuItem>
+                    <MenuItem eventKey={3.3} onclick={this.onSignOut}>{i18next.t("users.titles.sign_out")}</MenuItem>
                 </NavDropdown>)
         } else {
             return (<NavDropdown eventKey={3} title={i18next.t("users.titles.sign_in_or_up")} id="basic-nav-dropdown">
@@ -29,9 +30,9 @@ const header = React.createClass({
                 <MenuItem eventKey={3.2} href="/#/users/sign-up">{i18next.t("users.titles.sign_up")}</MenuItem>
                 <MenuItem eventKey={3.3}
                           href="/#/users/forgot-password">{i18next.t("users.titles.forgot_your_password")}</MenuItem>
-                <MenuItem eventKey={3.3}
+                <MenuItem eventKey={3.4}
                           href="/#/users/confirm">{i18next.t("users.titles.did_not_receive_confirmation_instructions")}</MenuItem>
-                <MenuItem eventKey={3.3}
+                <MenuItem eventKey={3.5}
                           href="/#/users/unlock">{i18next.t("users.titles.did_not_receive_unlock_instructions")}</MenuItem>
             </NavDropdown>)
         }

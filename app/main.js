@@ -12,7 +12,8 @@ import LanguageDetector from 'i18next-browser-languagedetector/lib';
 
 import {NoMatch, Version} from './Widgets'
 import {Application, Home, AboutUs, Notice} from  './Application'
-import {Users, SignIn, SignUp, Confirm, Unlock, ForgotPassword, ResetPassword, Profile} from './Users'
+import {Users, SignIn, SignUp, Confirm, Unlock, ForgotPassword, ResetPassword} from './Users'
+import {Personal, Profile} from './Personal'
 import {Message} from "./Message"
 
 function main(options) {
@@ -48,6 +49,10 @@ function main(options) {
                             <Route path="unlock" component={Unlock}/>
                             <Route path="forgot-password" component={ForgotPassword}/>
                             <Route path="reset-password" component={ResetPassword}/>
+                        </Route>
+
+                        <Route path="personal" component={Personal}>
+                            <Route path="profile" component={Profile}/>
                         </Route>
 
                         <Route path="*" component={NoMatch}/>

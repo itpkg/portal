@@ -9,13 +9,12 @@ import {Form} from './Form'
 import {Alert} from 'react-bootstrap'
 import {Actions, Store} from './flux'
 
-
 const users = React.createClass({
     hideIfSignIn: function () {
         if (this.state.current_user) {
             return (<Alert bsStyle="danger">
                 <h4>{i18next.t("users.already_sign_in")}</h4>
-            </Alert>);
+            </Alert>)
         } else {
             return this.props.children;
         }
@@ -167,15 +166,6 @@ const resetPassword = React.createClass({
     }
 });
 
-const profile = React.createClass({
-    render(){
-        return (//todo
-            <div>
-                Profile
-            </div>)
-    }
-});
-
 ReactMixin.onClass(users, Reflux.connect(Store));
 
 module.exports = {
@@ -185,6 +175,5 @@ module.exports = {
     Confirm: confirm,
     Unlock: unlock,
     ForgotPassword: forgotPassword,
-    ResetPassword: resetPassword,
-    Profile: profile
+    ResetPassword: resetPassword
 };
