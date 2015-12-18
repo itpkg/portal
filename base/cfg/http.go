@@ -17,7 +17,7 @@ func (p *Http) Home() string {
 	if p.IsProduction() {
 		return fmt.Sprintf("https://www.%s", p.Domain)
 	} else {
-		return fmt.Sprintf("http://www.%s:%d", p.Domain, p.Port)
+		return "http://localhost:8080"
 	}
 }
 

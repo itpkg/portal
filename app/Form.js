@@ -83,7 +83,7 @@ const form = React.createClass({
                     return <Input id={field.id} key={key} onChange={handleChange} type="checkbox" label={label}
                                   wrapperClassName="col-xs-offset-2 col-xs-10"/>;
                 default:
-                    return <input key={key} id={id} type="hidden"/>;
+                    return <input id={field.id} key={key}  type="hidden"/>;
             }
         });
         var method = this.props.method;

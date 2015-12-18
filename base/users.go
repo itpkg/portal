@@ -90,6 +90,12 @@ type SignUpForm struct {
 	PasswordConfirmation string `form:"password_confirmation" binding:"eqfield=Password"`
 }
 
+type PasswordForm struct {
+	Token                string `form:"token" binding:"required"`
+	Password             string `form:"password" binding:"min=8"`
+	PasswordConfirmation string `form:"password_confirmation" binding:"eqfield=Password"`
+}
+
 type EmailForm struct {
 	Email string `form:"email" binding:"email"`
 }
@@ -115,23 +121,25 @@ func (p *UsersEngine) sendMail(ctx *gin.Context, action string, user *User) {
 		Url      string
 	}
 
-	switch action {
-	case "confirm":
-	case "unlock":
-	case "reset_password":
-	default:
-		return
-	}
-
 	tkn, err := p.Token.New(map[string]interface{}{"action": action, "user": user.Uid}, 60)
 	if err != nil {
 		p.Logger.Error("bad in generate token: %v", err)
 		return
 	}
 
+	url := fmt.Sprintf("%s/users/%s?token=%s", p.Http.Home(), action, tkn)
+	switch action {
+	case "confirm":
+	case "unlock":
+	case "reset_password":
+		url = fmt.Sprintf("%s/?token=%s#/users/reset-password", p.Http.Home(), tkn)
+	default:
+		return
+	}
+
 	var buf bytes.Buffer
 	if tpl, err := template.New("").Parse(p.I18n.T(ctx, fmt.Sprintf("email.user.%s.body", action))); err == nil {
-		if err := tpl.Execute(&buf, &Model{Username: user.Name, Url: fmt.Sprintf("%s/users/%s?token=%s", p.Http.Home(), action, tkn)}); err != nil {
+		if err := tpl.Execute(&buf, &Model{Username: user.Name, Url: url}); err != nil {
 			p.Logger.Error("bad in parse email template email.user.%s.body: %v", action, err)
 			return
 		}
@@ -221,12 +229,40 @@ func (p *UsersEngine) Mount(r *gin.Engine) {
 		p.sendMail(c, "reset_password", u)
 		return []string{p.I18n.T(c, "log.user.messages.send_reset_password_instructions")}, nil
 	}))
-	r.POST("/users/reset_password", func(c *gin.Context) {
-		//todo
-	})
-	r.GET("/users/unlock", func(c *gin.Context) {
-		//todo
-	})
+
+	r.POST("/users/reset_password", Form(&PasswordForm{}, func(c *gin.Context, f interface{}) (interface{}, error) {
+		fm := f.(*PasswordForm)
+		tkn, err := p.Token.Parse(fm.Token)
+		if err != nil {
+			return nil, err
+		}
+		if tkn["action"].(string) != "reset_password" {
+			return nil, errors.New(p.I18n.T(c, "bad_action"))
+		}
+		user, err := p.Dao.GetUserByUid(tkn["user"].(string))
+		if err != nil {
+			return nil, err
+		}
+
+		if err := p.Dao.SetUserPassword(user.ID, fm.Password); err != nil {
+			return nil, err
+		}
+		p.Dao.Log(user.ID, p.I18n.T(c, "log.user.reset_password"))
+
+		return []string{p.I18n.T(c, "log.success")}, nil
+	}))
+
+	r.GET("/users/unlock", p.token("unlock", func(c *gin.Context, user *User) (bool, string) {
+		if user.LockedAt == nil {
+			return false, p.I18n.T(c, "valid.user.not_locked")
+		}
+		err := p.Dao.LockUser(user.ID, false)
+		if err != nil {
+			return false, err.Error()
+		}
+		p.Dao.Log(user.ID, p.I18n.T(c, "log.user.unlock"))
+		return true, p.I18n.T(c, "log.user.messages.unlocked")
+	}))
 	r.POST("/users/unlock", Form(&EmailForm{}, func(c *gin.Context, f interface{}) (interface{}, error) {
 		fm := f.(*EmailForm)
 		u, e := p.Dao.GetUserByEmail(fm.Email)

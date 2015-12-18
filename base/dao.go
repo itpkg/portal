@@ -103,6 +103,25 @@ func (p *Dao) ConfirmUser(id uint) error {
 	return p.Db.Model(&User{}).Where("id = ?", id).UpdateColumn("confirmed_at", time.Now()).Error
 }
 
+func (p *Dao) SetUserPassword(id uint, password string) error {
+	passwd, err := utils.Ssha512([]byte(password), 8)
+	if err != nil {
+		return err
+	}
+	return p.Db.Model(&User{}).Where("id = ?", id).UpdateColumn("password", passwd).Error
+}
+
+func (p *Dao) LockUser(id uint, flag bool) error {
+	var t *time.Time
+	if flag {
+		n := time.Now()
+		t = &n
+	} else {
+		t = nil
+	}
+	return p.Db.Model(&User{}).Where("id = ?", id).UpdateColumn("locked_at", t).Error
+}
+
 func (p *Dao) NewEmailUser(name, email, password string) (*User, error) {
 	passwd, err := utils.Ssha512([]byte(password), 8)
 	if err != nil {

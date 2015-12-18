@@ -86,7 +86,7 @@ const confirm = React.createClass({
                 resource="users"
                 title={i18next.t("users.buttons.resend_confirmation_instructions")}
                 fields={[
-            {id:"email", type:'email', focus:true, required: true},
+            {id:"email", type:'email', focus:true, required: true}
             ]}
             />
         )
@@ -100,7 +100,7 @@ const unlock = React.createClass({
             resource="users"
             title={i18next.t("users.buttons.resend_unlock_instructions")}
             fields={[
-            {id:"email", type:'email', focus:true, required: true},
+            {id:"email", type:'email', focus:true, required: true}
             ]}
         />)
     }
@@ -113,18 +113,29 @@ const forgotPassword = React.createClass({
             resource="users"
             title={i18next.t("users.buttons.send_me_reset_password_instructions")}
             fields={[
-            {id:"email", type:'email', focus:true, required: true},
+            {id:"email", type:'email', focus:true, required: true}
             ]}
         />)
     }
 });
 
-const changePassword = React.createClass({
-    render(){//todo
-        return (
-            <div>
-                Change Passwrod
-            </div>)
+var parse = require('url-parse');
+const resetPassword = React.createClass({
+    getInitialState: function () {
+        var query = parse(window.location.href, true).query;
+        return {token:query.token}
+    },
+    render(){
+        return (<Form
+            action="/users/reset_password"
+            resource="users"
+            title={i18next.t("users.buttons.send_me_reset_password_instructions")}
+            fields={[
+            {id:"token", type:'hidden', value:this.state.token},
+            {id:"password", type:'password', required: true},
+            {id:"password_confirmation", type:'password', required: true}
+            ]}
+        />)
     }
 });
 
@@ -144,6 +155,6 @@ module.exports = {
     Confirm: confirm,
     Unlock: unlock,
     ForgotPassword: forgotPassword,
-    ChangePassword: changePassword,
+    ResetPassword: resetPassword,
     Profile: profile
 };
