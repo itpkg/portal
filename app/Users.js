@@ -22,46 +22,45 @@ const users = React.createClass({
     },
     render(){
         return (
-            <div className="row">
-                <div className="col-md-offset-1 col-md-10">
+            <div className="col-md-offset-1 col-md-10">
+                <br/>
+                {this.hideIfSignIn()}
+                <br/>
+                <ul>
+                    <li>
+                        <IndexLink to="/users/sign-in">
+                            {i18next.t('users.titles.sign_in')}
+                        </IndexLink>
+                    </li>
+                    <li>
+                        <IndexLink to="/users/sign-up">
+                            {i18next.t('users.titles.sign_up')}
+                        </IndexLink>
+                    </li>
+                    <li>
+                        <IndexLink to="/users/forgot-password">
+                            {i18next.t('users.titles.forgot_your_password')}
+                        </IndexLink>
+                    </li>
+                    <li>
+                        <IndexLink to="/users/confirm">
+                            {i18next.t('users.titles.did_not_receive_confirmation_instructions')}
+                        </IndexLink>
+                    </li>
+                    <li>
+                        <IndexLink to="/users/unlock">
+                            {i18next.t('users.titles.did_not_receive_unlock_instructions')}
+                        </IndexLink>
+                    </li>
                     <br/>
-                    {this.hideIfSignIn()}
-                    <br/>
-                    <ul>
-                        <li>
-                            <IndexLink to="/users/sign-in">
-                                {i18next.t('users.titles.sign_in')}
-                            </IndexLink>
-                        </li>
-                        <li>
-                            <IndexLink to="/users/sign-up">
-                                {i18next.t('users.titles.sign_up')}
-                            </IndexLink>
-                        </li>
-                        <li>
-                            <IndexLink to="/users/forgot-password">
-                                {i18next.t('users.titles.forgot_your_password')}
-                            </IndexLink>
-                        </li>
-                        <li>
-                            <IndexLink to="/users/confirm">
-                                {i18next.t('users.titles.did_not_receive_confirmation_instructions')}
-                            </IndexLink>
-                        </li>
-                        <li>
-                            <IndexLink to="/users/unlock">
-                                {i18next.t('users.titles.did_not_receive_unlock_instructions')}
-                            </IndexLink>
-                        </li>
-                        <br/>
-                        <li>
-                            <IndexLink to="/">
-                                {i18next.t('back_to_home')}
-                            </IndexLink>
-                        </li>
-                    </ul>
-                </div>
-            </div>)
+                    <li>
+                        <IndexLink to="/">
+                            {i18next.t('back_to_home')}
+                        </IndexLink>
+                    </li>
+                </ul>
+            </div>
+        )
     }
 });
 

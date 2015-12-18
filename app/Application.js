@@ -6,21 +6,24 @@ import {Header, Footer} from './Widgets';
 const application = React.createClass({
     render(){
         return (
-            <div >
-                Application
-                <br/>
-                <IndexLink to="/">Home</IndexLink>
-                &nbsp;
-                <IndexLink to="/about_us">About Us</IndexLink>
-                <br/>
-                {this.props.children}
+            <div>
+                <Header/>
+                <div className="container-fluid">
+                    <div className="row">
+                        {this.props.children}
+                    </div>
+                    <hr/>
+                    <div>
+                        <Footer/>
+                    </div>
+                </div>
             </div>
         )
     }
 });
 
 const home = React.createClass({
-    render(){
+    render(){ //todo
         return (<div>
             home
             <br/>
@@ -31,7 +34,7 @@ const home = React.createClass({
 });
 
 const aboutUs = React.createClass({
-    render(){
+    render(){ // todo
         return (<div>
             about us
             <br/>
@@ -40,7 +43,7 @@ const aboutUs = React.createClass({
 });
 
 const notice = React.createClass({
-    render() {
+    render() { //todo
         return <h3>Message {this.props.params.id}</h3>
     }
 });

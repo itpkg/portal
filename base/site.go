@@ -8,10 +8,10 @@ import (
 	"io"
 	"io/ioutil"
 	"log"
+	"net/http"
 	"os"
 	"strings"
 	"time"
-	"net/http"
 
 	"github.com/gin-gonic/contrib/expvar"
 	"github.com/gin-gonic/gin"
@@ -138,7 +138,7 @@ func (p *SiteEngine) Build(dir string) error {
 func (p *SiteEngine) Mount(router *gin.Engine) {
 	router.GET("/debug/vars", expvar.Handler()) //todo only admin can
 
-	router.GET("/site/info", func(c *gin.Context){
+	router.GET("/site/info", func(c *gin.Context) {
 		c.JSON(http.StatusOK, p.Dao.GetSiteModel(ParseLocale(c)))
 	})
 }

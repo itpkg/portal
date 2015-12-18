@@ -9,11 +9,11 @@ const store = Reflux.createStore({
     init: function () {
         this.data = {
             current_user: JSON.parse(localStorage.getItem(current_user)),
-            site_info:{}
+            site_info: {}
         };
     },
-    onSiteInfo: function(info){
-      this.data.site_info = info;
+    onSiteInfo: function (info) {
+        this.data.site_info = info;
     },
     onSignIn: function (user) {
         localStorage.setItem(current_user, JSON.stringify(user));

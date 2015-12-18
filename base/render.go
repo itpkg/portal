@@ -8,7 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func ParseLocale(c *gin.Context)  string{
+func ParseLocale(c *gin.Context) string {
 	return c.DefaultQuery("locale", "en-US")
 }
 

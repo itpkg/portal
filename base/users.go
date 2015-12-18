@@ -214,10 +214,10 @@ func (p *UsersEngine) Mount(r *gin.Engine) {
 			},
 			60*24); err == nil {
 			return map[string]interface{}{
-				"token":    tk,
-				"username": u.Name,
-				"email":    u.Email,
-				"logo":     u.Logo,
+				"token": tk,
+				"name":  u.Name,
+				"email": u.Email,
+				"logo":  u.Logo,
 			}, nil
 		} else {
 			return nil, err
