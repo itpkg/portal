@@ -5,6 +5,8 @@ package cms
  * 1: 属性会转小写
  * 2: 会去掉引号
  * 3: 会去掉iframe之后的内容
+ *
+ * 优酷使用iframe 会出错
  */
 
 import (
@@ -51,7 +53,31 @@ func (p *Engine) Build(string) error {
 
 		switch {
 		case ext == ".youku":
-			//todo
+
+			vid := name[:len(name)-6]
+			name = name[:len(name)-6] + ".html"
+			p.Logger.Info("[优酷] %s => %s/%s", path, dir, name)
+			body := fmt.Sprintf(`
+<p>
+	%s
+</p>
+<p>
+	<embed src="http://player.youku.com/player.php/sid/%s/v.swf"
+	allowFullScreen="true" quality="high" width="480" height="400" align="middle"
+	allowScriptAccess="always" type="application/x-shockwave-flash">
+	</embed>
+</p>
+			`,
+				string(Md2Hm(buf)),
+				vid,
+			)
+			return p.Cdn.Write(dir, name, func(wrt io.Writer) error {
+				mod := p.BaseDao.GetSiteModel(lang)
+				mod.Url = fmt.Sprintf("%s%s/%s", p.Http.Assets(), dir, name)
+				mod.SubTitle = FirstLine(path)
+				mod.SetBody(body)
+				return tpl.Dump(wrt, base.LAYOUT, mod)
+			})
 			return nil
 		case ext == ".youtube":
 			vid := name[:len(name)-8]
@@ -72,7 +98,6 @@ func (p *Engine) Build(string) error {
 				vid,
 			)
 
-			p.Logger.Debug(body)
 			return p.Cdn.Write(dir, name, func(wrt io.Writer) error {
 				mod := p.BaseDao.GetSiteModel(lang)
 				mod.Url = fmt.Sprintf("%s%s/%s", p.Http.Assets(), dir, name)
