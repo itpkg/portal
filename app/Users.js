@@ -2,15 +2,13 @@ import React from 'react';
 import {IndexLink, History} from 'react-router';
 import i18next from 'i18next/lib';
 
-import Reflux from 'reflux';
-import ReactMixin from 'react-mixin';
-
 import {Form} from './Form'
 import {Alert} from 'react-bootstrap'
-import {Actions, Store} from './flux'
+
 
 const users = React.createClass({
     hideIfSignIn: function () {
+        //todo
         if (this.state.current_user) {
             return (<Alert bsStyle="danger">
                 <h4>{i18next.t("users.already_sign_in")}</h4>
@@ -66,7 +64,7 @@ const users = React.createClass({
 const signIn = React.createClass({
     mixins: [History],
     onSubmit(data){
-        Actions.signIn(data);
+        //Actions.signIn(data); todo
         this.history.pushState(null, `/about-us`);
     },
     render(){
@@ -166,7 +164,6 @@ const resetPassword = React.createClass({
     }
 });
 
-ReactMixin.onClass(users, Reflux.connect(Store));
 
 module.exports = {
     Users: users,

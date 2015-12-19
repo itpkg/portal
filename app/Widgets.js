@@ -5,17 +5,12 @@ import {Link} from 'react-router'
 import {Navbar, Nav, NavItem, NavDropdown, MenuItem, Alert} from 'react-bootstrap'
 import i18next from 'i18next/lib';
 
-import Reflux from 'reflux';
-import ReactMixin from 'react-mixin';
-
-import {Actions, Store} from './flux'
-
 const header = React.createClass({
     onSignOut: function () {
 
     },
     personalBar: function () {
-        var user = this.state.current_user;
+        var user =null;//todo this.state.current_user;
         if (user) {
             return (
                 <NavDropdown eventKey={3} title={i18next.t("users.titles.welcome", {name:user.name})}
@@ -42,12 +37,12 @@ const header = React.createClass({
         location.reload();
     },
     render(){
-
+            //todo info
         return (
             <Navbar inverse fixedTop fluid>
                 <Navbar.Header>
                     <Navbar.Brand>
-                        <a href="/#/">{this.state.site_info.title}</a>
+                        <a href="/#/">TODO</a>
                     </Navbar.Brand>
                     <Navbar.Toggle />
                 </Navbar.Header>
@@ -88,9 +83,6 @@ const noMatch = React.createClass({
 
 
 const version = 'v20151212';
-
-ReactMixin.onClass(header, Reflux.connect(Store));
-ReactMixin.onClass(footer, Reflux.connect(Store));
 
 module.exports = {
     Header: header,
