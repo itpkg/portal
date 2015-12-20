@@ -1,21 +1,16 @@
 import React from 'react';
-import {Router, Route, IndexRoute} from 'react-router';
+import {Route, IndexRoute} from 'react-router';
 
-import createBrowserHistory from 'history/lib/createBrowserHistory'
+import {Application} from './Layout'
+import {Home, AboutUs, NoMatch, Message} from './Pages'
+import {Users, SignIn, SignUp, Confirm, Unlock, ForgotPassword,ResetPassword} from './Users'
+import {Personal,Profile} from './Personal'
 
-import {NoMatch, Version} from './Widgets'
-import {Application, Home, AboutUs, Notice} from  './Application'
-import {Users, SignIn, SignUp, Confirm, Unlock, ForgotPassword, ResetPassword} from './Users'
-import {Personal, Profile} from './Personal'
-import {Message} from "./Message"
-
-
-const routes = (<Router history={createBrowserHistory()}>
+const routes = (
     <Route path="/" component={Application}>
         <IndexRoute component={Home}/>
         <Route path="message" component={Message}/>
         <Route path="about-us" component={AboutUs}/>
-        <Route path="notices/:id" component={Notice}/>
 
         <Route path="users" component={Users}>
             <Route path="sign-in" component={SignIn}/>
@@ -32,8 +27,6 @@ const routes = (<Router history={createBrowserHistory()}>
 
         <Route path="*" component={NoMatch}/>
     </Route>
-</Router>);
+);
 
-module.exports = {
-    Routes:routes
-};
+export default routes

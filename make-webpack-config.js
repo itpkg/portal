@@ -4,9 +4,8 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = function (options) {
     var entry = {
-        main: options.debug ? "./app/development": "./app/production"
+        main: options.debug ? "./app/dev": "./app/prod"
     };
-
 
     var loaders = [
         {test: /\.jsx?$/, exclude: /node_modules/, loader: 'babel', query: {presets: ['react', 'es2015']}},

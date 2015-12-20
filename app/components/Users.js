@@ -1,12 +1,13 @@
-import React from 'react';
-import {IndexLink, History} from 'react-router';
-import i18next from 'i18next/lib';
-
-import {Form} from './Form'
+import React from 'react'
+import {IndexLink, History} from 'react-router'
 import {Alert} from 'react-bootstrap'
+import i18next from 'i18next/lib'
+import parse from 'url-parse'
+
+import {Form} from './Widgets'
 
 
-const users = React.createClass({
+export const Users = React.createClass({
     hideIfSignIn: function () {
         //todo
         if (this.state.current_user) {
@@ -61,7 +62,7 @@ const users = React.createClass({
     }
 });
 
-const signIn = React.createClass({
+export const SignIn = React.createClass({
     mixins: [History],
     onSubmit(data){
         //Actions.signIn(data); todo
@@ -85,7 +86,7 @@ const signIn = React.createClass({
 });
 
 
-const signUp = React.createClass({
+export const SignUp = React.createClass({
     render(){
         return (
             <Form
@@ -104,7 +105,7 @@ const signUp = React.createClass({
     }
 });
 
-const confirm = React.createClass({
+export const Confirm = React.createClass({
     render(){
         return (<Form
                 action="/users/confirm"
@@ -118,7 +119,7 @@ const confirm = React.createClass({
     }
 });
 
-const unlock = React.createClass({
+export const Unlock = React.createClass({
     render(){
         return (<Form
             action="/users/unlock"
@@ -131,7 +132,7 @@ const unlock = React.createClass({
     }
 });
 
-const forgotPassword = React.createClass({
+export const ForgotPassword = React.createClass({
     render(){
         return (<Form
             action="/users/forgot_password"
@@ -144,8 +145,7 @@ const forgotPassword = React.createClass({
     }
 });
 
-var parse = require('url-parse');
-const resetPassword = React.createClass({
+export const ResetPassword = React.createClass({
     getInitialState: function () {
         var query = parse(window.location.href, true).query;
         return {token: query.token}
@@ -163,14 +163,3 @@ const resetPassword = React.createClass({
         />)
     }
 });
-
-
-module.exports = {
-    Users: users,
-    SignIn: signIn,
-    SignUp: signUp,
-    Confirm: confirm,
-    Unlock: unlock,
-    ForgotPassword: forgotPassword,
-    ResetPassword: resetPassword
-};

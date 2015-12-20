@@ -1,19 +1,18 @@
 import React from 'react';
 import {IndexLink, History} from 'react-router';
+import {Alert} from 'react-bootstrap'
 import i18next from 'i18next/lib';
 
+import {Form} from './Widgets'
 
-import {Form} from './Form'
-import {Alert} from 'react-bootstrap'
-
-const personal = React.createClass({
+export const Personal = React.createClass({
     render(){
         return <div>personal todo</div>
     }
 });
 
 
-const profile = React.createClass({
+export const Profile = React.createClass({
     render(){
         return (//todo
             <div>
@@ -21,8 +20,3 @@ const profile = React.createClass({
             </div>)
     }
 });
-
-module.exports = {
-    Personal: personal,
-    Profile: profile
-};
